@@ -1,0 +1,25 @@
+server {
+    listen 80;
+    root /var/www/site1/public;
+    index index.php index.html index.htm;
+    charset utf-8;
+    server_tokens off;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+    error_log  /var/log/nginx/site1-error.log error;
+    access_log /var/log/nginx/site1-access.log combined;
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
