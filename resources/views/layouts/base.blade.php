@@ -8,6 +8,12 @@
     <link rel="icon" href="/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .fa-solid {
+            width: 16px;
+            display: inline-block;
+        }
+    </style>
     @yield('inline_styles')
 </head>
 <body>
@@ -35,7 +41,7 @@
                 <li class="nav-item ms-1 me-1">
                     <a class="nav-link btn btn-sm btn-outline-warning {{ request()->is('post-ad') ? 'active' : '' }}"
                        href="{{ route('post-ad') }}">
-                        <i class="fa-solid fa-pen-to-square me-1"></i>Post ad
+                        <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
                     </a>
                 </li>
                 <li class="nav-item">
