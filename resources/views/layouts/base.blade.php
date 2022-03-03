@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Site1</title>
+    <title>@yield('title')ADZ</title>
 
     <link rel="icon" href="/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,8 +21,8 @@
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('about-us') ? 'active' : '' }}"
-                       href="{{ route('about-us') }}">About Us</a>
+                    <a class="nav-link {{ request()->is('about') ? 'active' : '' }}"
+                       href="{{ route('about') }}">About Us</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
