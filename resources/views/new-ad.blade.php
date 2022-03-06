@@ -1,11 +1,21 @@
 @extends('layouts.base')
 
-@section('meta')<meta name="csrf-token" content="{{ csrf_token() }}">@endsection
+@section('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">@endsection
 @section('title')Post an Ad - @endsection
 
 @section('content')
     <h1 class="text-center">Post an Ad</h1>
     <div id="app"></div>
+@endsection
+
+@section('inline_styles')
+    <style>
+        #app {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+    </style>
 @endsection
 
 @section('inline_scripts')

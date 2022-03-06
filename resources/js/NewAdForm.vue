@@ -89,7 +89,7 @@
             </span>
         </div>
 
-        <label for="description" class="form-label w-100"> Description </label>
+        <label for="description" class="form-label">Description:</label>
 
         <div class="col-lg-9 col-md-8">
             <textarea
