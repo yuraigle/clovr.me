@@ -1,17 +1,17 @@
-const path = require('path');
-const webpack = require('webpack');
-const {VueLoaderPlugin} = require('vue-loader')
+const path = require("path");
+const webpack = require("webpack");
+const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
-    mode: 'production',
+    mode: "production", // development | production
 
     entry: {
-        post_ad: './resources/js/post-ad.js',
+        "post-ad": "./resources/js/post-ad.js",
     },
 
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, './public/dist'),
+        filename: "[name].bundle.js",
+        path: path.resolve(__dirname, "./public/dist"),
         clean: true,
     },
 
@@ -19,15 +19,15 @@ module.exports = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
-            }
-        ]
+                loader: "vue-loader",
+            },
+        ],
     },
 
     plugins: [
         new VueLoaderPlugin(),
         new webpack.DefinePlugin({
-            __VUE_OPTIONS_API__: true,
+            __VUE_OPTIONS_API__: false,
             __VUE_PROD_DEVTOOLS__: false,
         }),
     ],

@@ -12,5 +12,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="/dist/post_ad.bundle.js"></script>
+    <script type="text/javascript" src="/dist/post-ad.bundle.js"></script>
 @endsection
