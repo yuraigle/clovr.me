@@ -5,13 +5,15 @@
 @section('title')Post an Ad - @endsection
 
 @section('content')
-    <h1 class="text-center">Post an Ad</h1>
-    <div id="app"></div>
+    <div class="width-850">
+        <h1 class="text-center">Post an Ad</h1>
+        <div id="app"></div>
+    </div>
 @endsection
 
 @section('inline_styles')
     <style>
-        #app {
+        .width-850 {
             max-width: 850px;
             margin: 0 auto;
         }
@@ -19,5 +21,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="/dist/new-ad.bundle.js"></script>
+    <script type="text/javascript" src="/dist/new-ad-details.bundle.js"></script>
 @endsection

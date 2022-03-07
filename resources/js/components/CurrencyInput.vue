@@ -8,7 +8,7 @@ import { useCurrencyInput } from "vue-currency-input";
 export default {
     setup() {
         const { inputRef } = useCurrencyInput({
-            currency: "USD",
+            currency: "EUR",
             precision: 2,
         });
 

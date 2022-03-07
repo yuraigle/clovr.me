@@ -114,16 +114,18 @@
 
         <div class="w-100">&nbsp;</div>
 
-        <div class="col-auto">
-            <button type="button" class="btn btn-primary" @click="submitForm">
-                <i class="fa-solid fa-pen-to-square me-1"></i> Post My Ad
+        <div class="w-100 mt-2 mb-2 text-end">
+            <button
+                type="button"
+                class="btn btn-primary"
+                :class="{ disabled: loading }"
+                @click="submitForm"
+                style="width: 80px"
+            >
+                Next
+                <i class="fa-solid fa-spinner" v-if="loading"></i>
+                <i class="fa-solid fa-chevron-right" v-else></i>
             </button>
-        </div>
-        <div class="col-auto lh-sm">
-            <small class="text-muted">
-                By selecting Post My Ad you agree you've read and accepted our
-                <a href="/terms" target="_blank">Terms of Use</a>.
-            </small>
         </div>
     </form>
 </template>
@@ -146,11 +148,14 @@ export default {
         const property_type = ref("");
         const num_beds = ref("");
         const description = ref();
+        const loading = ref(false);
         const v$ = useVuelidate();
 
         function submitForm() {
             this.v$.$validate().then((res) => {
                 if (res) {
+                    loading.value = true;
+
                     const postData = {
                         category_id: this.category_id,
                         title: this.title,
@@ -175,11 +180,10 @@ export default {
                     })
                         .then((response) => response.json())
                         .then((result) => {
-                            console.log("Success:", result);
+                            window.location.href = "/new-ad-location";
                         })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                        });
+                        .catch((error) => console.error("Error:", error))
+                        .finally(() => (loading.value = false));
                 }
             });
         }
@@ -191,6 +195,7 @@ export default {
             property_type,
             num_beds,
             description,
+            loading,
             v$,
             submitForm,
         };

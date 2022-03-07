@@ -45,3 +45,7 @@ Rent: $
 Rent period: Monthly / Weekly
 Date availabale:
 Property type: Parking space / Garage
+
+
+Step #2 : Location
+Step #3 : Pictures

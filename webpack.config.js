@@ -6,7 +6,8 @@ module.exports = {
     mode: "production", // development | production
 
     entry: {
-        "new-ad": "./resources/js/new-ad.js",
+        "new-ad-details": "./resources/js/new-ad-details.js",
+        "new-ad-location": "./resources/js/new-ad-location.js",
     },
 
     output: {

@@ -14,12 +14,17 @@ class AdController extends BaseController
 
     public function newAd()
     {
-        return view('new-ad', []);
+        return view('new-ad-details', []);
     }
 
     public function postAd(Request $req)
     {
         $p = $req->post();
         return response()->json($p);
+    }
+
+    public function newAdLocation()
+    {
+        return view('new-ad-location', []);
     }
 }
