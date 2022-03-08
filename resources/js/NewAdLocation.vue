@@ -2,6 +2,7 @@
     <div class="d-flex flex-row w-100">
         <div>
             <input
+                id="_postcode"
                 type="text"
                 v-model="postcode"
                 class="form-control"
@@ -13,8 +14,24 @@
                 {{ v$["postcode"].$errors[0].$message }}
             </span>
         </div>
+
         <div class="ms-1">
             <input
+                id="_county"
+                type="text"
+                v-model="county"
+                class="form-control"
+                :class="{ 'is-invalid': v$['county'].$error }"
+                placeholder="County"
+            />
+            <span class="invalid-feedback" v-if="v$['county'].$error">
+                {{ v$["county"].$errors[0].$message }}
+            </span>
+        </div>
+
+        <div class="ms-1">
+            <input
+                id="_town"
                 type="text"
                 v-model="town"
                 class="form-control"
@@ -25,31 +42,21 @@
                 {{ v$["town"].$errors[0].$message }}
             </span>
         </div>
+
         <div class="flex-grow-1 ms-1">
             <input
+                id="_address"
                 type="text"
-                v-model="street"
+                v-model="address"
                 class="form-control"
-                :class="{ 'is-invalid': v$['street'].$error }"
-                placeholder="Street"
+                :class="{ 'is-invalid': v$['address'].$error }"
+                placeholder="Address"
             />
-            <span class="invalid-feedback" v-if="v$['street'].$error">
-                {{ v$["street"].$errors[0].$message }}
+            <span class="invalid-feedback" v-if="v$['address'].$error">
+                {{ v$["address"].$errors[0].$message }}
             </span>
         </div>
-        <div class="ms-1">
-            <input
-                type="text"
-                v-model="unit"
-                class="form-control"
-                :class="{ 'is-invalid': v$['unit'].$error }"
-                placeholder="Unit#"
-                style="width: 100px"
-            />
-            <span class="invalid-feedback" v-if="v$['unit'].$error">
-                {{ v$["unit"].$errors[0].$message }}
-            </span>
-        </div>
+
         <div class="ms-1">
             <button
                 class="btn btn-outline-secondary"
@@ -70,9 +77,9 @@ import { maxLength, required } from "@vuelidate/validators";
 export default {
     setup() {
         const postcode = ref("");
+        const county = ref("");
         const town = ref("");
-        const street = ref("");
-        const unit = ref("");
+        const address = ref("");
         const v$ = useVuelidate();
 
         function submitSearch() {
@@ -80,9 +87,9 @@ export default {
                 if (res) {
                     window.showOnMap({
                         postcode: postcode.value,
+                        county: county.value,
                         town: town.value,
-                        street: street.value,
-                        unit: unit.value,
+                        address: address.value,
                     });
                 }
             });
@@ -90,9 +97,9 @@ export default {
 
         return {
             postcode,
+            county,
             town,
-            street,
-            unit,
+            address,
             v$,
             submitSearch,
         };
@@ -103,18 +110,18 @@ export default {
             max: maxLength(3),
         },
 
+        county: {
+            max: maxLength(20),
+        },
+
         town: {
             // required,
             max: maxLength(20),
         },
 
-        street: {
+        address: {
             // required,
             max: maxLength(50),
-        },
-
-        unit: {
-            max: maxLength(5),
         },
     }),
 };
