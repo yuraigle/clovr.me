@@ -9,7 +9,57 @@
         <h1 class="text-center">Select a Location</h1>
 
         <p class="text-center mt-4 mb-2">Enter location details:</p>
-        <div id="app"></div>
+
+        <div class="d-flex flex-row w-100">
+            <div>
+                <input id="_postcode" type="text" name="postcode" class="form-control" placeholder="ZipCode" style="width: 100px" />
+                <span class="invalid-feedback"></span>
+            </div>
+
+            <div class="ms-1">
+                <input
+                    id="_county"
+                    type="text"
+                    name="county"
+                    class="form-control"
+                    placeholder="County"
+                />
+                <span class="invalid-feedback"></span>
+            </div>
+
+            <div class="ms-1">
+                <input
+                    id="_town"
+                    type="text"
+                    name="town"
+                    class="form-control"
+                    placeholder="Town"
+                />
+                <span class="invalid-feedback"></span>
+            </div>
+
+            <div class="flex-grow-1 ms-1">
+                <input
+                    id="_address"
+                    type="text"
+                    name="address"
+                    class="form-control"
+                    placeholder="Address"
+                />
+                <span class="invalid-feedback"></span>
+            </div>
+
+            <div class="ms-1">
+                <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    onclick="locate1()"
+                >
+                    <i class="fa-solid fa-location-arrow"></i>
+                </button>
+            </div>
+        </div>
+
     </div>
 
     <p class="text-center mt-2 mb-2">...or click on the map:</p>
@@ -61,16 +111,19 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="/dist/new-ad-location.bundle.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
     <script type="text/javascript">
-        const marker = new mapboxgl.Marker({draggable: true});
         const elMsg1 = document.getElementById('msg1');
         const elBtn1 = document.getElementById('btn1');
+        const elPostcode = document.getElementById('_postcode');
+        const elCounty = document.getElementById('_county');
+        const elTown = document.getElementById('_town');
+        const elAddress = document.getElementById('_address');
         const startPos = [-6.25, 53.35];
         const startZoom = 11;
 
         mapboxgl.accessToken = 'pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw';
+        const marker = new mapboxgl.Marker({draggable: true});
 
         const map = new mapboxgl.Map({
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -79,17 +132,27 @@
             zoom: startZoom,
         });
 
-        window.showOnMap = function (req) {
+        map.on('click', function (e) {
+            marker.setLngLat(e.lngLat).addTo(map);
+            locate2(e.lngLat);
+        })
+
+        marker.on('dragend', function (e) {
+            locate2(e.target._lngLat);
+        })
+
+        function locate1() {
             const query = new URLSearchParams({
                 types: 'address',
                 country: 'ie',
-                region: req.county,
-                postcode: req.postcode,
-                place: req.town,
+                region: elCounty.value,
+                postcode: elPostcode.value,
+                place: elTown.value,
                 access_token: mapboxgl.accessToken,
                 limit: 1,
             });
-            const str = [req.postcode, req.county, req.town, req.address].join(' ');
+
+            const str = [elPostcode.value, elCounty.value, elTown.value, elAddress.value].join(' ');
             const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
                 + encodeURIComponent(str) + '.json?' + query.toString();
 
@@ -97,6 +160,7 @@
                 .then((res) => res.json())
                 .then((data) => {
                     if (data && data.features && data.features.length > 0) {
+                        // result1(data.features[0]);
                         const coords = data.features[0].center;
                         marker.setLngLat(coords).addTo(map);
 
@@ -105,6 +169,7 @@
                         document.getElementById('found_res1').style.display = 'block';
                         document.getElementById('found_res0').style.display = 'none';
                     } else {
+                        // result0();
                         marker.remove();
                         map.jumpTo({center: startPos, zoom: startZoom});
                         elBtn1.classList.add('disabled');
@@ -114,55 +179,33 @@
                 });
         }
 
-        map.on('click', function (e) {
-            marker.setLngLat(e.lngLat).addTo(map);
-
+        function locate2(lngLat) {
             const query = new URLSearchParams({
                 types: 'address',
                 country: 'ie',
                 access_token: mapboxgl.accessToken,
             });
-
-            const {lng, lat} = e.lngLat;
             const url2 = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
-                + lng + ',' + lat + '.json?' + query.toString();
+                + lngLat.lng + ',' + lngLat.lat + '.json?' + query.toString();
 
             fetch(url2)
                 .then((res) => res.json())
-                .then((data) => fillInputs(data));
-        })
-
-        marker.on('dragend', function (e) {
-            const query = new URLSearchParams({
-                types: 'address',
-                country: 'ie',
-                access_token: mapboxgl.accessToken,
-            });
-            const {lng, lat} = e.target._lngLat;
-            const url2 = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
-                + lng + ',' + lat + '.json?' + query.toString();
-
-            fetch(url2)
-                .then((res) => res.json())
-                .then((data) => fillInputs(data));
-        })
-
-        function fillInputs(data) {
-            if (data && data.features && data.features.length > 0) {
-                for (let c of data.features[0].context) {
-                    if (c.id && c.id.startsWith('postcode.')) {
-                        document.getElementById('_postcode').value = c.text;
+                .then((data) => {
+                    if (data && data.features && data.features.length > 0) {
+                        for (let c of data.features[0].context) {
+                            if (c.id && c.id.startsWith('postcode.')) {
+                                elPostcode.value = c.text;
+                            }
+                            if (c.id && c.id.startsWith('region.')) {
+                                elCounty.value = c.text;
+                            }
+                            if (c.id && c.id.startsWith('place.')) {
+                                elTown.value = c.text;
+                            }
+                        }
+                        elAddress.value = data.features[0].text;
                     }
-                    if (c.id && c.id.startsWith('region.')) {
-                        document.getElementById('_county').value = c.text;
-                    }
-                    if (c.id && c.id.startsWith('place.')) {
-                        document.getElementById('_town').value = c.text;
-                    }
-                }
-                document.getElementById('_address').value = data.features[0].text;
-            }
-            console.log(data);
+                });
         }
     </script>
 @endsection
