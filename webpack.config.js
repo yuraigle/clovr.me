@@ -7,6 +7,7 @@ module.exports = {
 
     entry: {
         "new-ad-details": "./resources/js/new-ad-details.js",
+        "new-ad-location": "./resources/js/new-ad-location.js",
     },
 
     output: {
