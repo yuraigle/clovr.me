@@ -12,7 +12,6 @@
 @endsection
 
 @section('inline_styles')
-    <link href="/mapbox-gl.css" rel="stylesheet">
     <style>
         .width-850 {
             max-width: 850px;
