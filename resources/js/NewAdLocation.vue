@@ -54,14 +54,22 @@
     </div>
 
     <div class="ms-1">
-      <button class="btn btn-outline-secondary" type="button" @click="searchAddress">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        @click="searchAddress"
+      >
         <i class="fa-solid fa-location-arrow"></i>
       </button>
     </div>
   </div>
 
   <div class="w-100">
-    <Mapbox :address="mapData.address" :center="mapData.center" @marker-set="markerSet" />
+    <Mapbox
+      :address="mapData.address"
+      :center="mapData.center"
+      @marker-set="markerSet"
+    />
   </div>
 </template>
 
@@ -85,16 +93,8 @@ export default {
     });
 
     const mapData = reactive({
-      address: {
-        postcode: "",
-        county: "",
-        town: "",
-        street: "",
-      },
-      center: {
-        lng: -6.25,
-        lat: 53.35,
-      },
+      address: {},
+      center: {},
     });
 
     function searchAddress() {
@@ -106,10 +106,7 @@ export default {
     }
 
     function markerSet(m) {
-      address.postcode = m.postcode;
-      address.county = m.county;
-      address.town = m.town;
-      address.street = m.street;
+      Object.assign(address, m);
     }
 
     return {

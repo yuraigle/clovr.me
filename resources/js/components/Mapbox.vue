@@ -1,7 +1,5 @@
 <template>
-  <div class="map_wrapper">
-    <div id="map"></div>
-  </div>
+  <div id="map"></div>
 </template>
 
 <script>
@@ -17,6 +15,7 @@ export default {
     const map = ref();
     const marker = ref();
 
+    const geo_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
     mapboxgl.accessToken =
       "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
@@ -24,7 +23,7 @@ export default {
       map.value = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [props.center.lng, props.center.lat],
+        center: [-6.25, 53.35],
         zoom: 11,
       });
 
@@ -45,55 +44,39 @@ export default {
     });
 
     function locate1(o) {
+      const str = [o.postcode, o.county, o.town, o.address].join(" ");
       const query = new URLSearchParams({
+        access_token: mapboxgl.accessToken,
         types: "address",
         country: "ie",
         region: o.county,
         postcode: o.postcode,
         place: o.town,
-        access_token: mapboxgl.accessToken,
         limit: 1,
       });
 
-      const str = [o.postcode, o.county, o.town, o.address].join(" ");
-      const url =
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-        encodeURIComponent(str) +
-        ".json?" +
-        query.toString();
-
-      fetch(url)
+      fetch(geo_url + encodeURIComponent(str) + ".json?" + query.toString())
         .then((res) => res.json())
         .then((data) => {
-          if (data && data.features && data.features.length > 0) {
-            const f = data.features[0];
-            marker.value.setLngLat(f.center).addTo(map.value);
-            map.value.jumpTo({ center: f.center, zoom: 16 });
-          } else {
-            console.log("Nothing");
-          }
+          if (!data || !data.features || !data.features.length) return;
+
+          const f = data.features[0];
+          marker.value.setLngLat(f.center).addTo(map.value);
+          map.value.jumpTo({ center: f.center, zoom: 16 });
         });
     }
 
     function locate2({ lng, lat }) {
       const query = new URLSearchParams({
+        access_token: mapboxgl.accessToken,
         types: "address",
         country: "ie",
-        access_token: mapboxgl.accessToken,
       });
 
-      const url2 =
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-        lng +
-        "," +
-        lat +
-        ".json?" +
-        query.toString();
-
-      fetch(url2)
+      fetch(geo_url + `${lng},${lat}.json?` + query.toString())
         .then((res) => res.json())
         .then((data) => {
-          if (!data || !data.features) return;
+          if (!data || !data.features || !data.features.length) return;
 
           const addr1 = { street: data.features[0].text };
           for (let c of data.features[0].context) {
@@ -112,11 +95,8 @@ export default {
 </script>
 
 <style scoped>
-.map_wrapper {
-  height: 550px;
-}
 #map {
-  height: 100%;
   width: 100%;
+  height: 550px;
 }
 </style>
