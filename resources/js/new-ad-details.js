@@ -1,4 +1,4 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
 import NewAdDetails from "./NewAdDetails.vue";
 
-createApp(NewAdDetails).mount('#app')
+createApp(NewAdDetails).mount("#app");
