@@ -3,5 +3,9 @@
 @section('title')Login - @endsection
 
 @section('content')
-    <h1>Login</h1>
+    <div id="app"></div>
+@endsection
+
+@section('inline_scripts')
+    <script type="text/javascript" src="{{ mix('/dist/auth-login-box.js') }}"></script>
 @endsection
