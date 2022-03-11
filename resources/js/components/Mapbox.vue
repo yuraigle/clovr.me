@@ -63,6 +63,7 @@ export default {
           const f = data.features[0];
           marker.value.setLngLat(f.center).addTo(map.value);
           map.value.jumpTo({ center: f.center, zoom: 16 });
+          context.emit("marker-set", null, f.center[0], f.center[1]);
         });
     }
 
@@ -85,7 +86,7 @@ export default {
             if (c.id.startsWith("place.")) addr1.town = c.text;
           }
 
-          context.emit("marker-set", addr1);
+          context.emit("marker-set", addr1, lng, lat);
         });
     }
 
@@ -97,6 +98,6 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 550px;
+  height: 450px;
 }
 </style>

@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
-    mode: "production", // development | production
+    mode: "development", // development | production
 
     entry: {
         "new-ad-details": "./resources/js/new-ad-details.js",
