@@ -7,7 +7,6 @@
         v-model="category_id"
         class="form-control"
         :class="{ 'is-invalid': v$['category_id'].$error }"
-        @change="v$['category_id'].$touch"
       >
         <option value="">Please select...</option>
         <option value="1">Property For Sale</option>
@@ -29,7 +28,6 @@
         v-model="title"
         class="form-control"
         :class="{ 'is-invalid': v$['title'].$error }"
-        @blur="v$['title'].$touch"
       />
       <span class="invalid-feedback" v-if="v$['title'].$error">
         {{ v$["title"].$errors[0].$message }}
@@ -43,7 +41,6 @@
         v-model="price"
         class="form-control"
         :class="{ 'is-invalid': v$['price'].$error }"
-        @blur="v$['price'].$touch"
       />
       <span class="invalid-feedback" v-if="v$['price'].$error">
         {{ v$["price"].$errors[0].$message }}
@@ -57,7 +54,6 @@
         v-model="property_type"
         class="form-control"
         :class="{ 'is-invalid': v$['property_type'].$error }"
-        @change="v$['property_type'].$touch"
       >
         <option value="">Please select...</option>
         <option value="flat">Flat</option>
@@ -76,7 +72,6 @@
         v-model="num_beds"
         class="form-control"
         :class="{ 'is-invalid': v$['num_beds'].$error }"
-        @change="v$['num_beds'].$touch"
       >
         <option value="">Please select...</option>
         <option value="0">Studio</option>
@@ -97,7 +92,6 @@
         v-model="description"
         class="form-control"
         :class="{ 'is-invalid': v$['description'].$error }"
-        @blur="v$['description'].$touch"
         rows="6"
       ></textarea>
       <span class="invalid-feedback" v-if="v$['description'].$error">
@@ -107,8 +101,8 @@
 
     <div class="col-lg-3 col-md-4 lh-sm">
       <small class="text-muted">
-        Enter as much information possible; Ads with detailed and longer descriptions get
-        more views and replies!
+        Enter as much information possible; Ads with detailed and longer
+        descriptions get more views and replies!
       </small>
     </div>
 
@@ -133,7 +127,7 @@
 <script>
 import { ref } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required } from "@vuelidate/validators";
+import { maxLength, required, helpers } from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
 
 export default {
@@ -165,7 +159,9 @@ export default {
             description: this.num_beds,
           };
 
-          const csrf = document.querySelector('meta[name="csrf-token"]').content;
+          const csrf = document.querySelector(
+            'meta[name="csrf-token"]'
+          ).content;
           const formData = new FormData();
           for (let key in postData) {
             formData.append(key, postData[key]);
@@ -201,20 +197,20 @@ export default {
 
   validations: () => ({
     category_id: {
-      required,
+      required: helpers.withMessage("Required", required),
     },
     title: {
-      required,
-      max: maxLength(10),
+      required: helpers.withMessage("Required", required),
+      max: helpers.withMessage("Too long", maxLength(100)),
     },
     price: {
-      required,
+      required: helpers.withMessage("Required", required),
     },
     property_type: {},
     num_beds: {},
     description: {
-      required,
-      max: maxLength(10000),
+      required: helpers.withMessage("Required", required),
+      max: helpers.withMessage("Too long", maxLength(10000)),
     },
   }),
 };

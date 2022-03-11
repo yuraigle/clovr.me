@@ -6,21 +6,14 @@
     @yield('meta')
 
     <title>@yield('title')ADZ</title>
-
-    <link rel="icon" href="/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     @yield('inline_styles')
-    <style>
-        .width-850 {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .fa-solid {
-            width: 16px;
-            display: inline-block;
-        }
-    </style>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
@@ -61,18 +54,7 @@
     </div>
 </nav>
 <div class="container mt-4 mb-4">@yield('content')</div>
-{{--
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
---}}
-<script type="text/javascript">
-    const e1 = document.getElementsByClassName('navbar-toggler')[0];
-    const e2 = document.getElementById('navbar1');
-    e1.addEventListener('click', function () {
-        e2.classList.toggle('show');
-    })
-</script>
+<script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
 <script src="https://kit.fontawesome.com/e0449c5598.js" crossorigin="anonymous"></script>
 @yield('inline_scripts')
 </body>
