@@ -44,7 +44,7 @@ export default {
     });
 
     function locate1(o) {
-      const str = [o.postcode, o.county, o.town, o.address].join(" ");
+      const str = [o.postcode, o.county, o.town, o.street].join(" ");
       const query = new URLSearchParams({
         access_token: mapboxgl.accessToken,
         types: "address",
