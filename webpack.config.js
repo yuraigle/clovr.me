@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = {
     mode: "development", // development | production
@@ -11,8 +12,8 @@ module.exports = {
     },
 
     output: {
-        filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "./public/dist"),
+        filename: "[name].[contenthash].js",
+        path: path.resolve(__dirname, "./public/dist/"),
         clean: true,
     },
 
@@ -34,6 +35,11 @@ module.exports = {
         new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: false,
             __VUE_PROD_DEVTOOLS__: false,
+        }),
+        new WebpackManifestPlugin({
+            basePath: "/dist/",
+            publicPath: "/dist/",
+            fileName: path.resolve(__dirname, "./public/mix-manifest.json"),
         }),
     ],
 };

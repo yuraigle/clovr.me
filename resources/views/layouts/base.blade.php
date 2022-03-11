@@ -12,6 +12,10 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     @yield('inline_styles')
     <style>
+        .width-850 {
+            max-width: 850px;
+            margin: 0 auto;
+        }
         .fa-solid {
             width: 16px;
             display: inline-block;

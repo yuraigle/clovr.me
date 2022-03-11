@@ -107,8 +107,8 @@
 
     <div class="col-lg-3 col-md-4 lh-sm">
       <small class="text-muted">
-        Enter as much information possible; Ads with detailed and longer
-        descriptions get more views and replies!
+        Enter as much information possible; Ads with detailed and longer descriptions get
+        more views and replies!
       </small>
     </div>
 
@@ -165,9 +165,7 @@ export default {
             description: this.num_beds,
           };
 
-          const csrf = document.querySelector(
-            'meta[name="csrf-token"]'
-          ).content;
+          const csrf = document.querySelector('meta[name="csrf-token"]').content;
           const formData = new FormData();
           for (let key in postData) {
             formData.append(key, postData[key]);
@@ -212,12 +210,8 @@ export default {
     price: {
       required,
     },
-    property_type: {
-      required,
-    },
-    num_beds: {
-      required,
-    },
+    property_type: {},
+    num_beds: {},
     description: {
       required,
       max: maxLength(10000),

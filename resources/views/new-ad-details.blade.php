@@ -11,15 +11,6 @@
     </div>
 @endsection
 
-@section('inline_styles')
-    <style>
-        .width-850 {
-            max-width: 850px;
-            margin: 0 auto;
-        }
-    </style>
-@endsection
-
 @section('inline_scripts')
-    <script type="text/javascript" src="/dist/new-ad-details.bundle.js"></script>
+    <script type="text/javascript" src="{{ mix('/dist/new-ad-details.js') }}"></script>
 @endsection

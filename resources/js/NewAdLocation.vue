@@ -3,7 +3,7 @@
     <p class="text-center mt-2 mb-1">Search by address details:</p>
 
     <div class="row">
-      <div class="col-md-6 mb-1 mee-05">
+      <div class="col-md-6 mb-1 pee-05">
         <div class="d-flex d-flex-row">
           <div>
             <input
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 mss-05">
+      <div class="col-md-6 pss-05">
         <div class="d-flex d-flex-row">
           <div class="flex-grow-1">
             <input
@@ -191,11 +191,11 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .mee-05 {
-    padding-right: 2px;
-  }
-  .mss-05 {
+  .pss-05 {
     padding-left: 2px;
+  }
+  .pee-05 {
+    padding-right: 2px;
   }
 }
 </style>
