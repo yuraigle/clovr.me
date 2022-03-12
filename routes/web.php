@@ -13,5 +13,5 @@ Route::get('/search', [IndexController::class, 'search'])->name('search');
 Route::get('/about', [IndexController::class, 'about'])->name('about');
 Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
 Route::get('/new-ad', [AdController::class, 'newAd'])->name('new-ad');
-Route::post('/new-ad', [AdController::class, 'postAd']);
+Route::post('/new-ad', [AdController::class, 'postAdDetails']);
 Route::get('/new-ad-location', [AdController::class, 'newAdLocation'])->name('new-ad-location');

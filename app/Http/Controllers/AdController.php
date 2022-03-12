@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -14,17 +15,20 @@ class AdController extends BaseController
 
     public function newAd()
     {
+        // step 1 : details form
         return view('new-ad-details', []);
     }
 
-    public function postAd(Request $req)
+    public function postAdDetails(Request $req): JsonResponse
     {
         $p = $req->post();
-        return response()->json($p);
+        // TODO backend validation
+        return response()->json(["status" => "OK"]);
     }
 
     public function newAdLocation()
     {
+        // step 2 : location form
         return view('new-ad-location', []);
     }
 }
