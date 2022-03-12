@@ -98,6 +98,12 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 450px;
+  height: 400px;
+}
+
+@media (min-width: 768px) {
+  #map {
+    height: 450px;
+  }
 }
 </style>

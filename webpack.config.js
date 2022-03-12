@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require("vue-loader");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = {
-    mode: "development", // development | production
+    mode: "development",
 
     entry: {
         "new-ad-details": "./resources/js/new-ad-details.js",

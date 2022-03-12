@@ -35,7 +35,14 @@
     </div>
 
     <div class="col-sm-6 mb-2">
-      <label for="price" class="form-label">Price:</label>
+      <label
+        for="price"
+        class="form-label"
+        v-if="['2', '3', '5'].includes(category_id)"
+      >
+        Rent:
+      </label>
+      <label for="price" class="form-label" v-else>Price:</label>
       <CurrencyInput
         id="price"
         v-model="price"
@@ -47,7 +54,46 @@
       </span>
     </div>
 
-    <div class="col-sm-6 mb-2">
+    <div class="col-sm-6 mb-2" v-if="['2', '3', '5'].includes(category_id)">
+      <label for="price_freq" class="form-label">Rent period:</label>
+
+      <div
+        class="form-check"
+        :class="{ 'is-invalid': v$['price_freq'].$error }"
+      >
+        <input
+          type="radio"
+          id="price_freq_m"
+          name="price_freq"
+          v-model="price_freq"
+          class="form-check-input float-none me-1"
+          :class="{ 'is-invalid': v$['price_freq'].$error }"
+          value="per_month"
+        />
+        <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_m">
+          Monthly
+        </label>
+
+        <input
+          type="radio"
+          id="price_freq_w"
+          name="price_freq"
+          v-model="price_freq"
+          class="form-check-input float-none ms-2 me-1"
+          :class="{ 'is-invalid': v$['price_freq'].$error }"
+          value="per_week"
+        />
+        <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
+          Weekly
+        </label>
+      </div>
+
+      <span class="invalid-feedback" v-if="v$['price_freq'].$error">
+        {{ v$["price_freq"].$errors[0].$message }}
+      </span>
+    </div>
+
+    <div class="col-sm-6 mb-2" v-if="category_id > 0">
       <label for="property_type" class="form-label">Property Type:</label>
       <select
         id="property_type"
@@ -56,16 +102,18 @@
         :class="{ 'is-invalid': v$['property_type'].$error }"
       >
         <option value="">Please select...</option>
-        <option value="flat">Flat</option>
-        <option value="house">House</option>
-        <option value="other">Other</option>
+        <option value="flat" v-if="category_id < 4">Flat</option>
+        <option value="house" v-if="category_id < 4">House</option>
+        <option value="other" v-if="category_id < 4">Other</option>
+        <option value="garage" v-if="category_id >= 4">Garage</option>
+        <option value="parking" v-if="category_id >= 4">Parking space</option>
       </select>
       <span class="invalid-feedback" v-if="v$['property_type'].$error">
         {{ v$["property_type"].$errors[0].$message }}
       </span>
     </div>
 
-    <div class="col-sm-6 mb-4">
+    <div class="col-sm-6 mb-4" v-if="['1', '2'].includes(category_id)">
       <label for="num_beds" class="form-label">No. of Bedrooms:</label>
       <select
         id="num_beds"
@@ -81,6 +129,27 @@
       </select>
       <span class="invalid-feedback" v-if="v$['num_beds'].$error">
         {{ v$["num_beds"].$errors[0].$message }}
+      </span>
+    </div>
+
+    <div class="col-sm-6 mb-2" v-if="['3'].includes(category_id)">
+      <label for="room_type" class="form-label">Room type:</label>
+      <select
+        id="room_type"
+        v-model="room_type"
+        class="form-control"
+        :class="{ 'is-invalid': v$['room_type'].$error }"
+      >
+        <option value="">Please select...</option>
+        <option value="single">Single room</option>
+        <option value="double">Double room</option>
+        <option value="twin">Twin room</option>
+        <option value="triple">Triple room</option>
+        <option value="shared">Shared room</option>
+        <option value="couch">Couch Surf</option>
+      </select>
+      <span class="invalid-feedback" v-if="v$['room_type'].$error">
+        {{ v$["room_type"].$errors[0].$message }}
       </span>
     </div>
 
@@ -142,6 +211,9 @@ export default {
     const property_type = ref("");
     const num_beds = ref("");
     const description = ref();
+    const price_freq = ref();
+    const room_type = ref();
+
     const loading = ref(false);
     const v$ = useVuelidate();
 
@@ -157,6 +229,8 @@ export default {
             property_type: this.property_type,
             num_beds: this.num_beds,
             description: this.num_beds,
+            price_freq: this.price_freq,
+            room_type: this.room_type,
           };
 
           const csrf = document.querySelector(
@@ -189,6 +263,8 @@ export default {
       property_type,
       num_beds,
       description,
+      price_freq,
+      room_type,
       loading,
       v$,
       submitForm,
@@ -212,6 +288,18 @@ export default {
       required: helpers.withMessage("Required", required),
       max: helpers.withMessage("Too long", maxLength(10000)),
     },
+    price_freq: {
+      required: helpers.withMessage("Required", required),
+    },
+    room_type: {},
   }),
 };
 </script>
+
+<style scoped>
+.form-check {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border: 1px solid transparent;
+}
+</style>

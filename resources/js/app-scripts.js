@@ -1,2 +1,2 @@
-import Collapse from "bootstrap/js/dist/collapse";
+import "bootstrap/js/dist/collapse.js";
 import "../css/app-styles.css";

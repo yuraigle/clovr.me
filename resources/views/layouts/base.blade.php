@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @yield('meta')
 
-    <title>@yield('title')ADZ</title>
+    <title>@yield('title')clovr.one</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -18,7 +18,10 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="/">ADZ</a>
+        <a class="navbar-brand" href="/">
+            <img src="/favicon-32x32.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
+            clovr
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
             <span class="navbar-toggler-icon"></span>
         </button>
