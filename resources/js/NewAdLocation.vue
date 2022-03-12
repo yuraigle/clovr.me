@@ -63,7 +63,11 @@
           </div>
 
           <div class="flex-shrink-1 ms-1">
-            <button class="btn btn-outline-primary" type="button" @click="searchAddress">
+            <button
+              class="btn btn-outline-primary"
+              type="button"
+              @click="searchAddress"
+            >
               <i class="fa-solid fa-location-arrow"></i>
             </button>
           </div>
@@ -186,6 +190,10 @@ export default {
 </script>
 
 <style scoped>
+form {
+  max-width: 850px;
+  margin: 0 auto;
+}
 .res-msg {
   min-height: 50px;
 }

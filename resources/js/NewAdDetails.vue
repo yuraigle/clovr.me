@@ -297,6 +297,10 @@ export default {
 </script>
 
 <style scoped>
+form {
+  max-width: 850px;
+  margin: 0 auto;
+}
 .form-check {
   padding-top: 0.375rem;
   padding-bottom: 0.375rem;
