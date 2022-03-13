@@ -34,23 +34,37 @@ export default {
       locate1(o);
     });
 
+    let hasMarker = false;
+    watch(props.center, (o) => {
+      hasMarker = true;
+      if (map.value) {
+        marker.value.setLngLat(o).addTo(map.value);
+      }
+    });
+
     function mountMap() {
       map.value = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [-6.29726611776664, 53.34677576650242],
-        zoom: 11,
+        center: [props.center.lng, props.center.lat],
+        zoom: hasMarker ? 16 : 11,
       });
 
       marker.value = new mapboxgl.Marker({ draggable: true });
 
+      if (hasMarker && props.center) {
+        marker.value.setLngLat(props.center).addTo(map.value);
+      }
+
       map.value.on("click", function (e) {
         marker.value.setLngLat(e.lngLat).addTo(map.value);
-        locate2(e.lngLat);
+        const {lng, lat} = e.lngLat;
+        context.emit("marker-set", null, lng, lat);
       });
 
       marker.value.on("dragend", function (e) {
-        locate2(e.target._lngLat);
+        const {lng, lat} = e.target._lngLat;
+        context.emit("marker-set", null, lng, lat);
       });
     }
 
@@ -72,32 +86,10 @@ export default {
           if (!data || !data.features || !data.features.length) return;
 
           const f = data.features[0];
-          marker.value.setLngLat(f.center).addTo(map.value);
-          map.value.jumpTo({ center: f.center, zoom: 16 });
           context.emit("marker-set", null, f.center[0], f.center[1]);
-        });
-    }
-
-    function locate2({ lng, lat }) {
-      const query = new URLSearchParams({
-        access_token: mapboxgl.accessToken,
-        types: "address",
-        country: "ie",
-      });
-
-      fetch(geo_url + `${lng},${lat}.json?` + query.toString())
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data || !data.features || !data.features.length) return;
-
-          const addr1 = { street: data.features[0].text };
-          for (let c of data.features[0].context) {
-            if (c.id.startsWith("postcode.")) addr1.postcode = c.text;
-            if (c.id.startsWith("region.")) addr1.county = c.text;
-            if (c.id.startsWith("place.")) addr1.town = c.text;
+          if (map.value) {
+            map.value.jumpTo({ center: f.center, zoom: 16 });
           }
-
-          context.emit("marker-set", addr1, lng, lat);
         });
     }
 
@@ -111,6 +103,7 @@ export default {
   width: 100%;
   height: 400px;
   position: relative;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {

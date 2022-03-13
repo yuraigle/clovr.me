@@ -321,7 +321,7 @@ export default {
 
     const mapData = reactive({
       address: {},
-      center: {},
+      center: { lng: -6.29726611776664, lat: 53.34677576650242 },
       shown: false,
     });
 
