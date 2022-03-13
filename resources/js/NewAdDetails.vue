@@ -1,7 +1,7 @@
 <template>
   <form method="post" class="row">
     <div class="col-xs-12 mb-4">
-      <label for="category_id" class="form-label">Category</label>
+      <label for="category_id" class="form-label">Category:</label>
       <select
         id="category_id"
         v-model="details.category_id"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-xs-12 mb-4">
-      <label for="title" class="form-label">Ad Title</label>
+      <label for="title" class="form-label">Title:</label>
       <input
         type="text"
         id="title"
@@ -34,15 +34,107 @@
       </span>
     </div>
 
-    <div class="col-sm-6 mb-2">
-      <label
-        for="price"
-        class="form-label"
-        v-if="['2', '3', '5'].includes(details.category_id)"
+    <h4 class="mt-4">Location</h4>
+
+    <div class="col-md-6 mb-1 pee-05">
+      <div class="d-flex d-flex-row">
+        <div>
+          <input
+            type="text"
+            v-model="address.postcode"
+            class="form-control"
+            :class="{ 'is-invalid': v$['address'].postcode.$error }"
+            placeholder="Postal Code"
+            style="width: 110px"
+          />
+          <span class="invalid-feedback" v-if="v$['address'].postcode.$error">
+            {{ v$["address"].postcode.$errors[0].$message }}
+          </span>
+        </div>
+
+        <div class="flex-grow-1 ms-1">
+          <input
+            type="text"
+            v-model="address.county"
+            class="form-control"
+            :class="{ 'is-invalid': v$['address'].county.$error }"
+            placeholder="County"
+          />
+          <span class="invalid-feedback" v-if="v$['address'].county.$error">
+            {{ v$["address"].county.$errors[0].$message }}
+          </span>
+        </div>
+
+        <div class="flex-grow-1 ms-1">
+          <input
+            type="text"
+            v-model="address.town"
+            class="form-control"
+            :class="{ 'is-invalid': v$['address'].town.$error }"
+            placeholder="Town"
+          />
+          <span class="invalid-feedback" v-if="v$['address'].town.$error">
+            {{ v$["address"].town.$errors[0].$message }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 pss-05">
+      <div class="d-flex d-flex-row">
+        <div class="flex-grow-1">
+          <input
+            type="text"
+            v-model="address.street"
+            class="form-control"
+            :class="{ 'is-invalid': v$['address'].street.$error }"
+            placeholder="Address"
+          />
+          <span class="invalid-feedback" v-if="v$['address'].street.$error">
+            {{ v$["address"].street.$errors[0].$message }}
+          </span>
+        </div>
+
+        <div class="flex-shrink-1 ms-1">
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            @click="searchAddress"
+          >
+            <i class="fa-solid fa-location-arrow"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100 mt-2 mb-2">
+      <button
+        class="btn btn-sm btn-link"
+        type="button"
+        @click="mapData.shown = !mapData.shown"
       >
-        Rent:
+        Locate on the map
+        <i class="fa-solid fa-chevron-up" v-if="mapData.shown"></i>
+        <i class="fa-solid fa-chevron-down" v-else></i>
+      </button>
+    </div>
+
+    <div class="w-100">
+      <Mapbox
+        :address="mapData.address"
+        :center="mapData.center"
+        :shown="mapData.shown"
+        @marker-set="markerSet"
+      />
+    </div>
+
+    <h4 class="pt-4 mt-2">Property Details</h4>
+
+    <div class="col-sm-6 mb-2">
+      <label for="price" class="form-label">
+        <span v-if="['2', '3', '5'].includes(details.category_id)">Rent:</span>
+        <span v-else>Price:</span>
       </label>
-      <label for="price" class="form-label" v-else>Price:</label>
       <CurrencyInput
         id="price"
         v-model="details.price"
@@ -201,13 +293,12 @@
 <script>
 import { reactive, ref, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers } from "@vuelidate/validators";
+import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
+import Mapbox from "./components/Mapbox.vue";
 
 export default {
-  components: {
-    CurrencyInput,
-  },
+  components: { CurrencyInput, Mapbox },
 
   setup() {
     const details = reactive({
@@ -219,6 +310,19 @@ export default {
       description: undefined,
       price_freq: undefined,
       room_type: undefined,
+    });
+
+    const address = reactive({
+      postcode: "",
+      county: "",
+      town: "",
+      street: "",
+    });
+
+    const mapData = reactive({
+      address: {},
+      center: {},
+      shown: false,
     });
 
     const loading = ref(false);
@@ -236,7 +340,6 @@ export default {
       this.v$.$validate().then((res) => {
         if (res) {
           loading.value = true;
-
           localStorage.setItem("frm1", JSON.stringify(this.details));
 
           const csrf = document.querySelector(
@@ -254,7 +357,7 @@ export default {
           })
             .then((response) => response.json())
             .then((result) => {
-              window.location.href = "/new-ad-location";
+              console.log(result);
             })
             .catch((error) => console.error("Error:", error))
             .finally(() => (loading.value = false));
@@ -262,10 +365,24 @@ export default {
       });
     }
 
+    function searchAddress() {
+      Object.assign(mapData.address, address);
+    }
+
+    function markerSet(m, lng, lat) {
+      if (m) Object.assign(address, m);
+      mapData.center.lng = lng;
+      mapData.center.lat = lat;
+    }
+
     return {
       details,
+      address,
+      mapData,
       loading,
       v$,
+      searchAddress,
+      markerSet,
       submitForm,
     };
   },
@@ -291,6 +408,21 @@ export default {
       price_freq: {}, // todo: requiredIf
       room_type: {},
     },
+    address: {
+      postcode: {
+        min: helpers.withMessage("3 symbols", minLength(3)),
+        max: helpers.withMessage("3 symbols", maxLength(3)),
+      },
+      county: {
+        max: maxLength(20),
+      },
+      town: {
+        max: maxLength(20),
+      },
+      street: {
+        max: maxLength(50),
+      },
+    },
   },
 };
 </script>
@@ -304,5 +436,14 @@ form {
   padding-top: 0.375rem;
   padding-bottom: 0.375rem;
   border: 1px solid transparent;
+}
+
+@media (min-width: 768px) {
+  .pss-05 {
+    padding-left: 2px;
+  }
+  .pee-05 {
+    padding-right: 2px;
+  }
 }
 </style>

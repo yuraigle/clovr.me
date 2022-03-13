@@ -75,7 +75,7 @@
       </div>
 
       <div class="mb-2 text-center">
-        <a href="/login">I have an account</a>
+        <a href="/login" class="btn btn-link">I have an account</a>
       </div>
     </form>
   </div>

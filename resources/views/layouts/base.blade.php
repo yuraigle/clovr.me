@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="/favicon-32x32.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
@@ -34,13 +34,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbar1">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('about') ? 'active' : '' }}"
-                            href="{{ route('about') }}">About Us</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link btn btn-sm btn-light {{ request()->is('search') ? 'active' : '' }}"
                             href="{{ route('search') }}">
@@ -61,6 +55,7 @@
                     </li>
                 </ul>
             </div>
+
         </div>
     </nav>
     <div class="container mt-4 mb-4">@yield('content')</div>

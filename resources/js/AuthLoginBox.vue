@@ -50,7 +50,7 @@
       </div>
 
       <div class="mb-2 text-center">
-        <a href="/register">I'm new here </a>
+        <a href="/register" class="btn btn-link">I'm new here </a>
       </div>
     </form>
   </div>

@@ -29,10 +29,8 @@
         </button>
       </div>
 
-      <div class="mt-2 text-end">
-        <a href="/login" class="btn btn-link">
-          Cancel
-        </a>
+      <div class="mb-2 text-end">
+        <a href="/login" class="btn btn-link">Cancel</a>
       </div>
     </form>
   </div>

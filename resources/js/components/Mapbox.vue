@@ -1,14 +1,14 @@
 <template>
-  <div id="map"></div>
+  <div id="map" :class="{ 'd-none': !shown }"></div>
 </template>
 
 <script>
-import { onMounted, ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 export default {
-  props: ["address", "center"],
+  props: ["address", "center", "shown"],
   emits: ["marker-set"],
 
   setup(props, context) {
@@ -19,11 +19,26 @@ export default {
     mapboxgl.accessToken =
       "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
-    onMounted(() => {
+    let shownOnce = false;
+    watch(
+      () => props.shown,
+      (v1) => {
+        if (v1 && !shownOnce) {
+          setTimeout(() => mountMap(), 100);
+          shownOnce = true;
+        }
+      }
+    );
+
+    watch(props.address, (o) => {
+      locate1(o);
+    });
+
+    function mountMap() {
       map.value = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [-6.25, 53.35],
+        center: [-6.29726611776664, 53.34677576650242],
         zoom: 11,
       });
 
@@ -37,11 +52,7 @@ export default {
       marker.value.on("dragend", function (e) {
         locate2(e.target._lngLat);
       });
-    });
-
-    watch(props.address, (o) => {
-      locate1(o);
-    });
+    }
 
     function locate1(o) {
       const str = [o.postcode, o.county, o.town, o.street].join(" ");
@@ -95,10 +106,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #map {
   width: 100%;
   height: 400px;
+  position: relative;
 }
 
 @media (min-width: 768px) {
