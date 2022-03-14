@@ -26,4 +26,8 @@ class AdController extends BaseController
         return response()->json(["status" => "OK", "req" => $p]);
     }
 
+    public function pictures()
+    {
+        return view('new-ad-upload', []);
+    }
 }

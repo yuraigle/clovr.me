@@ -14,3 +14,4 @@ Route::get('/about', [IndexController::class, 'about'])->name('about');
 Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
 Route::get('/new-ad', [AdController::class, 'newAd'])->name('new-ad');
 Route::post('/new-ad', [AdController::class, 'postAdDetails']);
+Route::get('/new-ad-upload', [AdController::class, 'pictures'])->name('new-ad-upload');

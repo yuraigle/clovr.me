@@ -5,7 +5,7 @@ put .\package.json ./
 put .\composer.json ./
 put -neweronly .\app\* ./app/*
 put -neweronly .\config\* ./config/*
-put .\public\* ./public/*
+put -neweronly .\public\* ./public/*
 put -neweronly .\resources\* ./resources/*
 put -neweronly .\routes\* ./routes/*
 close
