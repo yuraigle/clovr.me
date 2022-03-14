@@ -273,7 +273,7 @@
 
     <div class="col-lg-3 col-md-4 lh-sm">
       <small class="text-muted">
-        Enter as much information possible; Ads with detailed and longer descriptions get
+        Enter as much information possible. Ads with detailed and longer descriptions get
         more views and replies!
       </small>
     </div>
@@ -301,8 +301,6 @@ import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
-// import mapboxgl from "mapbox-gl";
-// import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
@@ -349,6 +347,14 @@ export default {
 
       map.obj.on("click", function (e) {
         map.marker.setLngLat(e.lngLat).addTo(map.obj);
+      });
+
+      // hidden-resize bugfix
+      map.obj.on("resize", function (e) {
+        if (!map.shown) {
+          map.obj.remove();
+          map.obj = undefined;
+        }
       });
 
       if (map.marker._lngLat) {
@@ -407,12 +413,19 @@ export default {
       this.v$.$validate().then((res) => {
         if (res) {
           loading.value = true;
-          localStorage.setItem("frm1", JSON.stringify(this.details));
+
+          const postData = Object.assign(
+            {},
+            this.details,
+            this.address,
+            this.map.marker._lngLat
+          );
+          // localStorage.setItem("frm1", JSON.stringify(postData));
 
           const csrf = document.querySelector('meta[name="csrf-token"]').content;
           const formData = new FormData();
-          for (let key in this.details) {
-            formData.append(key, this.details[key]);
+          for (let key in postData) {
+            formData.append(key, postData[key]);
           }
 
           fetch("/new-ad", {

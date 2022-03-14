@@ -23,7 +23,7 @@ class AdController extends BaseController
     {
         $p = $req->post();
         // TODO backend validation
-        return response()->json(["status" => "OK"]);
+        return response()->json(["status" => "OK", "req" => $p]);
     }
 
 }

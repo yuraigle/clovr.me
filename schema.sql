@@ -12,6 +12,7 @@ CREATE TABLE `categories`
 CREATE TABLE `ads`
 (
     `id`             INT            NOT NULL AUTO_INCREMENT,
+    `user_id`        INT            NULL,
     `category_id`    INT            NOT NULL,
     `title`          VARCHAR(100)   NOT NULL,
     `price`          DECIMAL(10, 2) NOT NULL,
@@ -21,8 +22,8 @@ CREATE TABLE `ads`
     `date_avail`     DATE           NULL,
     `room_type`      VARCHAR(10)    NULL, -- single / double / twin / triple / shared / couch
     `room_couples`   INT            NULL,
-    `youtube`        VARCHAR(100)   NULL,
     `www`            VARCHAR(500)   NULL,
+    `youtube`        VARCHAR(100)   NULL,
     `description`    TEXT           NULL,
     `location`       VARCHAR(100)   NULL, -- ??
     `created_at`     DATETIME       NOT NULL DEFAULT NOW(),
