@@ -15,3 +15,4 @@ yarn-error.log
 /.vscode
 /public/dist
 mix-manifest.json
+deploy.bat
