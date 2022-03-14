@@ -99,6 +99,7 @@
           <button
             class="btn btn-outline-primary"
             type="button"
+            title="Show map"
             @click="searchAddress"
           >
             <i class="fa-solid fa-location-arrow"></i>
@@ -107,25 +108,40 @@
       </div>
     </div>
 
-    <div class="w-100 mt-2 mb-2">
-      <button
-        class="btn btn-sm btn-link"
-        type="button"
-        @click="mapData.shown = !mapData.shown"
-      >
-        Locate on the map
-        <i class="fa-solid fa-chevron-up" v-if="mapData.shown"></i>
-        <i class="fa-solid fa-chevron-down" v-else></i>
+    <div class="w-100" v-if="!map.shown">
+      <button type="button" class="btn btn-sm btn-link" @click="toggleMap(true)">
+        Show map
+        <i class="fa-solid fa-chevron-down"></i>
       </button>
     </div>
 
-    <div class="w-100">
-      <Mapbox
-        :address="mapData.address"
-        :center="mapData.center"
-        :shown="mapData.shown"
-        @marker-set="markerSet"
-      />
+    <div class="w-100" :class="{ 'd-none': !map.shown }">
+      <div id="map" class="mt-2"></div>
+
+      <p class="text-center text-muted mt-1 mb-0">
+        <small>Drag the marker and point the exact location.</small>
+      </p>
+
+      <div class="d-flex">
+        <button
+          type="button"
+          class="btn btn-sm btn-link me-auto"
+          @click="toggleMap(false)"
+        >
+          Hide the map
+          <i class="fa-solid fa-chevron-up"></i>
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-success"
+          @click="toggleMap(false)"
+          v-if="map.marker._lngLat"
+        >
+          <i class="fa-solid fa-check"></i>
+          Yes, it's the correct location
+        </button>
+      </div>
     </div>
 
     <h4 class="pt-4 mt-2">Property Details</h4>
@@ -146,16 +162,10 @@
       </span>
     </div>
 
-    <div
-      class="col-sm-6 mb-2"
-      v-if="['2', '3', '5'].includes(details.category_id)"
-    >
+    <div class="col-sm-6 mb-2" v-if="['2', '3', '5'].includes(details.category_id)">
       <label for="price_freq" class="form-label">Rent period:</label>
 
-      <div
-        class="form-check"
-        :class="{ 'is-invalid': v$['details'].price_freq.$error }"
-      >
+      <div class="form-check" :class="{ 'is-invalid': v$['details'].price_freq.$error }">
         <input
           type="radio"
           id="price_freq_m"
@@ -178,9 +188,7 @@
           :class="{ 'is-invalid': v$['details'].price_freq.$error }"
           value="per_week"
         />
-        <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
-          Weekly
-        </label>
+        <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w"> Weekly </label>
       </div>
 
       <span class="invalid-feedback" v-if="v$['details'].price_freq.$error">
@@ -201,9 +209,7 @@
         <option value="house" v-if="details.category_id < 4">House</option>
         <option value="other" v-if="details.category_id < 4">Other</option>
         <option value="garage" v-if="details.category_id >= 4">Garage</option>
-        <option value="parking" v-if="details.category_id >= 4">
-          Parking space
-        </option>
+        <option value="parking" v-if="details.category_id >= 4">Parking space</option>
       </select>
       <span class="invalid-feedback" v-if="v$['details'].property_type.$error">
         {{ v$["details"].property_type.$errors[0].$message }}
@@ -267,8 +273,8 @@
 
     <div class="col-lg-3 col-md-4 lh-sm">
       <small class="text-muted">
-        Enter as much information possible; Ads with detailed and longer
-        descriptions get more views and replies!
+        Enter as much information possible; Ads with detailed and longer descriptions get
+        more views and replies!
       </small>
     </div>
 
@@ -291,14 +297,18 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
-import Mapbox from "./components/Mapbox.vue";
+// import mapboxgl from "mapbox-gl";
+// import "mapbox-gl/dist/mapbox-gl.css";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
 export default {
-  components: { CurrencyInput, Mapbox },
+  components: { CurrencyInput },
 
   setup() {
     const details = reactive({
@@ -319,22 +329,79 @@ export default {
       street: "",
     });
 
-    const mapData = reactive({
-      address: {},
-      center: { lng: -6.29726611776664, lat: 53.34677576650242 },
+    const map = reactive({
+      obj: undefined,
+      marker: new mapboxgl.Marker({ draggable: true }),
       shown: false,
     });
 
     const loading = ref(false);
     const v$ = useVuelidate();
+    const geo_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
-    onMounted(() => {
-      const draft = localStorage.getItem("frm1");
-      if (draft) {
-        const frm0 = JSON.parse(draft);
-        Object.assign(details, frm0); // todo: price??
+    function mountMap() {
+      map.obj = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [-6.29726611776664, 53.34677576650242],
+        zoom: 11,
+      });
+
+      map.obj.on("click", function (e) {
+        map.marker.setLngLat(e.lngLat).addTo(map.obj);
+      });
+
+      if (map.marker._lngLat) {
+        map.marker.addTo(map.obj);
+        map.obj.jumpTo({ center: map.marker._lngLat, zoom: 16 });
       }
-    });
+    }
+
+    function toggleMap(v) {
+      map.shown = v;
+
+      if (v && !map.obj) {
+        setTimeout(() => mountMap(), 100);
+      }
+    }
+
+    function searchAddress() {
+      this.v$.address.$validate().then((res) => {
+        if (res) {
+          toggleMap(true);
+
+          const str = [
+            address.postcode,
+            address.county,
+            address.town,
+            address.street,
+          ].join(" ");
+
+          const query = new URLSearchParams({
+            access_token: mapboxgl.accessToken,
+            types: "address",
+            country: "ie",
+            region: address.county,
+            postcode: address.postcode,
+            place: address.town,
+            limit: 1,
+          });
+
+          fetch(geo_url + encodeURIComponent(str) + ".json?" + query.toString())
+            .then((res) => res.json())
+            .then((data) => {
+              if (!data || !data.features || !data.features.length) return;
+              const f = data.features[0];
+              map.marker.setLngLat(f.center);
+
+              if (map.obj) {
+                map.marker.addTo(map.obj);
+                map.obj.jumpTo({ center: f.center, zoom: 16 });
+              }
+            });
+        }
+      });
+    }
 
     function submitForm() {
       this.v$.$validate().then((res) => {
@@ -342,9 +409,7 @@ export default {
           loading.value = true;
           localStorage.setItem("frm1", JSON.stringify(this.details));
 
-          const csrf = document.querySelector(
-            'meta[name="csrf-token"]'
-          ).content;
+          const csrf = document.querySelector('meta[name="csrf-token"]').content;
           const formData = new FormData();
           for (let key in this.details) {
             formData.append(key, this.details[key]);
@@ -365,24 +430,14 @@ export default {
       });
     }
 
-    function searchAddress() {
-      Object.assign(mapData.address, address);
-    }
-
-    function markerSet(m, lng, lat) {
-      if (m) Object.assign(address, m);
-      mapData.center.lng = lng;
-      mapData.center.lat = lat;
-    }
-
     return {
       details,
       address,
-      mapData,
       loading,
+      map,
       v$,
+      toggleMap,
       searchAddress,
-      markerSet,
       submitForm,
     };
   },
@@ -417,9 +472,11 @@ export default {
         max: maxLength(20),
       },
       town: {
+        required: helpers.withMessage("Required", required),
         max: maxLength(20),
       },
       street: {
+        required: helpers.withMessage("Required", required),
         max: maxLength(50),
       },
     },
@@ -438,12 +495,22 @@ form {
   border: 1px solid transparent;
 }
 
+#map {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
 @media (min-width: 768px) {
   .pss-05 {
     padding-left: 2px;
   }
   .pee-05 {
     padding-right: 2px;
+  }
+  #map {
+    height: 450px;
   }
 }
 </style>

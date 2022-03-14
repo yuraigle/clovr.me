@@ -26,9 +26,4 @@ class AdController extends BaseController
         return response()->json(["status" => "OK"]);
     }
 
-    public function newAdLocation()
-    {
-        // step 2 : location form
-        return view('new-ad-location', []);
-    }
 }
