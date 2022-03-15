@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller as BaseController;
 use Intervention\Image\Facades\Image;
 
@@ -17,32 +18,34 @@ class AdController extends BaseController
 
     public function newAd()
     {
-        // step 1 : details form
-        return view('new-ad-details', []);
+        return view('new-ad', []);
     }
 
-    public function postAdDetails(Request $req): JsonResponse
+    public function postAd(Request $req): JsonResponse
     {
         $p = $req->post();
         // TODO backend validation
         return response()->json(["status" => "OK", "req" => $p]);
     }
 
-    public function pictures()
+    public function upload(Request $req)
     {
-        return view('new-ad-upload', []);
+        try {
+            $pic = $this->uploadImage($req->file('pic'));
+            return response()->json(['location' => $pic]);
+        } catch (Exception $e) {
+            return abort(500, $e->getMessage());
+        }
     }
-
 
     /**
      * @throws Exception
      */
-    private function uploadImage(array $file1): string
+    private function uploadImage(UploadedFile $file1): string
     {
         $dest = '/' . date('ym') . '/';
         $destAbs = base_path('public/images' . $dest);
-        $destTmb = base_path('public/thumbnail' . $dest);
-        $ext = strtolower(pathinfo($file1['name'], PATHINFO_EXTENSION));
+        $ext = strtolower($file1->extension());
         $newName = substr(md5(rand()), 0, 10) . '.' . $ext;
 
         if (!in_array($ext, ['jpg', 'png'])) {
@@ -51,36 +54,11 @@ class AdController extends BaseController
         if (!file_exists($destAbs) && !mkdir($destAbs)) {
             throw new Exception('I/O exception');
         }
-        if (!file_exists($destTmb) && !mkdir($destTmb)) {
-            throw new Exception('I/O exception');
-        }
-        if (!move_uploaded_file($file1['tmp_name'], $destAbs . $newName)) {
-            throw new Exception('I/O exception');
-        }
 
-        // resize
-        $img = Image::make($destAbs . $newName);
-        $img->resize(150, null, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        $img->save($destTmb . $newName);
+        Image::make($file1)->fit(200, 150)->save($destAbs . "m_" . $newName);
+        Image::make($file1)->fit(120, 90)->save($destAbs . "s_" . $newName);
+        $file1->move($destAbs, "x_" . $newName);
 
-        return $dest . $newName;
-    }
-
-    public function upload()
-    {
-        reset($_FILES);
-        $temp = current($_FILES);
-
-        try {
-            $pic = $this->uploadImage($temp);
-        } catch (Exception $e) {
-            header('HTTP/1.1 500 ' . $e->getMessage());
-            die();
-        }
-
-        return json_encode(['location' => $pic]);
+        return $dest . "x_" . $newName;
     }
 }

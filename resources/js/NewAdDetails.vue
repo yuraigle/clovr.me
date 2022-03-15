@@ -16,7 +16,10 @@
             <option value="4">Parking &amp; Garage For Sale</option>
             <option value="5">Parking &amp; Garage To Rent</option>
           </select>
-          <span class="invalid-feedback" v-if="v$['details'].category_id.$error">
+          <span
+            class="invalid-feedback"
+            v-if="v$['details'].category_id.$error"
+          >
             {{ v$["details"].category_id.$errors[0].$message }}
           </span>
         </div>
@@ -56,7 +59,10 @@
                     placeholder="Postal Code"
                     style="width: 110px"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].postcode.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].postcode.$error"
+                  >
                     {{ v$["address"].postcode.$errors[0].$message }}
                   </span>
                 </div>
@@ -69,7 +75,10 @@
                     :class="{ 'is-invalid': v$['address'].county.$error }"
                     placeholder="County"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].county.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].county.$error"
+                  >
                     {{ v$["address"].county.$errors[0].$message }}
                   </span>
                 </div>
@@ -82,7 +91,10 @@
                     :class="{ 'is-invalid': v$['address'].town.$error }"
                     placeholder="Town"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].town.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].town.$error"
+                  >
                     {{ v$["address"].town.$errors[0].$message }}
                   </span>
                 </div>
@@ -99,7 +111,10 @@
                     :class="{ 'is-invalid': v$['address'].street.$error }"
                     placeholder="Address"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].street.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].street.$error"
+                  >
                     {{ v$["address"].street.$errors[0].$message }}
                   </span>
                 </div>
@@ -119,7 +134,11 @@
           </div>
 
           <div class="w-100" v-if="!map.shown">
-            <button type="button" class="btn btn-sm btn-link" @click="toggleMap(true)">
+            <button
+              type="button"
+              class="btn btn-sm btn-link"
+              @click="toggleMap(true)"
+            >
               Show on the map
               <i class="fa-solid fa-chevron-down"></i>
             </button>
@@ -164,7 +183,9 @@
           <div class="row">
             <div class="col-sm-6 mb-2">
               <label for="price" class="form-label">
-                <span v-if="['2', '3', '5'].includes(details.category_id)">Rent:</span>
+                <span v-if="['2', '3', '5'].includes(details.category_id)"
+                  >Rent:</span
+                >
                 <span v-else>Price:</span>
               </label>
               <CurrencyInput
@@ -197,7 +218,10 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_month"
                 />
-                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_m">
+                <label
+                  class="form-check-label me-4 ps-1 pe-2"
+                  for="price_freq_m"
+                >
                   Monthly
                 </label>
 
@@ -210,18 +234,26 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_week"
                 />
-                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
+                <label
+                  class="form-check-label me-4 ps-1 pe-2"
+                  for="price_freq_w"
+                >
                   Weekly
                 </label>
               </div>
 
-              <span class="invalid-feedback" v-if="v$['details'].price_freq.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].price_freq.$error"
+              >
                 {{ v$["details"].price_freq.$errors[0].$message }}
               </span>
             </div>
 
             <div class="col-sm-6 mb-2" v-if="details.category_id > 0">
-              <label for="property_type" class="form-label">Property Type:</label>
+              <label for="property_type" class="form-label"
+                >Property Type:</label
+              >
               <select
                 id="property_type"
                 v-model="details.property_type"
@@ -229,20 +261,34 @@
                 :class="{ 'is-invalid': v$['details'].property_type.$error }"
               >
                 <option value="">Please select...</option>
-                <option value="flat" v-if="details.category_id < 4">Flat</option>
-                <option value="house" v-if="details.category_id < 4">House</option>
-                <option value="other" v-if="details.category_id < 4">Other</option>
-                <option value="garage" v-if="details.category_id >= 4">Garage</option>
+                <option value="flat" v-if="details.category_id < 4">
+                  Flat
+                </option>
+                <option value="house" v-if="details.category_id < 4">
+                  House
+                </option>
+                <option value="other" v-if="details.category_id < 4">
+                  Other
+                </option>
+                <option value="garage" v-if="details.category_id >= 4">
+                  Garage
+                </option>
                 <option value="parking" v-if="details.category_id >= 4">
                   Parking space
                 </option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].property_type.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].property_type.$error"
+              >
                 {{ v$["details"].property_type.$errors[0].$message }}
               </span>
             </div>
 
-            <div class="col-sm-6 mb-4" v-if="['1', '2'].includes(details.category_id)">
+            <div
+              class="col-sm-6 mb-4"
+              v-if="['1', '2'].includes(details.category_id)"
+            >
               <label for="num_beds" class="form-label">No. of Bedrooms:</label>
               <select
                 id="num_beds"
@@ -256,12 +302,18 @@
                   {{ index }}
                 </option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].num_beds.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].num_beds.$error"
+              >
                 {{ v$["details"].num_beds.$errors[0].$message }}
               </span>
             </div>
 
-            <div class="col-sm-6 mb-2" v-if="['3'].includes(details.category_id)">
+            <div
+              class="col-sm-6 mb-2"
+              v-if="['3'].includes(details.category_id)"
+            >
               <label for="room_type" class="form-label">Room type:</label>
               <select
                 id="room_type"
@@ -277,7 +329,10 @@
                 <option value="shared">Shared room</option>
                 <option value="couch">Couch Surf</option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].room_type.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].room_type.$error"
+              >
                 {{ v$["details"].room_type.$errors[0].$message }}
               </span>
             </div>
@@ -293,7 +348,10 @@
                 :class="{ 'is-invalid': v$['details'].description.$error }"
                 rows="6"
               ></textarea>
-              <span class="invalid-feedback" v-if="v$['details'].description.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].description.$error"
+              >
                 {{ v$["details"].description.$errors[0].$message }}
               </span>
             </div>
@@ -316,14 +374,22 @@
           <div class="row">
             <div class="col-lg-9 col-md-8">
               <img
-                src="http://via.placeholder.com/120x90"
+                v-for="p in pictures"
+                :key="p"
+                :src="'/images/' + p.replace('x_', 's_')"
                 class="img-thumbnail me-1 mb-1"
-                alt=""
+                alt="uploaded image"
               />
 
-              <label class="btn btn-link text-decoration-none ps-3" style="height: 100px">
+              <label
+                class="btn btn-link text-decoration-none ps-3"
+                :class="{ disabled: uploading }"
+                style="height: 100px"
+              >
                 <span style="line-height: 85px">
-                  <i class="fa-solid fa-camera-retro"></i> Add image
+                  <i class="fa-solid fa-spinner" v-if="uploading"></i>
+                  <i class="fa-solid fa-camera-retro" v-else></i>
+                  Add image
                   <input
                     type="file"
                     class="d-none"
@@ -335,8 +401,9 @@
             </div>
             <div class="col-lg-3 col-md-4 lh-sm">
               <small class="text-muted">
-                You can add up to <strong>10 images</strong>. Upload as many clear images
-                as possible; this will get your ad more views and replies!
+                You can add up to <strong>10 images</strong>. Upload as many
+                clear images as possible; this will get your ad more views and
+                replies!
               </small>
             </div>
           </div>
@@ -347,7 +414,9 @@
             </label>
             <div class="flex-grow-1">
               <div class="input-group">
-                <span class="input-group-text"><i class="fa-brands fa-youtube"></i></span>
+                <span class="input-group-text"
+                  ><i class="fa-brands fa-youtube"></i
+                ></span>
                 <input
                   class="form-control"
                   type="text"
@@ -414,7 +483,7 @@ export default {
       shown: false,
     });
 
-    const files = ref([]);
+    const pictures = ref([]);
 
     const loading = ref(false);
     const uploading = ref(false);
@@ -500,7 +569,7 @@ export default {
         uploading.value = true;
 
         const formData = new FormData();
-        formData.append("file", files[0]);
+        formData.append("pic", files[0]);
 
         fetch("/image-upload", {
           method: "POST",
@@ -508,7 +577,7 @@ export default {
         })
           .then((resp) => resp.json())
           .then((res) => {
-            console.log(res);
+            pictures.value.push(res.location);
           })
           .catch((error) => console.error("Error:", error))
           .finally(() => (uploading.value = false));
@@ -526,9 +595,10 @@ export default {
             this.address,
             this.map.marker._lngLat
           );
-          // localStorage.setItem("frm1", JSON.stringify(postData));
 
-          const csrf = document.querySelector('meta[name="csrf-token"]').content;
+          const csrf = document.querySelector(
+            'meta[name="csrf-token"]'
+          ).content;
           const formData = new FormData();
           for (let key in postData) {
             formData.append(key, postData[key]);
@@ -552,7 +622,9 @@ export default {
     return {
       details,
       address,
+      pictures,
       loading,
+      uploading,
       map,
       v$,
       toggleMap,
