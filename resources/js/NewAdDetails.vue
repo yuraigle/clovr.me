@@ -314,7 +314,25 @@
         <div class="card-header">Pictures</div>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-9 col-md-8">Upload a picture...</div>
+            <div class="col-lg-9 col-md-8">
+              <img
+                src="http://via.placeholder.com/120x90"
+                class="img-thumbnail me-1 mb-1"
+                alt=""
+              />
+
+              <label class="btn btn-link text-decoration-none ps-3" style="height: 100px">
+                <span style="line-height: 85px">
+                  <i class="fa-solid fa-camera-retro"></i> Add image
+                  <input
+                    type="file"
+                    class="d-none"
+                    accept="image/*"
+                    @change="onFileAdd"
+                  />
+                </span>
+              </label>
+            </div>
             <div class="col-lg-3 col-md-4 lh-sm">
               <small class="text-muted">
                 You can add up to <strong>10 images</strong>. Upload as many clear images
@@ -396,7 +414,10 @@ export default {
       shown: false,
     });
 
+    const files = ref([]);
+
     const loading = ref(false);
+    const uploading = ref(false);
     const v$ = useVuelidate();
     const geo_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
@@ -472,6 +493,28 @@ export default {
       });
     }
 
+    // https://webdevblog.ru/zagruzka-fajlov-s-pomoshhju-vuejs-i-axios/
+    function onFileAdd(e) {
+      const files = e.target.files || e.dataTransfer.files;
+      if (files.length) {
+        uploading.value = true;
+
+        const formData = new FormData();
+        formData.append("file", files[0]);
+
+        fetch("/image-upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((resp) => resp.json())
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.error("Error:", error))
+          .finally(() => (uploading.value = false));
+      }
+    }
+
     function submitForm() {
       this.v$.$validate().then((res) => {
         if (res) {
@@ -496,7 +539,7 @@ export default {
             headers: { "X-CSRF-TOKEN": csrf },
             body: formData,
           })
-            .then((response) => response.json())
+            .then((resp) => resp.json())
             .then((result) => {
               console.log(result);
             })
@@ -514,6 +557,7 @@ export default {
       v$,
       toggleMap,
       searchAddress,
+      onFileAdd,
       submitForm,
     };
   },

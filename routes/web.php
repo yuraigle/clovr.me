@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'home'])->name('home');
@@ -15,3 +16,5 @@ Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
 Route::get('/new-ad', [AdController::class, 'newAd'])->name('new-ad');
 Route::post('/new-ad', [AdController::class, 'postAdDetails']);
 Route::get('/new-ad-upload', [AdController::class, 'pictures'])->name('new-ad-upload');
+Route::post('/image-upload', [AdController::class, 'upload'])
+    ->withoutMiddleware(VerifyCsrfToken::class);
