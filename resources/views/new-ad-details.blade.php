@@ -9,10 +9,8 @@
 @endsection
 
 @section('content')
-    <div class="width-850">
-        <h1 class="text-center">Post an Ad</h1>
-        <div id="app"></div>
-    </div>
+    <h1 class="text-center">Post an Ad</h1>
+    <div id="app"></div>
 @endsection
 
 @section('inline_scripts')

@@ -9,7 +9,5 @@
 @endsection
 
 @section('content')
-    <div class="width-850">
-        <h1 class="text-center">Upload Pictures</h1>
-    </div>
+    <h1 class="text-center">Upload Pictures</h1>
 @endsection
