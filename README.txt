@@ -49,3 +49,9 @@ Property type: Parking space / Garage
 
 Step #2 : Location
 Step #3 : Pictures
+
+
+TODO:
+check picture size
+show upload error
+check pictures <=10
