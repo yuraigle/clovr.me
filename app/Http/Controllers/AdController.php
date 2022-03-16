@@ -31,8 +31,8 @@ class AdController extends BaseController
     public function upload(Request $req)
     {
         try {
-            $pic = $this->uploadImage($req->file('pic'));
-            return response()->json(['location' => $pic]);
+            $hash = $this->uploadImage($req->file('pic'));
+            return response()->json(['hash' => $hash]);
         } catch (Exception $e) {
             return abort(500, $e->getMessage());
         }
@@ -43,22 +43,29 @@ class AdController extends BaseController
      */
     private function uploadImage(UploadedFile $file1): string
     {
-        $dest = '/' . date('ym') . '/';
+        $hash = substr(md5(rand()), 0, 10);
+        $dest = '/' . substr($hash, 0, 2) . '/';
         $destAbs = base_path('public/images' . $dest);
-        $ext = strtolower($file1->extension());
-        $newName = substr(md5(rand()), 0, 10) . '.' . $ext;
 
-        if (!in_array($ext, ['jpg', 'png'])) {
-            throw new Exception('Unexpected file type');
-        }
         if (!file_exists($destAbs) && !mkdir($destAbs)) {
             throw new Exception('I/O exception');
         }
 
-        Image::make($file1)->fit(200, 150)->save($destAbs . "m_" . $newName);
-        Image::make($file1)->fit(120, 90)->save($destAbs . "s_" . $newName);
-        $file1->move($destAbs, "x_" . $newName);
+        Image::make($file1)->fit(200, 150)
+            ->save($destAbs . "m_$hash.jpg")
+            ->save($destAbs . "m_$hash.webp", 75);
 
-        return $dest . "x_" . $newName;
+        Image::make($file1)->fit(120, 90)
+            ->save($destAbs . "s_$hash.jpg")
+            ->save($destAbs . "s_$hash.webp", 75);
+
+        Image::make($file1)->resize(800, 600, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })
+            ->save($destAbs . "x_$hash.jpg")
+            ->save($destAbs . "x_$hash.webp", 75);
+
+        return $hash;
     }
 }

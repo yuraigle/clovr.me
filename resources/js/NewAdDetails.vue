@@ -16,10 +16,7 @@
             <option value="4">Parking &amp; Garage For Sale</option>
             <option value="5">Parking &amp; Garage To Rent</option>
           </select>
-          <span
-            class="invalid-feedback"
-            v-if="v$['details'].category_id.$error"
-          >
+          <span class="invalid-feedback" v-if="v$['details'].category_id.$error">
             {{ v$["details"].category_id.$errors[0].$message }}
           </span>
         </div>
@@ -59,10 +56,7 @@
                     placeholder="Postal Code"
                     style="width: 110px"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$['address'].postcode.$error"
-                  >
+                  <span class="invalid-feedback" v-if="v$['address'].postcode.$error">
                     {{ v$["address"].postcode.$errors[0].$message }}
                   </span>
                 </div>
@@ -75,10 +69,7 @@
                     :class="{ 'is-invalid': v$['address'].county.$error }"
                     placeholder="County"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$['address'].county.$error"
-                  >
+                  <span class="invalid-feedback" v-if="v$['address'].county.$error">
                     {{ v$["address"].county.$errors[0].$message }}
                   </span>
                 </div>
@@ -91,10 +82,7 @@
                     :class="{ 'is-invalid': v$['address'].town.$error }"
                     placeholder="Town"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$['address'].town.$error"
-                  >
+                  <span class="invalid-feedback" v-if="v$['address'].town.$error">
                     {{ v$["address"].town.$errors[0].$message }}
                   </span>
                 </div>
@@ -111,10 +99,7 @@
                     :class="{ 'is-invalid': v$['address'].street.$error }"
                     placeholder="Address"
                   />
-                  <span
-                    class="invalid-feedback"
-                    v-if="v$['address'].street.$error"
-                  >
+                  <span class="invalid-feedback" v-if="v$['address'].street.$error">
                     {{ v$["address"].street.$errors[0].$message }}
                   </span>
                 </div>
@@ -134,12 +119,8 @@
           </div>
 
           <div class="w-100" v-if="!map.shown">
-            <button
-              type="button"
-              class="btn btn-sm btn-link"
-              @click="toggleMap(true)"
-            >
-              Show on the map
+            <button type="button" class="btn btn-sm btn-link" @click="toggleMap(true)">
+              Show the map
               <i class="fa-solid fa-chevron-down"></i>
             </button>
           </div>
@@ -183,9 +164,7 @@
           <div class="row">
             <div class="col-sm-6 mb-2">
               <label for="price" class="form-label">
-                <span v-if="['2', '3', '5'].includes(details.category_id)"
-                  >Rent:</span
-                >
+                <span v-if="['2', '3', '5'].includes(details.category_id)">Rent:</span>
                 <span v-else>Price:</span>
               </label>
               <CurrencyInput
@@ -218,10 +197,7 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_month"
                 />
-                <label
-                  class="form-check-label me-4 ps-1 pe-2"
-                  for="price_freq_m"
-                >
+                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_m">
                   Monthly
                 </label>
 
@@ -234,26 +210,18 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_week"
                 />
-                <label
-                  class="form-check-label me-4 ps-1 pe-2"
-                  for="price_freq_w"
-                >
+                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
                   Weekly
                 </label>
               </div>
 
-              <span
-                class="invalid-feedback"
-                v-if="v$['details'].price_freq.$error"
-              >
+              <span class="invalid-feedback" v-if="v$['details'].price_freq.$error">
                 {{ v$["details"].price_freq.$errors[0].$message }}
               </span>
             </div>
 
             <div class="col-sm-6 mb-2" v-if="details.category_id > 0">
-              <label for="property_type" class="form-label"
-                >Property Type:</label
-              >
+              <label for="property_type" class="form-label">Property Type:</label>
               <select
                 id="property_type"
                 v-model="details.property_type"
@@ -261,34 +229,20 @@
                 :class="{ 'is-invalid': v$['details'].property_type.$error }"
               >
                 <option value="">Please select...</option>
-                <option value="flat" v-if="details.category_id < 4">
-                  Flat
-                </option>
-                <option value="house" v-if="details.category_id < 4">
-                  House
-                </option>
-                <option value="other" v-if="details.category_id < 4">
-                  Other
-                </option>
-                <option value="garage" v-if="details.category_id >= 4">
-                  Garage
-                </option>
+                <option value="flat" v-if="details.category_id < 4">Flat</option>
+                <option value="house" v-if="details.category_id < 4">House</option>
+                <option value="other" v-if="details.category_id < 4">Other</option>
+                <option value="garage" v-if="details.category_id >= 4">Garage</option>
                 <option value="parking" v-if="details.category_id >= 4">
                   Parking space
                 </option>
               </select>
-              <span
-                class="invalid-feedback"
-                v-if="v$['details'].property_type.$error"
-              >
+              <span class="invalid-feedback" v-if="v$['details'].property_type.$error">
                 {{ v$["details"].property_type.$errors[0].$message }}
               </span>
             </div>
 
-            <div
-              class="col-sm-6 mb-4"
-              v-if="['1', '2'].includes(details.category_id)"
-            >
+            <div class="col-sm-6 mb-4" v-if="['1', '2'].includes(details.category_id)">
               <label for="num_beds" class="form-label">No. of Bedrooms:</label>
               <select
                 id="num_beds"
@@ -302,18 +256,12 @@
                   {{ index }}
                 </option>
               </select>
-              <span
-                class="invalid-feedback"
-                v-if="v$['details'].num_beds.$error"
-              >
+              <span class="invalid-feedback" v-if="v$['details'].num_beds.$error">
                 {{ v$["details"].num_beds.$errors[0].$message }}
               </span>
             </div>
 
-            <div
-              class="col-sm-6 mb-2"
-              v-if="['3'].includes(details.category_id)"
-            >
+            <div class="col-sm-6 mb-2" v-if="['3'].includes(details.category_id)">
               <label for="room_type" class="form-label">Room type:</label>
               <select
                 id="room_type"
@@ -329,10 +277,7 @@
                 <option value="shared">Shared room</option>
                 <option value="couch">Couch Surf</option>
               </select>
-              <span
-                class="invalid-feedback"
-                v-if="v$['details'].room_type.$error"
-              >
+              <span class="invalid-feedback" v-if="v$['details'].room_type.$error">
                 {{ v$["details"].room_type.$errors[0].$message }}
               </span>
             </div>
@@ -348,10 +293,7 @@
                 :class="{ 'is-invalid': v$['details'].description.$error }"
                 rows="6"
               ></textarea>
-              <span
-                class="invalid-feedback"
-                v-if="v$['details'].description.$error"
-              >
+              <span class="invalid-feedback" v-if="v$['details'].description.$error">
                 {{ v$["details"].description.$errors[0].$message }}
               </span>
             </div>
@@ -373,13 +315,21 @@
         <div class="card-body">
           <div class="row">
             <div class="col-lg-9 col-md-8">
-              <img
-                v-for="p in pictures"
-                :key="p"
-                :src="'/images/' + p.replace('x_', 's_')"
-                class="img-thumbnail me-1 mb-1"
-                alt="uploaded image"
-              />
+              <div
+                v-for="hash in pictures"
+                :key="hash"
+                class="d-inline-block img-thumbnail me-1 mb-1"
+              >
+                <button
+                  type="button"
+                  class="btn-close"
+                  title="Remove"
+                  @click="removeImg(hash)"
+                >
+                  &nbsp;
+                </button>
+                <img :src="hash2img(hash)" alt="img" />
+              </div>
 
               <label
                 class="btn btn-link text-decoration-none ps-3"
@@ -390,20 +340,14 @@
                   <i class="fa-solid fa-spinner" v-if="uploading"></i>
                   <i class="fa-solid fa-camera-retro" v-else></i>
                   Add image
-                  <input
-                    type="file"
-                    class="d-none"
-                    accept="image/*"
-                    @change="onFileAdd"
-                  />
+                  <input type="file" class="d-none" accept="image/*" @change="addImg" />
                 </span>
               </label>
             </div>
             <div class="col-lg-3 col-md-4 lh-sm">
               <small class="text-muted">
-                You can add up to <strong>10 images</strong>. Upload as many
-                clear images as possible; this will get your ad more views and
-                replies!
+                You can add up to <strong>10 images</strong>. Upload as many clear images
+                as possible; this will get your ad more views and replies!
               </small>
             </div>
           </div>
@@ -414,9 +358,7 @@
             </label>
             <div class="flex-grow-1">
               <div class="input-group">
-                <span class="input-group-text"
-                  ><i class="fa-brands fa-youtube"></i
-                ></span>
+                <span class="input-group-text"><i class="fa-brands fa-youtube"></i></span>
                 <input
                   class="form-control"
                   type="text"
@@ -518,10 +460,17 @@ export default {
 
     function toggleMap(v) {
       map.shown = v;
-
       if (v && !map.obj) {
         setTimeout(() => mountMap(), 100);
       }
+    }
+
+    function csrf() {
+      return document.querySelector('meta[name="csrf-token"]').content;
+    }
+
+    function hash2img(s) {
+      return "/images/" + s.substring(0, 2) + "/s_" + s + ".webp";
     }
 
     function searchAddress() {
@@ -562,8 +511,7 @@ export default {
       });
     }
 
-    // https://webdevblog.ru/zagruzka-fajlov-s-pomoshhju-vuejs-i-axios/
-    function onFileAdd(e) {
+    function addImg(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (files.length) {
         uploading.value = true;
@@ -573,14 +521,21 @@ export default {
 
         fetch("/image-upload", {
           method: "POST",
+          headers: { "X-CSRF-TOKEN": csrf() },
           body: formData,
         })
           .then((resp) => resp.json())
-          .then((res) => {
-            pictures.value.push(res.location);
-          })
+          .then((res) => pictures.value.push(res.hash))
           .catch((error) => console.error("Error:", error))
           .finally(() => (uploading.value = false));
+      }
+    }
+
+    function removeImg(hash) {
+      for (let i = 0; i < pictures.value.length; i++) {
+        if (pictures.value[i] === hash) {
+          pictures.value.splice(i, 1);
+        }
       }
     }
 
@@ -589,24 +544,18 @@ export default {
         if (res) {
           loading.value = true;
 
-          const postData = Object.assign(
-            {},
-            this.details,
-            this.address,
-            this.map.marker._lngLat
-          );
-
-          const csrf = document.querySelector(
-            'meta[name="csrf-token"]'
-          ).content;
+          const postData = Object.assign({}, details, address, map.marker._lngLat);
           const formData = new FormData();
-          for (let key in postData) {
+          for (const key in postData) {
             formData.append(key, postData[key]);
+          }
+          for (const pic of pictures.value) {
+            formData.append("pictures[]", pic);
           }
 
           fetch("/new-ad", {
             method: "POST",
-            headers: { "X-CSRF-TOKEN": csrf },
+            headers: { "X-CSRF-TOKEN": csrf() },
             body: formData,
           })
             .then((resp) => resp.json())
@@ -629,7 +578,9 @@ export default {
       v$,
       toggleMap,
       searchAddress,
-      onFileAdd,
+      addImg,
+      removeImg,
+      hash2img,
       submitForm,
     };
   },
@@ -692,6 +643,16 @@ form {
   height: 400px;
   position: relative;
   overflow: hidden;
+}
+
+.img-thumbnail {
+  position: relative;
+}
+.img-thumbnail > .btn-close {
+  background-color: #8a848d;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 @media (min-width: 768px) {
