@@ -37,7 +37,7 @@
             {{ v$["details"].title.$errors[0].$message }}
           </span>
 
-          <div class="form-check border-top pt-3 mt-4">
+          <div class="form-check mt-3">
             <label class="form-check-label">
               <input class="form-check-input" type="checkbox" v-model="details.is_bold" />
               Make it outstanding for &euro;5.00
