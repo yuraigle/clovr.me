@@ -36,6 +36,13 @@
           <span class="invalid-feedback" v-if="v$['details'].title.$error">
             {{ v$["details"].title.$errors[0].$message }}
           </span>
+
+          <div class="form-check border-top pt-3 mt-4">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" v-model="details.is_bold" />
+              Make it outstanding for &euro;5.00
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -353,22 +360,69 @@
           </div>
 
           <div class="d-md-flex border-top pt-3 mt-2">
-            <label class="col-form-label me-4" for="yt_link">
+            <label class="col-form-label me-4" for="youtube">
               Add a YouTube video link:
             </label>
             <div class="flex-grow-1">
               <div class="input-group">
                 <span class="input-group-text"><i class="fa-brands fa-youtube"></i></span>
                 <input
-                  class="form-control"
                   type="text"
-                  id="yt_link"
+                  v-model="details.youtube"
+                  id="youtube"
+                  class="form-control"
+                  :class="{ 'is-invalid': v$['details'].youtube.$error }"
                   placeholder="https://www.youtube.com/watch?v=K69tbUo3vGs"
                 />
+
+                <span class="invalid-feedback" v-if="v$['details'].youtube.$error">
+                  {{ v$["details"].youtube.$errors[0].$message }}
+                </span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="w-100 mt-2 mb-2">
+      <div class="card">
+        <div class="card-header">Website Link</div>
+        <div class="card-body">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" v-model="details.has_www" />
+              Include a link to your website for &euro;5.00
+            </label>
+          </div>
+
+          <input
+            type="text"
+            v-model="details.www"
+            class="form-control"
+            :disabled="!details.has_www"
+            :class="{ 'is-invalid': v$['details'].www.$error }"
+            placeholder="https://"
+          />
+          <span class="invalid-feedback" v-if="v$['details'].www.$error">
+            {{ v$["details"].www.$errors[0].$message }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100" v-if="be_messages.length">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          @click="be_messages.length = 0"
+        ></button>
+        <strong>Warning</strong>
+        <ul class="mb-0">
+          <li v-for="msg in be_messages" :key="msg">{{ msg }}</li>
+        </ul>
       </div>
     </div>
 
@@ -391,7 +445,7 @@
 <script>
 import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
+import { maxLength, minLength, required, url, helpers } from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
 
 mapboxgl.accessToken =
@@ -410,6 +464,10 @@ export default {
       description: undefined,
       price_freq: undefined,
       room_type: undefined,
+      www: undefined,
+      youtube: undefined,
+      has_www: false,
+      is_bold: false,
     });
 
     const address = reactive({
@@ -429,6 +487,7 @@ export default {
 
     const loading = ref(false);
     const uploading = ref(false);
+    const be_messages = ref([]);
     const v$ = useVuelidate();
     const geo_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
@@ -562,6 +621,17 @@ export default {
           })
             .then((resp) => resp.json())
             .then((result) => {
+              be_messages.value.length = 0;
+              if (result.status === "OK") {
+                // redirect
+              } else if (result.status === "FAIL") {
+                for (const key in result.messages) {
+                  be_messages.value.push(result.messages[key][0]);
+                }
+              } else {
+                be_messages.value.push("Something went wrong");
+              }
+
               console.log(result);
             })
             .catch((error) => console.error("Error:", error))
@@ -578,6 +648,7 @@ export default {
       uploading,
       map,
       v$,
+      be_messages,
       toggleMap,
       searchAddress,
       addImg,
@@ -607,6 +678,18 @@ export default {
       },
       price_freq: {}, // todo: requiredIf
       room_type: {},
+      www: {
+        url,
+        max: maxLength(500),
+      },
+      youtube: {
+        url,
+        yt2: helpers.withMessage(
+          "Not a valid YouTube link",
+          helpers.regex(/^https?:\/\/(www\.)?youtube\.com\/watch/)
+        ),
+        max: maxLength(100),
+      },
     },
     address: {
       postcode: {

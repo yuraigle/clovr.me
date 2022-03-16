@@ -37,7 +37,7 @@ class AdController extends BaseController
             'room_type' => 'nullable|regex:/^[a-z]{0,10}$/',
             'room_couples' => 'nullable|numeric|min:0|max:1',
             'www' => 'nullable|url|max:500',
-            'youtube' => 'nullable|url|max:100',
+            'youtube' => 'nullable|url|max:100|regex:/^https?:\/\/(www\.)?youtube\.com\/watch/',
             'description' => 'required|string|max:10000',
             'postcode' => 'nullable|string|max:10',
             'county' => 'nullable|string|max:20',
