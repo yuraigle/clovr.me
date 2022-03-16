@@ -470,7 +470,7 @@ export default {
     }
 
     function hash2img(s) {
-      return "/images/" + s.substring(0, 2) + "/s_" + s + ".webp";
+      return "/images/" + s.substring(0, 4) + "/s_" + s + ".webp";
     }
 
     function searchAddress() {
@@ -547,7 +547,9 @@ export default {
           const postData = Object.assign({}, details, address, map.marker._lngLat);
           const formData = new FormData();
           for (const key in postData) {
-            formData.append(key, postData[key]);
+            if (postData[key] !== undefined) {
+              formData.append(key, postData[key]);
+            }
           }
           for (const pic of pictures.value) {
             formData.append("pictures[]", pic);
@@ -616,7 +618,7 @@ export default {
       },
       town: {
         required: helpers.withMessage("Required", required),
-        max: maxLength(20),
+        max: maxLength(30),
       },
       street: {
         required: helpers.withMessage("Required", required),

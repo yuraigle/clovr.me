@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
 class AdController extends BaseController
@@ -21,11 +23,83 @@ class AdController extends BaseController
         return view('new-ad', []);
     }
 
+    // TODO: authenticated
     public function postAd(Request $req): JsonResponse
     {
-        $p = $req->post();
-        // TODO backend validation
-        return response()->json(["status" => "OK", "req" => $p]);
+        $validator = Validator::make($req->post(), [
+            'category_id' => 'required|numeric|min:1|max:5',
+            'title' => 'required|string|max:100',
+            'price' => 'required|regex:/^[0-9]*(\.[0-9]{1,2})?$/',
+            'property_type' => 'nullable|regex:/^[a-z]{0,10}$/',
+            'num_beds' => 'nullable|numeric|max:10',
+            'price_freq' => 'nullable|in:per_month,per_week',
+            'date_avail' => 'nullable',
+            'room_type' => 'nullable|regex:/^[a-z]{0,10}$/',
+            'room_couples' => 'nullable|numeric|min:0|max:1',
+            'www' => 'nullable|url|max:500',
+            'youtube' => 'nullable|url|max:100',
+            'description' => 'required|string|max:10000',
+            'postcode' => 'nullable|string|max:10',
+            'county' => 'nullable|string|max:20',
+            'town' => 'nullable|string|max:30',
+            'street' => 'nullable|string|max:50',
+            'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+            'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+            'pictures' => 'nullable|array|max:10',
+            'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
+        ]);
+
+        try {
+            $validator->validate();
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "FAIL",
+                "messages" => $validator->errors(),
+            ]);
+        }
+
+        $userId = 0;
+        $categoryId = $req->post('category_id');
+        $title = $req->post('title');
+        $price = $req->post('price');
+        $propertyType = $req->post('property_type');
+        $numBeds = $req->post('num_beds');
+        $priceFreq = $req->post('price_freq');
+        $dateAvail = $req->post('date_avail');
+        $roomType = $req->post('room_type');
+        $roomCouples = $req->post('room_couples');
+        $www = $req->post('www');
+        $youtube = $req->post('youtube');
+        $description = $req->post('description');
+        $postcode = $req->post('postcode');
+        $county = $req->post('county');
+        $town = $req->post('town');
+        $street = $req->post('street');
+        $lng = $req->post('lng');
+        $lat = $req->post('lat');
+        $pictures = $req->post('pictures', []);
+
+        DB::beginTransaction();
+        DB::insert("insert into `ads` (`user_id`, `category_id`, `title`, `price`, `property_type`,
+                   `num_beds`, `price_freq`, `date_avail`, `room_type`, `room_couples`, `www`,
+                   `youtube`, `description`, `postcode`, `county`, `town`, `street`, `lng`, `lat`)
+                    values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [
+                $userId, $categoryId, $title, $price, $propertyType, $numBeds, $priceFreq,
+                $dateAvail, $roomType, $roomCouples, $www, $youtube, $description, $postcode,
+                $county, $town, $street, $lng, $lat
+            ]
+        );
+
+        $adId = DB::getPdo()->lastInsertId();
+        $i = 0;
+        foreach ($pictures as $name) {
+            DB::insert("insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
+                [$adId, $name, $i++]);
+        }
+        DB::commit();
+
+        return response()->json(["status" => "OK", "id" => $adId]);
     }
 
     public function upload(Request $req)
@@ -43,8 +117,8 @@ class AdController extends BaseController
      */
     private function uploadImage(UploadedFile $file1): string
     {
-        $hash = substr(md5(rand()), 0, 10);
-        $dest = '/' . substr($hash, 0, 2) . '/';
+        $hash = date('ym') . substr(md5(rand()), 0, 10);
+        $dest = '/' . substr($hash, 0, 4) . '/';
         $destAbs = base_path('public/images' . $dest);
 
         if (!file_exists($destAbs) && !mkdir($destAbs)) {
