@@ -69,7 +69,7 @@ CREATE TABLE `pictures`
     `ord`   INT                 NULL,
     PRIMARY KEY (`id`) USING BTREE,
     CONSTRAINT `FK_PICTURE_ON_AD` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`)
-        ON UPDATE RESTRICT ON DELETE SET NULL
+        ON UPDATE RESTRICT ON DELETE CASCADE
 ) COLLATE = 'utf8mb3_general_ci'
   ENGINE = InnoDB;
 

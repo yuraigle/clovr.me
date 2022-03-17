@@ -16,7 +16,10 @@
             <option value="4">Parking &amp; Garage For Sale</option>
             <option value="5">Parking &amp; Garage To Rent</option>
           </select>
-          <span class="invalid-feedback" v-if="v$['details'].category_id.$error">
+          <span
+            class="invalid-feedback"
+            v-if="v$['details'].category_id.$error"
+          >
             {{ v$["details"].category_id.$errors[0].$message }}
           </span>
         </div>
@@ -39,7 +42,11 @@
 
           <div class="form-check mt-3">
             <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" v-model="details.is_bold" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="details.is_bold"
+              />
               Make it outstanding for &euro;5.00
             </label>
           </div>
@@ -63,7 +70,10 @@
                     placeholder="Postal Code"
                     style="width: 110px"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].postcode.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].postcode.$error"
+                  >
                     {{ v$["address"].postcode.$errors[0].$message }}
                   </span>
                 </div>
@@ -76,7 +86,10 @@
                     :class="{ 'is-invalid': v$['address'].county.$error }"
                     placeholder="County"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].county.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].county.$error"
+                  >
                     {{ v$["address"].county.$errors[0].$message }}
                   </span>
                 </div>
@@ -89,7 +102,10 @@
                     :class="{ 'is-invalid': v$['address'].town.$error }"
                     placeholder="Town"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].town.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].town.$error"
+                  >
                     {{ v$["address"].town.$errors[0].$message }}
                   </span>
                 </div>
@@ -106,7 +122,10 @@
                     :class="{ 'is-invalid': v$['address'].street.$error }"
                     placeholder="Address"
                   />
-                  <span class="invalid-feedback" v-if="v$['address'].street.$error">
+                  <span
+                    class="invalid-feedback"
+                    v-if="v$['address'].street.$error"
+                  >
                     {{ v$["address"].street.$errors[0].$message }}
                   </span>
                 </div>
@@ -126,7 +145,11 @@
           </div>
 
           <div class="w-100" v-if="!map.shown">
-            <button type="button" class="btn btn-sm btn-link" @click="toggleMap(true)">
+            <button
+              type="button"
+              class="btn btn-sm btn-link"
+              @click="toggleMap(true)"
+            >
               Show the map
               <i class="fa-solid fa-chevron-down"></i>
             </button>
@@ -171,7 +194,9 @@
           <div class="row">
             <div class="col-sm-6 mb-2">
               <label for="price" class="form-label">
-                <span v-if="['2', '3', '5'].includes(details.category_id)">Rent:</span>
+                <span v-if="['2', '3', '5'].includes(details.category_id)"
+                  >Rent:</span
+                >
                 <span v-else>Price:</span>
               </label>
               <CurrencyInput
@@ -204,7 +229,10 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_month"
                 />
-                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_m">
+                <label
+                  class="form-check-label me-4 ps-1 pe-2"
+                  for="price_freq_m"
+                >
                   Monthly
                 </label>
 
@@ -217,18 +245,26 @@
                   :class="{ 'is-invalid': v$['details'].price_freq.$error }"
                   value="per_week"
                 />
-                <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
+                <label
+                  class="form-check-label me-4 ps-1 pe-2"
+                  for="price_freq_w"
+                >
                   Weekly
                 </label>
               </div>
 
-              <span class="invalid-feedback" v-if="v$['details'].price_freq.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].price_freq.$error"
+              >
                 {{ v$["details"].price_freq.$errors[0].$message }}
               </span>
             </div>
 
             <div class="col-sm-6 mb-2" v-if="details.category_id > 0">
-              <label for="property_type" class="form-label">Property Type:</label>
+              <label for="property_type" class="form-label"
+                >Property Type:</label
+              >
               <select
                 id="property_type"
                 v-model="details.property_type"
@@ -236,20 +272,34 @@
                 :class="{ 'is-invalid': v$['details'].property_type.$error }"
               >
                 <option value="">Please select...</option>
-                <option value="flat" v-if="details.category_id < 4">Flat</option>
-                <option value="house" v-if="details.category_id < 4">House</option>
-                <option value="other" v-if="details.category_id < 4">Other</option>
-                <option value="garage" v-if="details.category_id >= 4">Garage</option>
+                <option value="flat" v-if="details.category_id < 4">
+                  Flat
+                </option>
+                <option value="house" v-if="details.category_id < 4">
+                  House
+                </option>
+                <option value="other" v-if="details.category_id < 4">
+                  Other
+                </option>
+                <option value="garage" v-if="details.category_id >= 4">
+                  Garage
+                </option>
                 <option value="parking" v-if="details.category_id >= 4">
                   Parking space
                 </option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].property_type.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].property_type.$error"
+              >
                 {{ v$["details"].property_type.$errors[0].$message }}
               </span>
             </div>
 
-            <div class="col-sm-6 mb-4" v-if="['1', '2'].includes(details.category_id)">
+            <div
+              class="col-sm-6 mb-4"
+              v-if="['1', '2'].includes(details.category_id)"
+            >
               <label for="num_beds" class="form-label">No. of Bedrooms:</label>
               <select
                 id="num_beds"
@@ -263,12 +313,18 @@
                   {{ index }}
                 </option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].num_beds.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].num_beds.$error"
+              >
                 {{ v$["details"].num_beds.$errors[0].$message }}
               </span>
             </div>
 
-            <div class="col-sm-6 mb-2" v-if="['3'].includes(details.category_id)">
+            <div
+              class="col-sm-6 mb-2"
+              v-if="['3'].includes(details.category_id)"
+            >
               <label for="room_type" class="form-label">Room type:</label>
               <select
                 id="room_type"
@@ -284,7 +340,10 @@
                 <option value="shared">Shared room</option>
                 <option value="couch">Couch Surf</option>
               </select>
-              <span class="invalid-feedback" v-if="v$['details'].room_type.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].room_type.$error"
+              >
                 {{ v$["details"].room_type.$errors[0].$message }}
               </span>
             </div>
@@ -300,7 +359,10 @@
                 :class="{ 'is-invalid': v$['details'].description.$error }"
                 rows="6"
               ></textarea>
-              <span class="invalid-feedback" v-if="v$['details'].description.$error">
+              <span
+                class="invalid-feedback"
+                v-if="v$['details'].description.$error"
+              >
                 {{ v$["details"].description.$errors[0].$message }}
               </span>
             </div>
@@ -347,14 +409,20 @@
                   <i class="fa-solid fa-spinner" v-if="uploading"></i>
                   <i class="fa-solid fa-camera-retro" v-else></i>
                   Add image
-                  <input type="file" class="d-none" accept="image/*" @change="addImg" />
+                  <input
+                    type="file"
+                    class="d-none"
+                    accept="image/*"
+                    @change="addImg"
+                  />
                 </span>
               </label>
             </div>
             <div class="col-lg-3 col-md-4 lh-sm">
               <small class="text-muted">
-                You can add up to <strong>10 images</strong>. Upload as many clear images
-                as possible; this will get your ad more views and replies!
+                You can add up to <strong>10 images</strong>. Upload as many
+                clear images as possible; this will get your ad more views and
+                replies!
               </small>
             </div>
           </div>
@@ -365,7 +433,9 @@
             </label>
             <div class="flex-grow-1">
               <div class="input-group">
-                <span class="input-group-text"><i class="fa-brands fa-youtube"></i></span>
+                <span class="input-group-text"
+                  ><i class="fa-brands fa-youtube"></i
+                ></span>
                 <input
                   type="text"
                   v-model="details.youtube"
@@ -375,7 +445,10 @@
                   placeholder="https://www.youtube.com/watch?v=K69tbUo3vGs"
                 />
 
-                <span class="invalid-feedback" v-if="v$['details'].youtube.$error">
+                <span
+                  class="invalid-feedback"
+                  v-if="v$['details'].youtube.$error"
+                >
                   {{ v$["details"].youtube.$errors[0].$message }}
                 </span>
               </div>
@@ -391,7 +464,11 @@
         <div class="card-body">
           <div class="form-check">
             <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" v-model="details.has_www" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="details.has_www"
+              />
               Include a link to your website for &euro;5.00
             </label>
           </div>
@@ -408,21 +485,6 @@
             {{ v$["details"].www.$errors[0].$message }}
           </span>
         </div>
-      </div>
-    </div>
-
-    <div class="w-100" v-if="be_messages.length">
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          @click="be_messages.length = 0"
-        ></button>
-        <strong>Warning</strong>
-        <ul class="mb-0">
-          <li v-for="msg in be_messages" :key="msg">{{ msg }}</li>
-        </ul>
       </div>
     </div>
 
@@ -445,7 +507,13 @@
 <script>
 import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, minLength, required, url, helpers } from "@vuelidate/validators";
+import {
+  maxLength,
+  minLength,
+  required,
+  url,
+  helpers,
+} from "@vuelidate/validators";
 import CurrencyInput from "./components/CurrencyInput.vue";
 
 mapboxgl.accessToken =
@@ -484,10 +552,8 @@ export default {
     });
 
     const pictures = ref([]);
-
     const loading = ref(false);
     const uploading = ref(false);
-    const be_messages = ref([]);
     const v$ = useVuelidate();
     const geo_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
@@ -524,10 +590,6 @@ export default {
       }
     }
 
-    function csrf() {
-      return document.querySelector('meta[name="csrf-token"]').content;
-    }
-
     function hash2img(s) {
       return "/images/" + s.substring(0, 4) + "/s_" + s + ".webp";
     }
@@ -555,7 +617,7 @@ export default {
           });
 
           fetch(geo_url + encodeURIComponent(str) + ".json?" + query.toString())
-            .then((res) => res.json())
+            .then((resp) => resp.json())
             .then((data) => {
               if (!data || !data.features || !data.features.length) return;
               const f = data.features[0];
@@ -578,15 +640,16 @@ export default {
         const formData = new FormData();
         formData.append("pic", files[0]);
 
-        fetch("/image-upload", {
-          method: "POST",
-          headers: { "X-CSRF-TOKEN": csrf() },
-          body: formData,
-        })
-          .then((resp) => resp.json())
-          .then((res) => pictures.value.push(res.hash))
-          .catch((error) => console.error("Error:", error))
-          .finally(() => (uploading.value = false));
+        fetchApi(
+          "/image-upload",
+          {
+            method: "POST",
+            headers: { "X-CSRF-TOKEN": csrf() },
+            body: formData,
+          },
+          (resp) => pictures.value.push(resp.hash),
+          () => (uploading.value = false)
+        );
       }
     }
 
@@ -603,7 +666,12 @@ export default {
         if (res) {
           loading.value = true;
 
-          const postData = Object.assign({}, details, address, map.marker._lngLat);
+          const postData = Object.assign(
+            {},
+            details,
+            address,
+            map.marker._lngLat
+          );
           const formData = new FormData();
           for (const key in postData) {
             if (postData[key] !== undefined) {
@@ -614,28 +682,16 @@ export default {
             formData.append("pictures[]", pic);
           }
 
-          fetch("/new-ad", {
-            method: "POST",
-            headers: { "X-CSRF-TOKEN": csrf() },
-            body: formData,
-          })
-            .then((resp) => resp.json())
-            .then((result) => {
-              be_messages.value.length = 0;
-              if (result.status === "OK") {
-                // redirect
-              } else if (result.status === "FAIL") {
-                for (const key in result.messages) {
-                  be_messages.value.push(result.messages[key][0]);
-                }
-              } else {
-                be_messages.value.push("Something went wrong");
-              }
-
-              console.log(result);
-            })
-            .catch((error) => console.error("Error:", error))
-            .finally(() => (loading.value = false));
+          fetchApi(
+            "/new-ad",
+            {
+              method: "POST",
+              headers: { "X-CSRF-TOKEN": csrf() },
+              body: formData,
+            },
+            (resp) => console.log(resp),
+            () => (loading.value = false)
+          );
         }
       });
     }
@@ -648,7 +704,6 @@ export default {
       uploading,
       map,
       v$,
-      be_messages,
       toggleMap,
       searchAddress,
       addImg,

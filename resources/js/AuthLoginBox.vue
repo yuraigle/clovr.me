@@ -5,7 +5,7 @@
       Sign in with Facebook
     </button>
 
-    <p class="text-center text-muted mt-3 mb-1">or</p>
+    <p class="text-center text-muted mt-3 mb-3">or</p>
 
     <form method="post">
       <div class="mb-2">
@@ -13,29 +13,26 @@
         <input
           type="email"
           id="email"
-          v-model="email"
+          v-model="form.email"
           class="form-control"
-          :class="{ 'is-invalid': v$['email'].$error }"
+          :class="{ 'is-invalid': v$['form'].email.$error }"
         />
-        <span class="invalid-feedback" v-if="v$['email'].$error">
-          {{ v$["email"].$errors[0].$message }}
+        <span class="invalid-feedback" v-if="v$['form'].email.$error">
+          {{ v$["form"].email.$errors[0].$message }}
         </span>
       </div>
 
       <div class="mb-4">
-        <span class="float-end">
-          <a href="/forgot">Forgot password?</a>
-        </span>
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
           id="password"
-          v-model="password"
+          v-model="form.password"
           class="form-control"
-          :class="{ 'is-invalid': v$['password'].$error }"
+          :class="{ 'is-invalid': v$['form'].password.$error }"
         />
-        <span class="invalid-feedback" v-if="v$['password'].$error">
-          {{ v$["password"].$errors[0].$message }}
+        <span class="invalid-feedback" v-if="v$['form'].password.$error">
+          {{ v$["form"].password.$errors[0].$message }}
         </span>
       </div>
 
@@ -43,6 +40,7 @@
         <button
           type="button"
           class="btn btn-success btn-lg w-100"
+          :class="{ disabled: loading }"
           @click="submitForm"
         >
           Login
@@ -57,14 +55,23 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers } from "@vuelidate/validators";
+import {
+  email,
+  maxLength,
+  minLength,
+  required,
+  helpers,
+} from "@vuelidate/validators";
 
 export default {
   setup() {
-    const email = ref();
-    const password = ref();
+    const form = reactive({
+      email: undefined,
+      password: undefined,
+    });
+
     const loading = ref(false);
     const v$ = useVuelidate();
 
@@ -72,14 +79,30 @@ export default {
       this.v$.$validate().then((res) => {
         if (res) {
           loading.value = true;
-          loading.value = false;
+
+          const formData = new FormData();
+          for (const key in form) {
+            if (form[key] !== undefined) {
+              formData.append(key, form[key]);
+            }
+          }
+
+          fetchApi(
+            "/login",
+            {
+              method: "POST",
+              headers: { "X-CSRF-TOKEN": csrf() },
+              body: formData,
+            },
+            () => (window.location.href = "/"),
+            () => (loading.value = false)
+          );
         }
       });
     }
 
     return {
-      email,
-      password,
+      form,
       loading,
       v$,
       submitForm,
@@ -87,13 +110,17 @@ export default {
   },
 
   validations: () => ({
-    email: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
-    },
-    password: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
+    form: {
+      email: {
+        required: helpers.withMessage("Required", required),
+        max: helpers.withMessage("Too long", maxLength(50)),
+        email,
+      },
+      password: {
+        min: minLength(6),
+        max: helpers.withMessage("Too long", maxLength(50)),
+        required: helpers.withMessage("Required", required),
+      },
     },
   }),
 };

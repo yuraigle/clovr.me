@@ -1,6 +1,12 @@
 @extends('layouts.base')
 
-@section('title')Login - @endsection
+@section('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('title')
+    Login -
+@endsection
 
 @section('content')
     <div id="app"></div>

@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
@@ -18,14 +19,21 @@ class AdController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function newAd()
+    public function newAd(Request $req)
     {
+        if (!Auth::check()) {
+            // redirect to /login?back=new-ad
+        }
+
         return view('new-ad', []);
     }
 
-    // TODO: authenticated
     public function postAd(Request $req): JsonResponse
     {
+        if (!Auth::check()) {
+            return response()->json("Unauthenticated", 401);
+        }
+
         $validator = Validator::make($req->post(), [
             'category_id' => 'required|numeric|min:1|max:5',
             'title' => 'required|string|max:100',
@@ -52,10 +60,7 @@ class AdController extends BaseController
         try {
             $validator->validate();
         } catch (Exception $e) {
-            return response()->json([
-                "status" => "FAIL",
-                "messages" => $validator->errors(),
-            ]);
+            return response()->json($validator->errors()->first(), 400);
         }
 
         $userId = 0;
@@ -102,13 +107,17 @@ class AdController extends BaseController
         return response()->json(["status" => "OK", "id" => $adId]);
     }
 
-    public function upload(Request $req)
+    public function upload(Request $req): JsonResponse
     {
+        if (!Auth::check()) {
+            return response()->json("Unauthenticated", 401);
+        }
+
         try {
             $hash = $this->uploadImage($req->file('pic'));
-            return response()->json(['hash' => $hash]);
+            return response()->json(["status" => "OK", "hash" => $hash]);
         } catch (Exception $e) {
-            return abort(500, $e->getMessage());
+            return response()->json($e->getMessage(), 500);
         }
     }
 

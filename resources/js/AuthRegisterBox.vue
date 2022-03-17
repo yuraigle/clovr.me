@@ -8,21 +8,6 @@
     <p class="text-center text-muted mt-3 mb-3">or</p>
 
     <form method="post">
-      <div class="w-100" v-if="be_messages.length">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            @click="be_messages.length = 0"
-          ></button>
-          <strong>Warning</strong>
-          <ul class="mb-0">
-            <li v-for="msg in be_messages" :key="msg">{{ msg }}</li>
-          </ul>
-        </div>
-      </div>
-
       <div class="mb-2">
         <label for="name" class="form-label">Name</label>
         <input
@@ -86,7 +71,13 @@
 <script>
 import { ref, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
+import {
+  email,
+  maxLength,
+  minLength,
+  required,
+  helpers,
+} from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -97,12 +88,7 @@ export default {
     });
 
     const loading = ref(false);
-    const be_messages = ref([]);
     const v$ = useVuelidate();
-
-    function csrf() {
-      return document.querySelector('meta[name="csrf-token"]').content;
-    }
 
     function submitForm() {
       this.v$.$validate().then((res) => {
@@ -116,26 +102,16 @@ export default {
             }
           }
 
-          fetch("/register", {
-            method: "POST",
-            headers: { "X-CSRF-TOKEN": csrf() },
-            body: formData,
-          })
-            .then((resp) => resp.json())
-            .then((result) => {
-              be_messages.value.length = 0;
-              if (result.access_token && result.token_type === "Bearer") {
-                window.location.href = "/";
-              } else if (result.status === "FAIL") {
-                for (const key in result.messages) {
-                  be_messages.value.push(result.messages[key][0]);
-                }
-              } else {
-                be_messages.value.push("Something went wrong");
-              }
-            })
-            .catch((error) => console.error("Error:", error))
-            .finally(() => (loading.value = false));
+          fetchApi(
+            "/register",
+            {
+              method: "POST",
+              headers: { "X-CSRF-TOKEN": csrf() },
+              body: formData,
+            },
+            () => (window.location.href = "/"),
+            () => (loading.value = false)
+          );
         }
       });
     }
@@ -143,7 +119,6 @@ export default {
     return {
       form,
       loading,
-      be_messages,
       v$,
       submitForm,
     };
@@ -158,6 +133,7 @@ export default {
       email: {
         required: helpers.withMessage("Required", required),
         max: helpers.withMessage("Too long", maxLength(50)),
+        email,
       },
       password: {
         min: minLength(6),

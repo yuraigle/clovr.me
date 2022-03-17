@@ -10,6 +10,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,14 +23,36 @@ class AuthController extends BaseController
         return view('auth.login', []);
     }
 
+    public function loginPost(Request $req): JsonResponse
+    {
+        $validator = Validator::make($req->post(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        try {
+            $validated = $validator->validate();
+        } catch (Exception $e) {
+            return response()->json($validator->errors()->first(), 400);
+        }
+
+        if (!Auth::attempt($req->only(['email', 'password']))) {
+            return response()->json("Invalid login details", 401);
+        }
+
+        $user = User::where('email', $validated['email'])->firstOrFail();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => 'OK',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
+    }
+
     public function register()
     {
         return view('auth.register', []);
-    }
-
-    public function forgot()
-    {
-        return view('auth.forgot', []);
     }
 
     public function registerPost(Request $req): JsonResponse
@@ -41,25 +64,34 @@ class AuthController extends BaseController
         ]);
 
         try {
-            $validatedData = $validator->validate();
+            $validated = $validator->validate();
         } catch (Exception $e) {
-            return response()->json([
-                "status" => "FAIL",
-                "messages" => $validator->errors(),
-            ]);
+            return response()->json($validator->errors()->first(), 400);
         }
 
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'status' => 'OK',
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ])->withCookie(cookie('Bearer', $token));
+        ]);
+    }
+
+    public function forgot()
+    {
+        return view('auth.forgot', []);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

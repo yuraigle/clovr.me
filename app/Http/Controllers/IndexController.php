@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class IndexController extends BaseController
@@ -27,9 +26,8 @@ class IndexController extends BaseController
         return view('about.terms', []);
     }
 
-    public function search(Request $req)
+    public function search()
     {
-        return $req->user();
-//        return view('search', []);
+        return view('search', []);
     }
 }
