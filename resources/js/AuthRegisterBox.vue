@@ -5,34 +5,35 @@
       Sign in with Facebook
     </button>
 
-    <p class="text-center text-muted mt-3 mb-1">or</p>
+    <p class="text-center text-muted mt-3 mb-3">or</p>
 
     <form method="post">
-      <div class="mb-2">
-        <label for="first_name" class="form-label">First Name</label>
-        <input
-          type="text"
-          id="first_name"
-          v-model="first_name"
-          class="form-control"
-          :class="{ 'is-invalid': v$['first_name'].$error }"
-        />
-        <span class="invalid-feedback" v-if="v$['first_name'].$error">
-          {{ v$["first_name"].$errors[0].$message }}
-        </span>
+      <div class="w-100" v-if="be_messages.length">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            @click="be_messages.length = 0"
+          ></button>
+          <strong>Warning</strong>
+          <ul class="mb-0">
+            <li v-for="msg in be_messages" :key="msg">{{ msg }}</li>
+          </ul>
+        </div>
       </div>
 
       <div class="mb-2">
-        <label for="last_name" class="form-label">Last Name</label>
+        <label for="name" class="form-label">Name</label>
         <input
           type="text"
-          id="last_name"
-          v-model="last_name"
+          id="name"
+          v-model="form.name"
           class="form-control"
-          :class="{ 'is-invalid': v$['last_name'].$error }"
+          :class="{ 'is-invalid': v$['form'].name.$error }"
         />
-        <span class="invalid-feedback" v-if="v$['last_name'].$error">
-          {{ v$["last_name"].$errors[0].$message }}
+        <span class="invalid-feedback" v-if="v$['form'].name.$error">
+          {{ v$["form"].name.$errors[0].$message }}
         </span>
       </div>
 
@@ -41,12 +42,12 @@
         <input
           type="email"
           id="email"
-          v-model="email"
+          v-model="form.email"
           class="form-control"
-          :class="{ 'is-invalid': v$['email'].$error }"
+          :class="{ 'is-invalid': v$['form'].email.$error }"
         />
-        <span class="invalid-feedback" v-if="v$['email'].$error">
-          {{ v$["email"].$errors[0].$message }}
+        <span class="invalid-feedback" v-if="v$['form'].email.$error">
+          {{ v$["form"].email.$errors[0].$message }}
         </span>
       </div>
 
@@ -55,12 +56,12 @@
         <input
           type="password"
           id="password"
-          v-model="password"
+          v-model="form.password"
           class="form-control"
-          :class="{ 'is-invalid': v$['password'].$error }"
+          :class="{ 'is-invalid': v$['form'].password.$error }"
         />
-        <span class="invalid-feedback" v-if="v$['password'].$error">
-          {{ v$["password"].$errors[0].$message }}
+        <span class="invalid-feedback" v-if="v$['form'].password.$error">
+          {{ v$["form"].password.$errors[0].$message }}
         </span>
       </div>
 
@@ -68,6 +69,7 @@
         <button
           type="button"
           class="btn btn-success btn-lg w-100"
+          :class="{ disabled: loading }"
           @click="submitForm"
         >
           Register
@@ -82,55 +84,86 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers } from "@vuelidate/validators";
+import { maxLength, minLength, required, helpers } from "@vuelidate/validators";
 
 export default {
   setup() {
-    const first_name = ref();
-    const last_name = ref();
-    const email = ref();
-    const password = ref();
+    const form = reactive({
+      name: undefined,
+      email: undefined,
+      password: undefined,
+    });
+
     const loading = ref(false);
+    const be_messages = ref([]);
     const v$ = useVuelidate();
+
+    function csrf() {
+      return document.querySelector('meta[name="csrf-token"]').content;
+    }
 
     function submitForm() {
       this.v$.$validate().then((res) => {
         if (res) {
           loading.value = true;
-          loading.value = false;
+
+          const formData = new FormData();
+          for (const key in form) {
+            if (form[key] !== undefined) {
+              formData.append(key, form[key]);
+            }
+          }
+
+          fetch("/register", {
+            method: "POST",
+            headers: { "X-CSRF-TOKEN": csrf() },
+            body: formData,
+          })
+            .then((resp) => resp.json())
+            .then((result) => {
+              be_messages.value.length = 0;
+              if (result.access_token && result.token_type === "Bearer") {
+                window.location.href = "/";
+              } else if (result.status === "FAIL") {
+                for (const key in result.messages) {
+                  be_messages.value.push(result.messages[key][0]);
+                }
+              } else {
+                be_messages.value.push("Something went wrong");
+              }
+            })
+            .catch((error) => console.error("Error:", error))
+            .finally(() => (loading.value = false));
         }
       });
     }
 
     return {
-      first_name,
-      last_name,
-      email,
-      password,
+      form,
       loading,
+      be_messages,
       v$,
       submitForm,
     };
   },
 
   validations: () => ({
-    first_name: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
-    },
-    last_name: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
-    },
-    email: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
-    },
-    password: {
-      required: helpers.withMessage("Required", required),
-      max: helpers.withMessage("Too long", maxLength(50)),
+    form: {
+      name: {
+        required: helpers.withMessage("Required", required),
+        max: helpers.withMessage("Too long", maxLength(50)),
+      },
+      email: {
+        required: helpers.withMessage("Required", required),
+        max: helpers.withMessage("Too long", maxLength(50)),
+      },
+      password: {
+        min: minLength(6),
+        max: helpers.withMessage("Too long", maxLength(50)),
+        required: helpers.withMessage("Required", required),
+      },
     },
   }),
 };

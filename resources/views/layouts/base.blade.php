@@ -26,7 +26,7 @@
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="/favicon-32x32.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
+                <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
                 clovr
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
