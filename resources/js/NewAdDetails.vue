@@ -385,6 +385,11 @@
       </div>
     </div>
 
+    <div id="aaaa" class="w-100">
+      <SimpleTypeahead :items="countiesList" :minInputLength="1">
+      </SimpleTypeahead>
+    </div>
+
     <div class="w-100 mt-2 mb-2">
       <div class="card">
         <div class="card-header">Website Link</div>
@@ -431,13 +436,14 @@
 import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { maxLength, minLength, required, url, helpers } from "@vuelidate/validators";
+import SimpleTypeahead from "vue3-simple-typeahead";
 import CurrencyInput from "./components/CurrencyInput.vue";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
 export default {
-  components: { CurrencyInput },
+  components: { CurrencyInput, SimpleTypeahead },
 
   setup() {
     const details = reactive({
@@ -718,5 +724,51 @@ form {
   #map {
     height: 450px;
   }
+}
+
+.simple-typeahead {
+  position: relative;
+  width: 100%;
+}
+.simple-typeahead > input {
+  margin-bottom: 0;
+}
+.simple-typeahead .simple-typeahead-list {
+  position: absolute;
+  width: 100%;
+  border: none;
+  max-height: 400px;
+  overflow-y: auto;
+  border-bottom: 0.1rem solid #d1d1d1;
+  z-index: 9;
+}
+.simple-typeahead .simple-typeahead-list .simple-typeahead-list-header {
+  background-color: #fafafa;
+  padding: 0.6rem 1rem;
+  border-bottom: 0.1rem solid #d1d1d1;
+  border-left: 0.1rem solid #d1d1d1;
+  border-right: 0.1rem solid #d1d1d1;
+}
+.simple-typeahead .simple-typeahead-list .simple-typeahead-list-footer {
+  background-color: #fafafa;
+  padding: 0.6rem 1rem;
+  border-left: 0.1rem solid #d1d1d1;
+  border-right: 0.1rem solid #d1d1d1;
+}
+.simple-typeahead .simple-typeahead-list .simple-typeahead-list-item {
+  cursor: pointer;
+  background-color: #fafafa;
+  padding: 0.6rem 1rem;
+  border-bottom: 0.1rem solid #d1d1d1;
+  border-left: 0.1rem solid #d1d1d1;
+  border-right: 0.1rem solid #d1d1d1;
+}
+.simple-typeahead .simple-typeahead-list .simple-typeahead-list-item:last-child {
+  border-bottom: none;
+}
+.simple-typeahead
+  .simple-typeahead-list
+  .simple-typeahead-list-item.simple-typeahead-list-item-active {
+  background-color: #e1e1e1;
 }
 </style>
