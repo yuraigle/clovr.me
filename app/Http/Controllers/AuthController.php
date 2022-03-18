@@ -33,11 +33,11 @@ class AuthController extends BaseController
         try {
             $validated = $validator->validate();
         } catch (Exception $e) {
-            return response()->json($validator->errors()->first(), 400);
+            return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
         if (!Auth::attempt($req->only(['email', 'password']))) {
-            return response()->json("Invalid login details", 401);
+            return response()->json(["message" => "Invalid login details"], 401);
         }
 
         $user = User::where('email', $validated['email'])->firstOrFail();
@@ -66,7 +66,7 @@ class AuthController extends BaseController
         try {
             $validated = $validator->validate();
         } catch (Exception $e) {
-            return response()->json($validator->errors()->first(), 400);
+            return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
         $user = User::create([

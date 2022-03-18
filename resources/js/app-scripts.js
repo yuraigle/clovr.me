@@ -30,9 +30,9 @@ window.fetchApi = function (
     return fetch(url, opts)
         .then((r) => r.json().then((d) => ({ status: r.status, body: d })))
         .then((result) => {
-            if (result.status !== 200) {
-                return showToast(result.body);
-            } else if (result.body.status !== "OK") {
+            if (result.status !== 200 && result.body.message) {
+                return showToast(result.body.message);
+            } else if (result.status !== 200 || result.body.status !== "OK") {
                 return showToast("Something went wrong");
             }
             _success(result.body);

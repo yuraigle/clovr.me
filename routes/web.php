@@ -21,5 +21,4 @@ Route::post('/new-ad', [AdController::class, 'postAd']);
 
 Route::post('/image-upload', [AdController::class, 'upload']);
 
-Route::get('/member', [MemberController::class, 'profile'])
-    ->name('member')->middleware('auth:sanctum');
+Route::get('/member', [MemberController::class, 'profile'])->name('member');

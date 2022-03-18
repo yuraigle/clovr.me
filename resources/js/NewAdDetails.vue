@@ -350,6 +350,7 @@
                   <i class="fa-solid fa-camera-retro" v-else></i>
                   Add image
                   <input
+                    id="picture1"
                     type="file"
                     class="d-none"
                     accept="image/*"
@@ -574,7 +575,10 @@ export default {
             body: formData,
           },
           (resp) => pictures.value.push(resp.hash),
-          () => (uploading.value = false)
+          () => {
+            uploading.value = false;
+            document.getElementById("picture1").value = null;
+          }
         );
       }
     }

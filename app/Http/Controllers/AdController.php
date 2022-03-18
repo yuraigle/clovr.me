@@ -19,10 +19,10 @@ class AdController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function newAd(Request $req)
+    public function newAd()
     {
         if (!Auth::check()) {
-            // redirect to /login?back=new-ad
+            return redirect('/login?back=' . urlencode($_SERVER['REQUEST_URI']));
         }
 
         return view('new-ad', []);
@@ -31,7 +31,7 @@ class AdController extends BaseController
     public function postAd(Request $req): JsonResponse
     {
         if (!Auth::check()) {
-            return response()->json("Unauthenticated", 401);
+            return response()->json(["message" => "Unauthenticated"], 401);
         }
 
         $validator = Validator::make($req->post(), [
@@ -60,7 +60,7 @@ class AdController extends BaseController
         try {
             $validator->validate();
         } catch (Exception $e) {
-            return response()->json($validator->errors()->first(), 400);
+            return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
         $userId = 0;
@@ -110,14 +110,14 @@ class AdController extends BaseController
     public function upload(Request $req): JsonResponse
     {
         if (!Auth::check()) {
-            return response()->json("Unauthenticated", 401);
+            return response()->json(["message" => "Unauthenticated"], 401);
         }
 
         try {
             $hash = $this->uploadImage($req->file('pic'));
             return response()->json(["status" => "OK", "hash" => $hash]);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 500);
+            return response()->json(["message" => $e->getMessage()], 500);
         }
     }
 
