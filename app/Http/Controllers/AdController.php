@@ -47,12 +47,12 @@ class AdController extends BaseController
             'www' => 'nullable|url|max:500',
             'youtube' => 'nullable|url|max:100|regex:/^https?:\/\/(www\.)?youtube\.com\/watch/',
             'description' => 'required|string|max:10000',
+            'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+            'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+            'location' => 'required|string|max:250',
             'postcode' => 'nullable|string|max:10',
             'county' => 'nullable|string|max:20',
             'town' => 'nullable|string|max:30',
-            'street' => 'nullable|string|max:50',
-            'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
-            'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
             'pictures' => 'nullable|array|max:10',
             'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
         ]);
@@ -76,23 +76,23 @@ class AdController extends BaseController
         $www = $req->post('www');
         $youtube = $req->post('youtube');
         $description = $req->post('description');
+        $lng = $req->post('lng');
+        $lat = $req->post('lat');
+        $location = $req->post('location');
         $postcode = $req->post('postcode');
         $county = $req->post('county');
         $town = $req->post('town');
-        $street = $req->post('street');
-        $lng = $req->post('lng');
-        $lat = $req->post('lat');
         $pictures = $req->post('pictures', []);
 
         DB::beginTransaction();
         DB::insert("insert into `ads` (`user_id`, `category_id`, `title`, `price`, `property_type`,
                    `num_beds`, `price_freq`, `date_avail`, `room_type`, `room_couples`, `www`,
-                   `youtube`, `description`, `postcode`, `county`, `town`, `street`, `lng`, `lat`)
+                   `youtube`, `description`, `postcode`, `county`, `town`, `location`, `lng`, `lat`)
                     values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             [
                 $userId, $categoryId, $title, $price, $propertyType, $numBeds, $priceFreq,
                 $dateAvail, $roomType, $roomCouples, $www, $youtube, $description, $postcode,
-                $county, $town, $street, $lng, $lat
+                $county, $town, $location, $lng, $lat
             ]
         );
 
