@@ -84,6 +84,7 @@ CREATE TABLE `users`
     `remember_token`    VARCHAR(100)        NULL DEFAULT NULL,
     `created_at`        TIMESTAMP           NULL DEFAULT NULL,
     `updated_at`        TIMESTAMP           NULL DEFAULT NULL,
+    `fb_id`             VARCHAR(20)         NULL DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `IX_USERS_EMAIL_UNIQUE` (`email`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'

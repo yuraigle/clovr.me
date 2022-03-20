@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends BaseController
 {
@@ -75,6 +76,7 @@ class AuthController extends BaseController
             'password' => Hash::make($validated['password']),
         ]);
 
+        Auth::login($user);
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -93,5 +95,32 @@ class AuthController extends BaseController
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function fbRedirect()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function fbCallback()
+    {
+        try {
+            $fbUser = Socialite::driver('facebook')->user();
+            $user = User::where('fb_id', $fbUser->id)->first();
+
+            if (!$user) {
+                $user = User::create([
+                    'name' => $fbUser->name,
+                    'email' => $fbUser->email,
+                    'password' => Hash::make(substr(md5(rand()), 0, 10)),
+                    'fb_id' => $fbUser->id,
+                ]);
+            }
+
+            Auth::login($user);
+            return redirect('/member');
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
     }
 }

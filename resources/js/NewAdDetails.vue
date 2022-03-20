@@ -619,7 +619,7 @@ export default {
               headers: { "X-CSRF-TOKEN": csrf() },
               body: formData,
             },
-            (resp) => console.log(resp),
+            (resp) => (window.location.href = "/activate?id=" + resp.id),
             () => (loading.value = false)
           );
         }

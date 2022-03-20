@@ -1,5 +1,7 @@
 server {
     listen 80;
+    server_name 151.ip-51-38-131.eu;
+
     root /var/www/site1/public;
     index index.php index.html index.htm;
     charset utf-8;

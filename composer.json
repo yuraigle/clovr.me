@@ -15,6 +15,7 @@
         "intervention/image": "^2.7",
         "laravel/framework": "^8.83",
         "laravel/sanctum": "^2.14",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
@@ -27,11 +28,6 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
         }
     },
     "scripts": {

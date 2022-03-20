@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow-sm bg-light mt-4 mb-4 p-4">
-    <button type="button" class="btn btn-primary btn-lg w-100">
+    <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100">
       <i class="fa-brands fa-facebook-square me-1"></i>
       Sign in with Facebook
-    </button>
+    </a>
 
     <p class="text-center text-muted mt-3 mb-3">or</p>
 
