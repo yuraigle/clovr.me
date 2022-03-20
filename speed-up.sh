@@ -1,4 +1,5 @@
-composer install --optimize-autoloader --no-dev &&
+composer update --no-ansi &&
+composer install --optimize-autoloader --no-dev --no-ansi &&
 php artisan cache:clear &&
 php artisan config:cache &&
 php artisan route:cache &&

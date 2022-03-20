@@ -32,7 +32,7 @@ class AuthController extends BaseController
         ]);
 
         try {
-            $validated = $validator->validate();
+            $validator->validate();
         } catch (Exception $e) {
             return response()->json(["message" => $validator->errors()->first()], 400);
         }
@@ -41,14 +41,7 @@ class AuthController extends BaseController
             return response()->json(["message" => "Invalid login details"], 401);
         }
 
-        $user = User::where('email', $validated['email'])->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'status' => 'OK',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+        return response()->json(['status' => 'OK']);
     }
 
     public function register()
@@ -77,13 +70,7 @@ class AuthController extends BaseController
         ]);
 
         Auth::login($user);
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'status' => 'OK',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+        return response()->json(['status' => 'OK']);
     }
 
     public function forgot()
@@ -109,6 +96,14 @@ class AuthController extends BaseController
             $user = User::where('fb_id', $fbUser->id)->first();
 
             if (!$user) {
+                $user = User::where('email', $fbUser->email)->first();
+                if ($user) {
+                    $user->fb_id = $fbUser->id;
+                    $user->save();
+                }
+            }
+
+            if (!$user) {
                 $user = User::create([
                     'name' => $fbUser->name,
                     'email' => $fbUser->email,
@@ -119,8 +114,8 @@ class AuthController extends BaseController
 
             Auth::login($user);
             return redirect('/member');
-        } catch (Exception $exception) {
-            dd($exception->getMessage());
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
     }
 }

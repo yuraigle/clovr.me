@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `ads`;
 DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `password_resets`;
-DROP TABLE IF EXISTS `personal_access_tokens`;
 
 CREATE TABLE `categories`
 (
@@ -96,22 +95,5 @@ CREATE TABLE `password_resets`
     `token`      VARCHAR(255) NOT NULL,
     `created_at` TIMESTAMP    NULL DEFAULT NULL,
     INDEX `IX_PASSWORD_RESETS_EMAIL` (`email`) USING BTREE
-) COLLATE = 'utf8mb3_general_ci'
-  ENGINE = InnoDB;
-
-CREATE TABLE `personal_access_tokens`
-(
-    `id`             BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `tokenable_type` VARCHAR(255)        NOT NULL,
-    `tokenable_id`   BIGINT(20) UNSIGNED NOT NULL,
-    `name`           VARCHAR(255)        NOT NULL,
-    `token`          VARCHAR(64)         NOT NULL,
-    `abilities`      TEXT                NULL DEFAULT NULL,
-    `last_used_at`   TIMESTAMP           NULL DEFAULT NULL,
-    `created_at`     TIMESTAMP           NULL DEFAULT NULL,
-    `updated_at`     TIMESTAMP           NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `IX_ACCESS_TOKEN_UNIQUE` (`token`) USING BTREE,
-    INDEX `IX_ACCESS_TOKEN_TYPE_ID` (`tokenable_type`, `tokenable_id`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'
   ENGINE = InnoDB;
