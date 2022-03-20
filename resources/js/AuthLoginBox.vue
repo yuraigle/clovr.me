@@ -23,6 +23,7 @@
       </div>
 
       <div class="mb-4">
+        <a href="/forgot" class="float-end">Forgot your password?</a>
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
