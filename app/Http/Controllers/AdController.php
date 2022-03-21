@@ -22,7 +22,7 @@ class AdController extends BaseController
     public function newAd()
     {
         if (!Auth::check()) {
-            return redirect('/login?back=' . urlencode($_SERVER['REQUEST_URI']));
+            // return redirect('/login?back=' . urlencode("/new-ad"));
         }
 
         return view('new-ad', []);
@@ -31,7 +31,7 @@ class AdController extends BaseController
     public function postAd(Request $req): JsonResponse
     {
         if (!Auth::check()) {
-            return response()->json(["message" => "Unauthenticated"], 401);
+            // return response()->json(["message" => "Unauthenticated"], 401);
         }
 
         $validator = Validator::make($req->post(), [
@@ -51,8 +51,8 @@ class AdController extends BaseController
             'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
             'location' => 'required|string|max:250',
             'postcode' => 'nullable|string|max:10',
-            'county' => 'nullable|string|max:20',
-            'town' => 'nullable|string|max:30',
+            'county' => 'nullable|string|max:50',
+            'town' => 'nullable|string|max:100',
             'pictures' => 'nullable|array|max:10',
             'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
         ]);
@@ -63,7 +63,7 @@ class AdController extends BaseController
             return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
-        $userId = 0;
+        $userId = 0; // $req->user()->id;
         $categoryId = $req->post('category_id');
         $title = $req->post('title');
         $price = $req->post('price');
@@ -110,7 +110,7 @@ class AdController extends BaseController
     public function upload(Request $req): JsonResponse
     {
         if (!Auth::check()) {
-            return response()->json(["message" => "Unauthenticated"], 401);
+            // return response()->json(["message" => "Unauthenticated"], 401);
         }
 
         try {

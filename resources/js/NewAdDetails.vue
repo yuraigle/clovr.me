@@ -47,7 +47,7 @@
                 type="checkbox"
                 v-model="details.is_bold"
               />
-              Make it outstanding for &euro;5.00
+              Make it outstanding for &euro;15.00
             </label>
           </div>
         </div>
@@ -435,7 +435,6 @@
         class="btn btn-primary"
         :class="{ disabled: loading }"
         @click="submitForm"
-        style="width: 80px"
       >
         Next
         <i class="fa-solid fa-spinner" v-if="loading"></i>
@@ -518,7 +517,6 @@ export default {
           map.marker.addTo(map.obj);
           map.obj.jumpTo({ center: s.latlng, zoom: 16 });
         }
-        console.log(s);
       });
     });
 

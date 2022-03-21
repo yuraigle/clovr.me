@@ -8,16 +8,16 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 
-class MemberController extends BaseController
+class PaymentController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function profile()
+    public function activate()
     {
         if (!Auth::check()) {
-            return redirect('/login?back=' . urlencode("/member"));
+            // return redirect('/');
         }
 
-        return view('member.profile', []);
+        return view('payment.activate', []);
     }
 }
