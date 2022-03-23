@@ -16,8 +16,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm">
-        <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm ps-4 pe-4">
+        <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
                 clovr
