@@ -22,7 +22,7 @@
       <div class="mb-4">
         <button
           type="button"
-          class="btn btn-danger btn-lg w-100"
+          class="btn btn-danger btn-lg w-100 bg-gradient"
           @click="submitForm"
         >
           Reset password

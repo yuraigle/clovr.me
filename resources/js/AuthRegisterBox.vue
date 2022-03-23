@@ -1,6 +1,6 @@
 <template>
   <div class="card shadow-sm bg-light mt-4 mb-4 p-4">
-    <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100">
+    <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100 bg-gradient">
       <i class="fa-brands fa-facebook-square me-1"></i>
       Sign in with Facebook
     </a>
@@ -53,7 +53,7 @@
       <div class="mb-2">
         <button
           type="button"
-          class="btn btn-success btn-lg w-100"
+          class="btn btn-success btn-lg w-100 bg-gradient"
           :class="{ disabled: loading }"
           @click="submitForm"
         >

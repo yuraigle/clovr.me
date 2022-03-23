@@ -47,7 +47,7 @@
                 type="checkbox"
                 v-model="details.is_bold"
               />
-              Make it outstanding for &euro;15.00
+              Make it outstanding for &euro;10.00
             </label>
           </div>
         </div>
@@ -432,7 +432,7 @@
     <div class="w-100 mt-2 mb-2 text-end">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary bg-gradient"
         :class="{ disabled: loading }"
         @click="submitForm"
       >
