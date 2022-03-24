@@ -5,7 +5,9 @@
       Sign in with Facebook
     </a>
 
-    <p class="text-center text-muted mt-3 mb-3">or</p>
+    <div class="text-center text-muted mt-4 mb-1 lined_or">
+      <p><span class="bg-light">or</span></p>
+    </div>
 
     <form method="post">
       <div class="mb-2">
@@ -69,15 +71,9 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
-import {
-  email,
-  maxLength,
-  minLength,
-  required,
-  helpers,
-} from "@vuelidate/validators";
+import {email, helpers, maxLength, minLength, required,} from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -106,7 +102,7 @@ export default {
             "/register",
             {
               method: "POST",
-              headers: { "X-CSRF-TOKEN": csrf() },
+              headers: {"X-CSRF-TOKEN": csrf()},
               body: formData,
             },
             () => (window.location.href = "/"),
@@ -149,5 +145,17 @@ export default {
 .card {
   max-width: 450px;
   margin: 0 auto;
+}
+
+.lined_or > p {
+  height: 1px;
+  background: #ddd;
+  margin-top: 10px;
+}
+
+.lined_or > p > span {
+  padding: 10px;
+  position: relative;
+  top: -13px;
 }
 </style>

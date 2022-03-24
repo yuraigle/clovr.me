@@ -10,7 +10,8 @@ window.showToast = function (content, color = "danger") {
     <div class="toast bg-${color} text-white fade show" id="toast_${++numToasts}" role="alert">
         <div class="d-flex">
             <div class="toast-body">${content}</div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                onclick="document.getElementById('toast_${numToasts}').remove()"></button>
         </div>
     </div>
     `;
@@ -24,11 +25,13 @@ window.showToast = function (content, color = "danger") {
 window.fetchApi = function (
     url,
     opts,
-    _success = () => {},
-    _finally = () => {}
+    _success = () => {
+    },
+    _finally = () => {
+    }
 ) {
     return fetch(url, opts)
-        .then((r) => r.json().then((d) => ({ status: r.status, body: d })))
+        .then((r) => r.json().then((d) => ({status: r.status, body: d})))
         .then((result) => {
             if (result.status !== 200 && result.body.message) {
                 return showToast(result.body.message);
