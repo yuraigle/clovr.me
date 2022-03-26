@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('title')
-    Profile -
+    My ADs -
 @endsection
 
 @section('content')

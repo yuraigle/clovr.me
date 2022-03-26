@@ -105,7 +105,10 @@ export default {
               headers: {"X-CSRF-TOKEN": csrf()},
               body: formData,
             },
-            () => (window.location.href = "/"),
+            () => {
+              const urlParams = new URLSearchParams(window.location.search);
+              window.location.href = urlParams.get("back") || "/member/profile";
+            },
             () => (loading.value = false)
           );
         }

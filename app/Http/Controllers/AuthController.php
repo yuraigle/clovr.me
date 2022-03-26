@@ -113,7 +113,7 @@ class AuthController extends BaseController
             }
 
             Auth::login($user);
-            return redirect('/member');
+            return redirect(route('profile'));
         } catch (Exception $e) {
             dd($e->getMessage());
         }

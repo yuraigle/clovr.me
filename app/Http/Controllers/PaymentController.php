@@ -15,7 +15,7 @@ class PaymentController extends BaseController
     public function activate()
     {
         if (!Auth::check()) {
-            // return redirect('/');
+            return redirect('/');
         }
 
         return view('payment.activate', []);

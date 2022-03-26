@@ -18,6 +18,7 @@
           v-model="form.email"
           class="form-control"
           :class="{ 'is-invalid': v$['form'].email.$error }"
+          autofocus
         />
         <span class="invalid-feedback" v-if="v$['form'].email.$error">
           {{ v$["form"].email.$errors[0].$message }}
@@ -25,7 +26,7 @@
       </div>
 
       <div class="mb-4">
-        <a href="/forgot" class="float-end">Forgot your password?</a>
+        <a href="/forgot" class="float-end" tabindex="-1">Forgot your password?</a>
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
@@ -93,7 +94,7 @@ export default {
             },
             () => {
               const urlParams = new URLSearchParams(window.location.search);
-              window.location.href = urlParams.get("back") || "/";
+              window.location.href = urlParams.get("back") || "/member/profile";
             },
             () => (loading.value = false)
           );
