@@ -1,4 +1,5 @@
 import "bootstrap/js/dist/collapse.js";
+import "bootstrap/js/dist/dropdown.js";
 
 window.csrf = function () {
     return document.querySelector('meta[name="csrf-token"]').content;

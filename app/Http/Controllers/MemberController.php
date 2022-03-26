@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends BaseController
 {
@@ -21,13 +23,15 @@ class MemberController extends BaseController
         return view('member.profile', []);
     }
 
-    public function ads()
+    public function ads(Request $req)
     {
         if (!Auth::check()) {
             return redirect('/login?back=' . urlencode(route('my-ads', [], false)));
         }
 
-        return view('member.ads');
+        $rows = DB::select("select * from `ads` where `user_id` = ?", [$req->user()->id]);
+
+        return view('member.ads', ["rows" => $rows]);
     }
 
     public function favorites()

@@ -83,16 +83,17 @@ class AdController extends BaseController
         $county = $req->post('county');
         $town = $req->post('town');
         $pictures = $req->post('pictures', []);
+        $pic = $pictures ? $pictures[0] : null;
 
         DB::beginTransaction();
         DB::insert("insert into `ads` (`user_id`, `category_id`, `title`, `price`, `property_type`,
                    `num_beds`, `price_freq`, `date_avail`, `room_type`, `room_couples`, `www`,
-                   `youtube`, `description`, `postcode`, `county`, `town`, `location`, `lng`, `lat`)
-                    values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                   `youtube`, `description`, `lng`, `lat`, `location`, `postcode`, `county`, `town`,
+                   `pic`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             [
                 $userId, $categoryId, $title, $price, $propertyType, $numBeds, $priceFreq,
-                $dateAvail, $roomType, $roomCouples, $www, $youtube, $description, $postcode,
-                $county, $town, $location, $lng, $lat
+                $dateAvail, $roomType, $roomCouples, $www, $youtube, $description, $lng, $lat,
+                $location, $postcode, $county, $town, $pic
             ]
         );
 
