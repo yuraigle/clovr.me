@@ -153,11 +153,15 @@ class AdController extends BaseController
         return $hash;
     }
 
-    public function editAd() {
+    public function editAd($id)
+    {
         if (!Auth::check()) {
             return redirect('/login');
         }
 
-        return view('member.edit-ad', []);
+        $row = DB::selectOne("select * from `ads` where id=?", [$id]);
+        abort_if(!$row, 404, "Ad not found");
+
+        return view('member.edit-ad', ["row_json" => json_encode($row)]);
     }
 }

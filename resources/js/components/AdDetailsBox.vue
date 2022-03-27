@@ -1,12 +1,12 @@
 <template>
   <div class="w-100 mt-2 mb-2">
     <div class="card">
-      <div class="card-header">Property Details {{ category }}</div>
+      <div class="card-header">Property Details {{ cid }}</div>
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6 mb-2">
             <label for="price" class="form-label">
-              <span v-if="[2, 3, 5].includes(category)">Rent:</span>
+              <span v-if="[2, 3, 5].includes(cid)">Rent:</span>
               <span v-else>Price:</span>
             </label>
             <CurrencyInput
@@ -20,7 +20,7 @@
             </span>
           </div>
 
-          <div class="col-sm-6 mb-2" v-if="[2, 3, 5].includes(category)">
+          <div class="col-sm-6 mb-2" v-if="[2, 3, 5].includes(cid)">
             <label for="price_freq" class="form-label">Rent period:</label>
             <div
               class="form-check"
@@ -57,6 +57,69 @@
               {{ errors.price_freq.$errors[0].$message }}
             </span>
           </div>
+
+          <div class="col-sm-6 mb-2" v-if="cid > 0">
+            <label for="property_type" class="form-label">Property Type:</label>
+            <select
+              id="property_type"
+              class="form-control"
+              :class="{ 'is-invalid': errors.property_type.$error }"
+              :value="property_type"
+              @change="$emit('update:property_type', $event.target.value)"
+            >
+              <option value="">Please select...</option>
+              <option value="flat" v-if="cid < 4">Flat</option>
+              <option value="house" v-if="cid < 4">House</option>
+              <option value="other" v-if="cid < 4">Other</option>
+              <option value="garage" v-if="cid >= 4">Garage</option>
+              <option value="parking" v-if="cid >= 4">Parking space</option>
+            </select>
+            <span class="invalid-feedback" v-if="errors.property_type.$error">
+              {{ errors.property_type.$errors[0].$message }}
+            </span>
+          </div>
+
+          <div class="col-sm-6 mb-4" v-if="[1, 2].includes(cid)">
+            <label for="num_beds" class="form-label">No. of Bedrooms:</label>
+            <select
+              id="num_beds"
+              class="form-control"
+              :class="{ 'is-invalid': errors.num_beds.$error }"
+              :value="num_beds"
+              @change="$emit('update:num_beds', $event.target.value)"
+            >
+              <option value="">Please select...</option>
+              <option value="0">Studio</option>
+              <option v-for="index in 10" :key="index" :value="index">
+                {{ index }}
+              </option>
+            </select>
+            <span class="invalid-feedback" v-if="errors.num_beds.$error">
+              {{ errors.num_beds.$errors[0].$message }}
+            </span>
+          </div>
+
+          <div class="col-sm-6 mb-2" v-if="[3].includes(cid)">
+            <label for="room_type" class="form-label">Room type:</label>
+            <select
+              id="room_type"
+              class="form-control"
+              :class="{ 'is-invalid': errors.room_type.$error }"
+              :value="room_type"
+              @change="$emit('update:room_type', $event.target.value)"
+            >
+              <option value="">Please select...</option>
+              <option value="single">Single room</option>
+              <option value="double">Double room</option>
+              <option value="twin">Twin room</option>
+              <option value="triple">Triple room</option>
+              <option value="shared">Shared room</option>
+              <option value="couch">Couch Surf</option>
+            </select>
+            <span class="invalid-feedback" v-if="errors.room_type.$error">
+              {{ errors.room_type.$errors[0].$message }}
+            </span>
+          </div>
         </div>
 
         <div class="row mt-4 mb-2">
@@ -90,15 +153,33 @@
 </template>
 
 <script>
-import { watch } from "vue";
+import { watch, computed } from "vue";
 import CurrencyInput from "./CurrencyInput.vue";
 
 export default {
-  props: ["category", "description", "price", "price_freq", "errors"],
-  emits: ["update:price", "update:price_freq", "update:description"],
+  props: [
+    "category",
+    "price",
+    "price_freq",
+    "property_type",
+    "num_beds",
+    "room_type",
+    "description",
+    "errors",
+  ],
+  emits: [
+    "update:price",
+    "update:price_freq",
+    "update:property_type",
+    "update:num_beds",
+    "update:room_type",
+    "update:description",
+  ],
   components: { CurrencyInput },
 
   setup(props, { emit }) {
+    const cid = computed(() => parseInt(props.category));
+
     watch(
       () => props.price,
       (val) => {
@@ -106,7 +187,9 @@ export default {
       }
     );
 
-    return {};
+    return {
+      cid,
+    };
   },
 };
 </script>
