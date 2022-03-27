@@ -711,12 +711,6 @@ form {
 }
 
 @media (min-width: 768px) {
-  .pss-05 {
-    padding-left: 2px;
-  }
-  .pee-05 {
-    padding-right: 2px;
-  }
   #map {
     height: 450px;
   }

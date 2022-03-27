@@ -28,7 +28,7 @@ class AdController extends BaseController
         return view('new-ad', []);
     }
 
-    public function postAd(Request $req): JsonResponse
+    public function newAdPost(Request $req): JsonResponse
     {
         if (!Auth::check()) {
             return response()->json(["message" => "Unauthenticated"], 401);
@@ -151,5 +151,13 @@ class AdController extends BaseController
             ->save($destAbs . "x_$hash.webp", 75);
 
         return $hash;
+    }
+
+    public function editAd() {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        return view('member.edit-ad', []);
     }
 }

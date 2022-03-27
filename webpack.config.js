@@ -9,6 +9,7 @@ module.exports = {
 
     entry: {
         "new-ad-details": "./resources/js/new-ad-details.js",
+        "edit-ad": "./resources/js/edit-ad.js",
         "auth-login-box": "./resources/js/auth-login-box.js",
         "auth-register-box": "./resources/js/auth-register-box.js",
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",

@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills flex-column">
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('my-ads') ? 'active' : '' }}" href="{{ route('my-ads') }}">
             <i class="fa-solid fa-folder-open me-1"></i>
@@ -17,7 +17,7 @@
             Favorites
         </a>
     </li>
-    <li class="nav-item me-auto">
+    <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">
             <i class="fa-solid fa-user-gear me-1"></i>
             My Details

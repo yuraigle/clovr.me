@@ -1,16 +1,26 @@
 <template>
-  <input ref="inputRef" type="text" />
+  <input ref="inputRef" />
 </template>
 
 <script>
+import { watch } from "vue";
 import { useCurrencyInput } from "vue-currency-input";
 
 export default {
-  setup() {
-    const { inputRef } = useCurrencyInput({
+  props: ["modelValue"],
+
+  setup(props) {
+    const { inputRef, setValue } = useCurrencyInput({
       currency: "EUR",
       precision: 2,
     });
+
+    watch(
+      () => props.modelValue,
+      (val) => {
+        setValue(val);
+      }
+    );
 
     return { inputRef };
   },
