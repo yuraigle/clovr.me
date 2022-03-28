@@ -7,89 +7,89 @@
     @yield('meta')
 
     <title>@yield('title')clovr.one</title>
-    <link href="{{ mix('/dist/app-styles.css') }}" rel="stylesheet"/>
+    <link href="{{ mix('/dist/app-styles.css') }}" rel="stylesheet" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-    <link rel="manifest" href="/site.webmanifest"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     @yield('inline_styles')
 </head>
 
 <body class="d-flex flex-column h-100">
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm ps-4 pe-4">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
-            clovr
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm ps-4 pe-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
+                clovr
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbar1">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('search') ? 'active' : '' }}"
-                       href="{{ route('search') }}">
-                        <i class="fa-solid fa-magnifying-glass me-1"></i>Search
-                    </a>
-                </li>
-                @guest
-                    <li class="nav-item ms-1 me-1">
-                        <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
-                           href="{{ route('login') }}?back=new-ad">
-                            <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
-                        </a>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbar1">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('login') ? 'active' : '' }}"
-                           href="{{ route('login') }}">
-                            <i class="fa-solid fa-user me-1"></i>Login
+                        <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('search') ? 'active' : '' }}"
+                            href="{{ route('search') }}">
+                            <i class="fa-solid fa-magnifying-glass me-1"></i>Search
                         </a>
                     </li>
-                @endguest
-                @auth
-                    <li class="nav-item ms-1 me-1">
-                        <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
-                           href="{{ route('new-ad') }}">
-                            <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('profile') ? 'active' : '' }}"
-                           href="{{ route('profile') }}">
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ auth()->user()['name'] }}
-                        </a>
-                    </li>
-                @endauth
-            </ul>
+                    @guest
+                        <li class="nav-item ms-1 me-1">
+                            <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
+                                href="{{ route('login') }}?back=new-ad">
+                                <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('login') ? 'active' : '' }}"
+                                href="{{ route('login') }}">
+                                <i class="fa-solid fa-user me-1"></i>Login
+                            </a>
+                        </li>
+                    @endguest
+                    @auth
+                        <li class="nav-item ms-1 me-1">
+                            <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
+                                href="{{ route('new-ad') }}">
+                                <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('profile') ? 'active' : '' }}"
+                                href="{{ route('profile') }}">
+                                <i class="fa-solid fa-user me-1"></i>
+                                {{ auth()->user()['name'] }}
+                            </a>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<main class="flex-grow-1">
-    <div class="container py-4">
-        @yield('content')
-    </div>
-</main>
-
-<footer class="mt-auto bg-dark py-4">
-    <div class="container">
-        <div class="col-sm-4">
-            <a href="{{ route('about') }}" class="text-light">About Us</a><br/>
-            <a href="{{ route('terms') }}" class="text-light">Terms of Use</a><br/>
+    <main class="flex-grow-1">
+        <div class="container py-4">
+            @yield('content')
         </div>
-    </div>
-    <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
-</footer>
+    </main>
 
-<script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
-<script src="https://kit.fontawesome.com/e0449c5598.js" crossorigin="anonymous"></script>
-@yield('inline_scripts')
+    <footer class="mt-auto bg-dark py-4">
+        <div class="container">
+            <div class="col-sm-4">
+                <a href="{{ route('about') }}" class="text-light">About Us</a><br />
+                <a href="{{ route('terms') }}" class="text-light">Terms of Use</a><br />
+            </div>
+        </div>
+        <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
+    </footer>
+
+    <script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
+    <script src="https://kit.fontawesome.com/e0449c5598.js" crossorigin="anonymous"></script>
+    @yield('inline_scripts')
 </body>
 
 </html>
