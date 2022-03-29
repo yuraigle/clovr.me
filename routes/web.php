@@ -29,4 +29,4 @@ Route::post('/new-ad', [AdController::class, 'newAdPost']);
 Route::post('/image-upload', [AdController::class, 'upload']);
 Route::get('/activate', [PaymentController::class, 'activate']);
 Route::get('/edit-ad/{id}', [AdController::class, 'editAd'])
-    ->where('id', '[0-9]+')->name('ad-edit');
+    ->where('id', '[0-9]+')->name('edit-ad');

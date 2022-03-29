@@ -52,3 +52,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form-check {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border: 1px solid transparent;
+}
+</style>

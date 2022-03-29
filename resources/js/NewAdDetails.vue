@@ -1,5 +1,5 @@
 <template>
-  <form method="post" class="row">
+  <form class="row">
     <div class="w-100 mt-2 mb-2">
       <div class="card">
         <div class="card-header">Category</div>

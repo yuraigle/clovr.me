@@ -5,7 +5,7 @@
       <div class="card-body">
         <select
           class="form-control"
-          :class="{ 'is-invalid': errors.$error }"
+          :class="{ 'is-invalid': errors.category_id.$error }"
           :disabled="!editable"
           :value="category_id"
           @change="$emit('update:category_id', $event.target.value)"
@@ -17,8 +17,8 @@
           <option value="4">Parking &amp; Garage For Sale</option>
           <option value="5">Parking &amp; Garage To Rent</option>
         </select>
-        <span class="invalid-feedback" v-if="errors.$error">
-          {{ errors.$errors[0].$message }}
+        <span class="invalid-feedback" v-if="errors.category_id.$error">
+          {{ errors.category_id.$errors[0].$message }}
         </span>
       </div>
     </div>

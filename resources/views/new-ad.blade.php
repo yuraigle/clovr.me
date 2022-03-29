@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <h1 class="text-center">Post an Ad</h1>
+    <h3 class="text-center">Post an Ad</h3>
     <div id="app"></div>
 @endsection
 

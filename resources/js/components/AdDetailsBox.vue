@@ -1,7 +1,7 @@
 <template>
   <div class="w-100 mt-2 mb-2">
     <div class="card">
-      <div class="card-header">Property Details {{ cid }}</div>
+      <div class="card-header">Property Details</div>
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6 mb-2">
@@ -22,10 +22,7 @@
 
           <div class="col-sm-6 mb-2" v-if="[2, 3, 5].includes(cid)">
             <label for="price_freq" class="form-label">Rent period:</label>
-            <div
-              class="form-check"
-              :class="{ 'is-invalid': errors.price_freq.$error }"
-            >
+            <div class="form-check" :class="{ 'is-invalid': errors.price_freq.$error }">
               <input
                 type="radio"
                 id="price_freq_m"
@@ -183,7 +180,9 @@ export default {
     watch(
       () => props.price,
       (val) => {
-        emit("update:price", val);
+        if (val !== null) {
+          emit("update:price", val);
+        }
       }
     );
 

@@ -1,19 +1,19 @@
 <template>
-  <form>
+  <form class="row">
     <AdCategoryBox
-      v-model:category_id="category_id"
-      :errors="v$.category_id"
+      v-model:category_id="details.category_id"
       :editable="false"
+      :errors="v$['details']"
     />
 
     <AdTitleBox
-      v-model:title="titleBox.title"
-      v-model:bold="titleBox.bold"
-      :errors="v$['titleBox']"
+      v-model:title="details.title"
+      v-model:bold="details.bold"
+      :errors="v$['details']"
     />
 
     <AdDetailsBox
-      :category="category_id"
+      :category="details.category_id"
       v-model:price="details.price"
       v-model:price_freq="details.price_freq"
       v-model:property_type="details.property_type"
@@ -22,38 +22,65 @@
       v-model:description="details.description"
       :errors="v$['details']"
     />
-    <button type="button" @click="handleSubmit">OK</button>
+
+    <AdImagesBox
+      v-model:pictures="pictures"
+      v-model:youtube="details.youtube"
+      :errors="v$['details']"
+    />
+
+    <AdWebsiteBox
+      v-model:has_www="details.has_www"
+      v-model:www="details.www"
+      :errors="v$['details']"
+    />
+
+    <div class="w-100 mt-2 mb-2 text-end">
+      <button
+        type="button"
+        class="btn btn-primary bg-gradient"
+        :class="{ disabled: loading }"
+        @click="handleSubmit"
+      >
+        Save
+        <i class="fa-solid fa-spinner" v-if="loading"></i>
+        <i class="fa-solid fa-chevron-right" v-else></i>
+      </button>
+    </div>
   </form>
 </template>
 
 <script>
 import { reactive, ref, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers } from "@vuelidate/validators";
+import { maxLength, required, helpers, url } from "@vuelidate/validators";
 import AdCategoryBox from "./components/AdCategoryBox.vue";
 import AdTitleBox from "./components/AdTitleBox.vue";
 import AdDetailsBox from "./components/AdDetailsBox.vue";
+import AdWebsiteBox from "./components/AdWebsiteBox.vue";
+import AdImagesBox from "./components/AdImagesBox.vue";
 
 export default {
-  components: { AdCategoryBox, AdTitleBox, AdDetailsBox },
+  components: { AdCategoryBox, AdTitleBox, AdDetailsBox, AdWebsiteBox, AdImagesBox },
 
   setup() {
-    const category_id = ref(2);
-
-    const titleBox = reactive({
+    const details = reactive({
+      category_id: undefined,
       title: undefined,
       bold: undefined,
-    });
-
-    const details = reactive({
       price: undefined,
       price_freq: undefined,
       property_type: undefined,
       num_beds: undefined,
       room_type: undefined,
       description: undefined,
+      has_www: undefined,
+      www: undefined,
+      youtube: undefined,
     });
 
+    const pictures = ref([]);
+    const loading = ref(false);
     const v$ = useVuelidate();
 
     function handleSubmit() {
@@ -67,36 +94,39 @@ export default {
       const mdata = document.querySelector('meta[name="form-data"]').content;
       const fdata = JSON.parse(mdata);
 
-      category_id.value = fdata.category_id;
-      titleBox.title = fdata.title;
+      details.category_id = fdata.category_id;
+      details.title = fdata.title;
       details.price = fdata.price;
       details.price_freq = fdata.price_freq;
       details.property_type = fdata.property_type;
       details.num_beds = fdata.num_beds;
       details.room_type = fdata.room_type;
       details.description = fdata.description;
+      details.youtube = fdata.youtube;
+
+      fdata.pictures.forEach((el) => {
+        pictures.value.push(el.name);
+      });
     });
 
     return {
-      category_id,
-      titleBox,
       details,
+      pictures,
+      loading,
       v$,
       handleSubmit,
     };
   },
 
   validations: {
-    category_id: {
-      required: helpers.withMessage("Required", required),
-    },
-    titleBox: {
+    details: {
+      category_id: {
+        required: helpers.withMessage("Required", required),
+      },
       title: {
         required: helpers.withMessage("Required", required),
         max: helpers.withMessage("Too long", maxLength(5)),
       },
-    },
-    details: {
       price: {
         required: helpers.withMessage("Required", required),
       },
@@ -107,7 +137,26 @@ export default {
       description: {
         required: helpers.withMessage("Required", required),
       },
+      www: {
+        url,
+        max: helpers.withMessage("Too long", maxLength(500)),
+      },
+      youtube: {
+        url,
+        yt2: helpers.withMessage(
+          "Not a valid YouTube link",
+          helpers.regex(/^https?:\/\/(www\.)?youtube\.com\/watch/)
+        ),
+        max: maxLength(100),
+      },
     },
   },
 };
 </script>
+
+<style scoped>
+form {
+  max-width: 900px;
+  margin: 0 auto;
+}
+</style>
