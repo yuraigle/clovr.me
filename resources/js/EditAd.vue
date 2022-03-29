@@ -12,6 +12,12 @@
       :errors="v$['details']"
     />
 
+    <AdLocationBox
+      v-model:address="address"
+      v-model:coords="coords"
+      :errors="v$['address']"
+    />
+
     <AdDetailsBox
       :category="details.category_id"
       v-model:price="details.price"
@@ -59,9 +65,17 @@ import AdTitleBox from "./components/AdTitleBox.vue";
 import AdDetailsBox from "./components/AdDetailsBox.vue";
 import AdWebsiteBox from "./components/AdWebsiteBox.vue";
 import AdImagesBox from "./components/AdImagesBox.vue";
+import AdLocationBox from "./components/AdLocationBox.vue";
 
 export default {
-  components: { AdCategoryBox, AdTitleBox, AdDetailsBox, AdWebsiteBox, AdImagesBox },
+  components: {
+    AdCategoryBox,
+    AdTitleBox,
+    AdDetailsBox,
+    AdWebsiteBox,
+    AdImagesBox,
+    AdLocationBox,
+  },
 
   setup() {
     const details = reactive({
@@ -77,6 +91,18 @@ export default {
       has_www: undefined,
       www: undefined,
       youtube: undefined,
+    });
+
+    const address = reactive({
+      postcode: undefined,
+      county: undefined,
+      town: undefined,
+      location: undefined,
+    });
+
+    const coords = reactive({
+      lng: undefined,
+      lat: undefined,
     });
 
     const pictures = ref([]);
@@ -104,6 +130,8 @@ export default {
       details.description = fdata.description;
       details.youtube = fdata.youtube;
 
+      details.location = fdata.location;
+
       fdata.pictures.forEach((el) => {
         pictures.value.push(el.name);
       });
@@ -111,6 +139,8 @@ export default {
 
     return {
       details,
+      address,
+      coords,
       pictures,
       loading,
       v$,
@@ -148,6 +178,11 @@ export default {
           helpers.regex(/^https?:\/\/(www\.)?youtube\.com\/watch/)
         ),
         max: maxLength(100),
+      },
+    },
+    address: {
+      location: {
+        required,
       },
     },
   },
