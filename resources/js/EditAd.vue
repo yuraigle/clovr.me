@@ -130,7 +130,10 @@ export default {
       details.description = fdata.description;
       details.youtube = fdata.youtube;
 
-      details.location = fdata.location;
+      address.location = fdata.location;
+      address.location = fdata.location;
+      coords.lng = fdata.lng;
+      coords.lat = fdata.lat;
 
       fdata.pictures.forEach((el) => {
         pictures.value.push(el.name);
