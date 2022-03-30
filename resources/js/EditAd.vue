@@ -103,10 +103,34 @@ export default {
     const v$ = useVuelidate();
 
     function handleSubmit() {
-      console.log(details);
-      console.log(address);
       this.v$.$validate().then((res) => {
-        console.log(res);
+        if (res) {
+          loading.value = true;
+
+          const postData = Object.assign({}, details, address);
+          const formData = new FormData();
+          for (const key in postData) {
+            if (postData[key] !== undefined && postData[key] !== null) {
+              formData.append(key, postData[key]);
+            }
+          }
+          for (const pic of pictures.value) {
+            formData.append("pictures[]", pic);
+          }
+
+          fetchApi(
+            "/edit-ad/2",
+            {
+              method: "POST",
+              headers: { "X-CSRF-TOKEN": csrf() },
+              body: formData,
+            },
+            (resp) => {
+              console.log(resp);
+            },
+            () => (loading.value = false)
+          );
+        }
       });
     }
 

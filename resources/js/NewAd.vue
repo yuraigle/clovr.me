@@ -110,7 +110,7 @@ export default {
           const postData = Object.assign({}, details, address);
           const formData = new FormData();
           for (const key in postData) {
-            if (postData[key] !== undefined) {
+            if (postData[key] !== undefined && postData[key] !== null) {
               formData.append(key, postData[key]);
             }
           }

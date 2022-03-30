@@ -19,6 +19,29 @@ class AdController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    private array $rules = [
+        'category_id' => 'required|numeric|min:1|max:5',
+        'title' => 'required|string|max:100',
+        'price' => 'required|regex:/^[0-9]*(\.[0-9]{1,2})?$/',
+        'property_type' => 'nullable|regex:/^[a-z]{0,10}$/',
+        'num_beds' => 'nullable|numeric|max:10',
+        'price_freq' => 'nullable|in:per_month,per_week',
+        'date_avail' => 'nullable',
+        'room_type' => 'nullable|regex:/^[a-z]{0,10}$/',
+        'room_couples' => 'nullable|numeric|min:0|max:1',
+        'www' => 'nullable|url|max:500',
+        'youtube' => 'nullable|url|max:100|regex:/^https?:\/\/(www\.)?youtube\.com\/watch/',
+        'description' => 'required|string|max:10000',
+        'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+        'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
+        'location' => 'required|string|max:250',
+        'postcode' => 'nullable|string|max:10',
+        'county' => 'nullable|string|max:50',
+        'town' => 'nullable|string|max:100',
+        'pictures' => 'nullable|array|max:10',
+        'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
+    ];
+
     public function newAd()
     {
         if (!Auth::check()) {
@@ -34,67 +57,33 @@ class AdController extends BaseController
             return response()->json(["message" => "Unauthenticated"], 401);
         }
 
-        $validator = Validator::make($req->post(), [
-            'category_id' => 'required|numeric|min:1|max:5',
-            'title' => 'required|string|max:100',
-            'price' => 'required|regex:/^[0-9]*(\.[0-9]{1,2})?$/',
-            'property_type' => 'nullable|regex:/^[a-z]{0,10}$/',
-            'num_beds' => 'nullable|numeric|max:10',
-            'price_freq' => 'nullable|in:per_month,per_week',
-            'date_avail' => 'nullable',
-            'room_type' => 'nullable|regex:/^[a-z]{0,10}$/',
-            'room_couples' => 'nullable|numeric|min:0|max:1',
-            'www' => 'nullable|url|max:500',
-            'youtube' => 'nullable|url|max:100|regex:/^https?:\/\/(www\.)?youtube\.com\/watch/',
-            'description' => 'required|string|max:10000',
-            'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
-            'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
-            'location' => 'required|string|max:250',
-            'postcode' => 'nullable|string|max:10',
-            'county' => 'nullable|string|max:50',
-            'town' => 'nullable|string|max:100',
-            'pictures' => 'nullable|array|max:10',
-            'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
-        ]);
+        $userId = $req->user()->id;
 
+        $validator = Validator::make($req->post(), $this->rules);
         try {
             $validator->validate();
+            $v = $validator->validated();
         } catch (Exception $e) {
             return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
-        $userId = $req->user()->id;
-        $categoryId = $req->post('category_id');
-        $title = $req->post('title');
-        $price = $req->post('price');
-        $propertyType = $req->post('property_type');
-        $numBeds = $req->post('num_beds');
-        $priceFreq = $req->post('price_freq');
-        $dateAvail = $req->post('date_avail');
-        $roomType = $req->post('room_type');
-        $roomCouples = $req->post('room_couples');
-        $www = $req->post('www');
-        $youtube = $req->post('youtube');
-        $description = $req->post('description');
-        $lng = $req->post('lng');
-        $lat = $req->post('lat');
-        $location = $req->post('location');
-        $postcode = $req->post('postcode');
-        $county = $req->post('county');
-        $town = $req->post('town');
         $pictures = $req->post('pictures', []);
         $pic = $pictures ? $pictures[0] : null;
 
+        $fields = ['title', 'price', 'property_type', 'num_beds', 'price_freq',
+            'date_avail', 'room_type', 'room_couples', 'www', 'youtube', 'description',
+            'lng', 'lat', 'location', 'postcode', 'county', 'town', 'category_id'];
+        $vars = [];
+        foreach ($fields as $field) {
+            $vars[] = $v[$field] ?? null;
+        }
+
         DB::beginTransaction();
-        DB::insert("insert into `ads` (`user_id`, `category_id`, `title`, `price`, `property_type`,
-                   `num_beds`, `price_freq`, `date_avail`, `room_type`, `room_couples`, `www`,
-                   `youtube`, `description`, `lng`, `lat`, `location`, `postcode`, `county`, `town`,
-                   `pic`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            [
-                $userId, $categoryId, $title, $price, $propertyType, $numBeds, $priceFreq,
-                $dateAvail, $roomType, $roomCouples, $www, $youtube, $description, $lng, $lat,
-                $location, $postcode, $county, $town, $pic
-            ]
+        DB::insert("insert into `ads` (`title`, `price`, `property_type`, `num_beds`, `price_freq`,
+                   `date_avail`, `room_type`, `room_couples`, `www`, `youtube`, `description`,
+                   `lng`, `lat`, `location`, `postcode`, `county`, `town`, `category_id`, `pic`,
+                   `user_id`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [...$vars, $pic, $userId]
         );
 
         $adId = DB::getPdo()->lastInsertId();
@@ -106,6 +95,70 @@ class AdController extends BaseController
         DB::commit();
 
         return response()->json(["status" => "OK", "id" => $adId]);
+    }
+
+    public function editAd($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $row = DB::selectOne("select * from `ads` where id=?", [$id]);
+        $pics = DB::select("select * from `pictures` where ad_id=? order by ord", [$id]);
+        $row->pictures = $pics;
+        abort_if(!$row, 404, "Ad not found");
+
+        return view('member.edit-ad', [
+            "row_json" => json_encode($row),
+        ]);
+    }
+
+    public function editAdPost(Request $req): JsonResponse
+    {
+        if (!Auth::check()) {
+            return response()->json(["message" => "Unauthenticated"], 401);
+        }
+
+        $id = $req->route()->parameter('id');
+        $uid = $req->user()->id;
+        // TODO: check rights
+
+        $validator = Validator::make($req->post(), $this->rules);
+        try {
+            $validator->validate();
+            $v = $validator->validated();
+        } catch (Exception $e) {
+            return response()->json(["message" => $validator->errors()->first()], 400);
+        }
+
+        $fields = ['title', 'price', 'property_type', 'num_beds', 'price_freq',
+            'date_avail', 'room_type', 'room_couples', 'www', 'youtube', 'description',
+            'lng', 'lat', 'location', 'postcode', 'county', 'town'];
+        $vars = [];
+        foreach ($fields as $field) {
+            $vars[] = $v[$field] ?? null;
+        }
+
+        $pictures = $req->post('pictures', []);
+        $pic = $pictures ? $pictures[0] : null;
+
+        DB::beginTransaction();
+        DB::insert("update `ads` set `title`=?, `price`=?, `property_type`=?, `num_beds`=?,
+                   `price_freq`=?, `date_avail`=?, `room_type`=?, `room_couples`=?, `www`=?,
+                   `youtube`=?, `description`=?, `lng`=?, `lat`=?, `location`=?, `postcode`=?,
+                    `county`=?, `town`=?, `pic`=? where `id`=?",
+            [...$vars, $pic, $id]
+        );
+
+        $i = 0;
+        DB::delete("delete from `pictures` where `ad_id`=?", [$id]);
+        foreach ($pictures as $name) {
+            DB::insert("insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
+                [$id, $name, $i++]);
+        }
+        DB::commit();
+
+        return response()->json(["status" => "OK", "id" => $id]);
     }
 
     public function upload(Request $req): JsonResponse
@@ -151,21 +204,5 @@ class AdController extends BaseController
             ->save($destAbs . "x_$hash.webp", 75);
 
         return $hash;
-    }
-
-    public function editAd($id)
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $row = DB::selectOne("select * from `ads` where id=?", [$id]);
-        $pics = DB::select("select * from `pictures` where ad_id=? order by ord", [$id]);
-        $row->pictures = $pics;
-        abort_if(!$row, 404, "Ad not found");
-
-        return view('member.edit-ad', [
-            "row_json" => json_encode($row),
-        ]);
     }
 }
