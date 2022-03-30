@@ -13,7 +13,7 @@
               id="price"
               class="form-control"
               :class="{ 'is-invalid': errors.price.$error }"
-              v-model="price"
+              v-model="details1.price"
             />
             <span class="invalid-feedback" v-if="errors.price.$error">
               {{ errors.price.$errors[0].$message }}
@@ -29,21 +29,20 @@
                 name="price_freq"
                 class="form-check-input float-none me-1"
                 :class="{ 'is-invalid': errors.price_freq.$error }"
-                :checked="price_freq === 'per_month'"
-                @change="$emit('update:price_freq', $event.target.value)"
+                v-model="details1.price_freq"
                 value="per_month"
               />
               <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_m">
                 Monthly
               </label>
+
               <input
                 type="radio"
                 id="price_freq_w"
                 name="price_freq"
                 class="form-check-input float-none ms-2 me-1"
                 :class="{ 'is-invalid': errors.price_freq.$error }"
-                :checked="price_freq === 'per_week'"
-                @change="$emit('update:price_freq', $event.target.value)"
+                v-model="details1.price_freq"
                 value="per_week"
               />
               <label class="form-check-label me-4 ps-1 pe-2" for="price_freq_w">
@@ -61,8 +60,7 @@
               id="property_type"
               class="form-control"
               :class="{ 'is-invalid': errors.property_type.$error }"
-              :value="property_type"
-              @change="$emit('update:property_type', $event.target.value)"
+              v-model="details1.property_type"
             >
               <option value="">Please select...</option>
               <option value="flat" v-if="cid < 4">Flat</option>
@@ -82,8 +80,7 @@
               id="num_beds"
               class="form-control"
               :class="{ 'is-invalid': errors.num_beds.$error }"
-              :value="num_beds"
-              @change="$emit('update:num_beds', $event.target.value)"
+              v-model="details1.num_beds"
             >
               <option value="">Please select...</option>
               <option value="0">Studio</option>
@@ -102,8 +99,7 @@
               id="room_type"
               class="form-control"
               :class="{ 'is-invalid': errors.room_type.$error }"
-              :value="room_type"
-              @change="$emit('update:room_type', $event.target.value)"
+              v-model="details1.room_type"
             >
               <option value="">Please select...</option>
               <option value="single">Single room</option>
@@ -121,22 +117,18 @@
 
         <div class="row mt-4 mb-2">
           <label for="description" class="form-label"> Description: </label>
-
           <div class="col-lg-9 col-md-8">
             <textarea
               id="description"
               class="form-control"
               :class="{ 'is-invalid': errors.description.$error }"
-              :value="description"
-              @input="$emit('update:description', $event.target.value)"
+              v-model="details1.description"
               rows="6"
             ></textarea>
-
             <span class="invalid-feedback" v-if="errors.description.$error">
               {{ errors.description.$errors[0].$message }}
             </span>
           </div>
-
           <div class="col-lg-3 col-md-4 lh-sm">
             <small class="text-muted">
               Enter as much information possible. Ads with detailed and longer
@@ -150,44 +142,29 @@
 </template>
 
 <script>
-import { watch, computed } from "vue";
+import { reactive, watch, computed } from "vue";
 import CurrencyInput from "./CurrencyInput.vue";
 
 export default {
-  props: [
-    "category",
-    "price",
-    "price_freq",
-    "property_type",
-    "num_beds",
-    "room_type",
-    "description",
-    "errors",
-  ],
-  emits: [
-    "update:price",
-    "update:price_freq",
-    "update:property_type",
-    "update:num_beds",
-    "update:room_type",
-    "update:description",
-  ],
+  props: ["category", "details", "errors"],
+  emits: ["update:details"],
   components: { CurrencyInput },
 
   setup(props, { emit }) {
     const cid = computed(() => parseInt(props.category));
+    const details1 = reactive(props.details);
 
     watch(
-      () => props.price,
+      () => details1,
       (val) => {
-        if (val !== null) {
-          emit("update:price", val);
-        }
-      }
+        emit("update:details", val);
+      },
+      { deep: true }
     );
 
     return {
       cid,
+      details1,
     };
   },
 };

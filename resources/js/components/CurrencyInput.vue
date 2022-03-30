@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 import { useCurrencyInput } from "vue-currency-input";
 
 export default {

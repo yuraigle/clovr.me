@@ -1,41 +1,28 @@
 <template>
   <form class="row">
     <AdCategoryBox
-      v-model:category_id="details.category_id"
+      v-model:category_id="ad.category_id"
       :editable="true"
-      :errors="v$['details']"
+      :errors="v$['ad']"
     />
 
-    <AdTitleBox
-      v-model:title="details.title"
-      v-model:bold="details.bold"
-      :errors="v$['details']"
-    />
+    <AdTitleBox v-model:title="ad.title" v-model:bold="ad.bold" :errors="v$['ad']" />
 
     <AdLocationBox v-model:address="address" :errors="v$['address']" />
 
     <AdDetailsBox
       :category="details.category_id"
-      v-model:price="details.price"
-      v-model:price_freq="details.price_freq"
-      v-model:property_type="details.property_type"
-      v-model:num_beds="details.num_beds"
-      v-model:room_type="details.room_type"
-      v-model:description="details.description"
+      v-model:details="details"
       :errors="v$['details']"
     />
 
     <AdImagesBox
       v-model:pictures="pictures"
-      v-model:youtube="details.youtube"
-      :errors="v$['details']"
+      v-model:youtube="ad.youtube"
+      :errors="v$['ad']"
     />
 
-    <AdWebsiteBox
-      v-model:has_www="details.has_www"
-      v-model:www="details.www"
-      :errors="v$['details']"
-    />
+    <AdWebsiteBox v-model:has_www="ad.has_www" v-model:www="ad.www" :errors="v$['ad']" />
 
     <div class="w-100 mt-2 mb-2 text-end">
       <button
@@ -74,19 +61,23 @@ export default {
   },
 
   setup() {
-    const details = reactive({
+    const ad = reactive({
+      id: undefined,
       category_id: undefined,
       title: undefined,
+      is_bold: false,
+      has_www: false,
+      www: undefined,
+      youtube: undefined,
+    });
+
+    const details = reactive({
       price: undefined,
       property_type: undefined,
       num_beds: undefined,
-      description: undefined,
       price_freq: undefined,
       room_type: undefined,
-      www: undefined,
-      youtube: undefined,
-      has_www: false,
-      is_bold: false,
+      description: undefined,
     });
 
     const address = reactive({
@@ -107,7 +98,7 @@ export default {
         if (res) {
           loading.value = true;
 
-          const postData = Object.assign({}, details, address);
+          const postData = Object.assign({}, ad, details, address);
           const formData = new FormData();
           for (const key in postData) {
             if (postData[key] !== undefined && postData[key] !== null) {
@@ -133,6 +124,7 @@ export default {
     }
 
     return {
+      ad,
       details,
       address,
       pictures,
@@ -143,24 +135,13 @@ export default {
   },
 
   validations: {
-    details: {
+    ad: {
       category_id: {
         required: helpers.withMessage("Required", required),
       },
       title: {
         required: helpers.withMessage("Required", required),
-        max: helpers.withMessage("Too long", maxLength(5)),
-      },
-      price: {
-        required: helpers.withMessage("Required", required),
-      },
-      price_freq: {},
-      property_type: {},
-      num_beds: {},
-      room_type: {},
-      description: {
-        required: helpers.withMessage("Required", required),
-        max: helpers.withMessage("Too long", maxLength(10000)),
+        max: helpers.withMessage("Too long", maxLength(100)),
       },
       www: {
         url,
@@ -173,6 +154,19 @@ export default {
           helpers.regex(/^https?:\/\/(www\.)?youtube\.com\/watch/)
         ),
         max: maxLength(100),
+      },
+    },
+    details: {
+      price: {
+        required: helpers.withMessage("Required", required),
+      },
+      price_freq: {},
+      property_type: {},
+      num_beds: {},
+      room_type: {},
+      description: {
+        required: helpers.withMessage("Required", required),
+        max: helpers.withMessage("Too long", maxLength(10000)),
       },
     },
     address: {

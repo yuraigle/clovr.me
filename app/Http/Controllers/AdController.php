@@ -150,6 +150,8 @@ class AdController extends BaseController
             [...$vars, $pic, $id]
         );
 
+        $a = [...$vars, $pic, $id];
+
         $i = 0;
         DB::delete("delete from `pictures` where `ad_id`=?", [$id]);
         foreach ($pictures as $name) {
@@ -158,7 +160,7 @@ class AdController extends BaseController
         }
         DB::commit();
 
-        return response()->json(["status" => "OK", "id" => $id]);
+        return response()->json(["status" => "OK", "id" => $id, "a" => $a]);
     }
 
     public function upload(Request $req): JsonResponse
