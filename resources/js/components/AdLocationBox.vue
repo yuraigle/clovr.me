@@ -19,14 +19,14 @@
           {{ errors.location.$errors[0].$message }}
         </span>
 
-        <div class="w-100" v-if="!map.shown">
+        <div class="w-100" v-if="!shown">
           <button type="button" class="btn btn-sm btn-link" @click="toggleMap(true)">
             Show the map
             <i class="fa-solid fa-chevron-down"></i>
           </button>
         </div>
 
-        <div class="w-100" :class="{ 'd-none': !map.shown }">
+        <div class="w-100" :class="{ 'd-none': !shown }">
           <p class="text-center mt-1 mb-1">
             <span v-if="address1.postcode" class="me-2">
               Postcode: {{ address1.postcode }}
@@ -57,7 +57,7 @@
               type="button"
               class="btn btn-sm btn-outline-success"
               @click="toggleMap(false)"
-              v-if="map.marker._lngLat && map.marker._lngLat.lng"
+              v-if="address1.lng"
             >
               <i class="fa-solid fa-check"></i>
               Yes, it's the correct location
@@ -76,21 +76,24 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
 export default {
-  props: ["address", "coords", "errors"],
-  emits: ["update:address", "update:coords"],
+  props: ["address", "errors"],
+  emits: ["update:address"],
 
   setup(props, { emit }) {
-    const map = reactive({
-      obj: undefined,
-      marker: new mapboxgl.Marker({ draggable: true }),
-      shown: false,
-    });
+    const startCenter = [-6.29726611776664, 53.34677576650242];
 
     const address1 = reactive(props.address);
+    const map = ref(null);
+    const marker = ref(new mapboxgl.Marker({ draggable: true }));
+    const shown = ref(false);
+
+    marker.value.on("dragend", function (e) {
+      address1.lng = e.target._lngLat.lng;
+      address1.lat = e.target._lngLat.lat;
+      emit("update:address", address1);
+    });
 
     onMounted(() => {
-      console.log(props.coords);
-
       const places1 = places({
         // appId: "<YOUR_PLACES_APP_ID>",
         // apiKey: "<YOUR_PLACES_API_KEY>",
@@ -100,11 +103,15 @@ export default {
       });
 
       places1.on("clear", () => {
-        address1.postcode = "";
-        address1.county = "";
-        address1.town = "";
-        address1.location = "";
-        map.marker.setLngLat({ lng: null, lat: null });
+        address1.postcode = undefined;
+        address1.county = undefined;
+        address1.town = undefined;
+        address1.location = undefined;
+        address1.lng = undefined;
+        address1.lat = undefined;
+        emit("update:address", address1);
+
+        marker.value.remove();
       });
 
       places1.on("change", (e) => {
@@ -113,55 +120,55 @@ export default {
         address1.county = s.county;
         address1.town = s.city;
         address1.location = s.value;
+        address1.lng = s.latlng.lng;
+        address1.lat = s.latlng.lat;
         emit("update:address", address1);
 
-        map.marker.setLngLat(s.latlng);
-        if (map.obj) {
-          map.marker.addTo(map.obj);
-          map.obj.jumpTo({ center: s.latlng, zoom: 16 });
+        marker.value.setLngLat(s.latlng);
+        if (map.value) {
+          marker.value.addTo(map.value);
+          map.value.jumpTo({ center: s.latlng, zoom: 16 });
         }
       });
     });
 
     function mountMap() {
-      map.obj = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: [-6.29726611776664, 53.34677576650242],
-        zoom: 11,
-      });
+      const center = address1.lng ? [address1.lng, address1.lat] : startCenter;
+      const zoom = address1.lng ? 16 : 11;
+      const style = "mapbox://styles/mapbox/streets-v11";
+      map.value = new mapboxgl.Map({ container: "map", style, center, zoom });
 
-      map.obj.on("click", function (e) {
-        map.marker.setLngLat(e.lngLat).addTo(map.obj);
-        emit("update:coords", e.lngLat);
+      if (address1.lng) {
+        marker.value.setLngLat(center).addTo(map.value);
+      }
+
+      map.value.on("click", function (e) {
+        marker.value.setLngLat(e.lngLat).addTo(map.value);
+        address1.lng = e.lngLat.lng;
+        address1.lat = e.lngLat.lat;
+        emit("update:address", address1);
       });
 
       // hidden-resize bugfix
-      map.obj.on("resize", function (e) {
-        if (!map.shown) {
-          map.obj.remove();
-          map.obj = undefined;
+      map.value.on("resize", function () {
+        if (!shown.value) {
+          map.value.remove();
+          map.value = undefined;
         }
       });
-
-      console.log(props.coords);
-
-      if (map.marker._lngLat) {
-        map.marker.addTo(map.obj);
-        map.obj.jumpTo({ center: map.marker._lngLat, zoom: 16 });
-      }
     }
 
     function toggleMap(v) {
-      map.shown = v;
-      if (v && !map.obj) {
+      shown.value = v;
+      if (v && !map.value) {
         setTimeout(() => mountMap(), 100);
       }
     }
 
     return {
       address1,
-      map,
+      marker,
+      shown,
       toggleMap,
     };
   },

@@ -12,11 +12,7 @@
       :errors="v$['details']"
     />
 
-    <AdLocationBox
-      v-model:address="address"
-      v-model:coords="coords"
-      :errors="v$['address']"
-    />
+    <AdLocationBox v-model:address="address" :errors="v$['address']" />
 
     <AdDetailsBox
       :category="details.category_id"
@@ -98,9 +94,6 @@ export default {
       county: undefined,
       town: undefined,
       location: undefined,
-    });
-
-    const coords = reactive({
       lng: undefined,
       lat: undefined,
     });
@@ -111,6 +104,7 @@ export default {
 
     function handleSubmit() {
       console.log(details);
+      console.log(address);
       this.v$.$validate().then((res) => {
         console.log(res);
       });
@@ -131,9 +125,11 @@ export default {
       details.youtube = fdata.youtube;
 
       address.location = fdata.location;
-      address.location = fdata.location;
-      coords.lng = fdata.lng;
-      coords.lat = fdata.lat;
+      address.postcode = fdata.postcode;
+      address.county = fdata.county;
+      address.town = fdata.town;
+      address.lng = fdata.lng;
+      address.lat = fdata.lat;
 
       fdata.pictures.forEach((el) => {
         pictures.value.push(el.name);
@@ -143,7 +139,6 @@ export default {
     return {
       details,
       address,
-      coords,
       pictures,
       loading,
       v$,
