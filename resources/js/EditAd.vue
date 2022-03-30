@@ -72,7 +72,7 @@ export default {
     });
 
     const details = reactive({
-      price: undefined,
+      price: null,
       property_type: undefined,
       num_beds: undefined,
       price_freq: undefined,
