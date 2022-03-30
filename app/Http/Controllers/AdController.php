@@ -25,7 +25,7 @@ class AdController extends BaseController
             return redirect('/login?back=' . urlencode(route('new-ad', [], false)));
         }
 
-        return view('new-ad', []);
+        return view('member.new-ad', []);
     }
 
     public function newAdPost(Request $req): JsonResponse

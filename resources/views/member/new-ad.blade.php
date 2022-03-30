@@ -17,5 +17,5 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
-    <script type="text/javascript" src="{{ mix('/dist/new-ad-details.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/new-ad.js') }}"></script>
 @endsection

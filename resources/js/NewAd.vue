@@ -2,7 +2,7 @@
   <form class="row">
     <AdCategoryBox
       v-model:category_id="details.category_id"
-      :editable="false"
+      :editable="true"
       :errors="v$['details']"
     />
 
@@ -44,7 +44,7 @@
         :class="{ disabled: loading }"
         @click="handleSubmit"
       >
-        Save
+        Next
         <i class="fa-solid fa-spinner" v-if="loading"></i>
         <i class="fa-solid fa-chevron-right" v-else></i>
       </button>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { maxLength, required, helpers, url } from "@vuelidate/validators";
 import AdCategoryBox from "./components/AdCategoryBox.vue";
@@ -103,38 +103,34 @@ export default {
     const v$ = useVuelidate();
 
     function handleSubmit() {
-      console.log(details);
-      console.log(address);
       this.v$.$validate().then((res) => {
-        console.log(res);
+        if (res) {
+          loading.value = true;
+
+          const postData = Object.assign({}, details, address);
+          const formData = new FormData();
+          for (const key in postData) {
+            if (postData[key] !== undefined) {
+              formData.append(key, postData[key]);
+            }
+          }
+          for (const pic of pictures.value) {
+            formData.append("pictures[]", pic);
+          }
+
+          fetchApi(
+            "/new-ad",
+            {
+              method: "POST",
+              headers: { "X-CSRF-TOKEN": csrf() },
+              body: formData,
+            },
+            (resp) => (window.location.href = "/activate?id=" + resp.id),
+            () => (loading.value = false)
+          );
+        }
       });
     }
-
-    onMounted(() => {
-      const mdata = document.querySelector('meta[name="form-data"]').content;
-      const fdata = JSON.parse(mdata);
-
-      details.category_id = fdata.category_id;
-      details.title = fdata.title;
-      details.price = fdata.price;
-      details.price_freq = fdata.price_freq;
-      details.property_type = fdata.property_type;
-      details.num_beds = fdata.num_beds;
-      details.room_type = fdata.room_type;
-      details.description = fdata.description;
-      details.youtube = fdata.youtube;
-
-      address.location = fdata.location;
-      address.postcode = fdata.postcode;
-      address.county = fdata.county;
-      address.town = fdata.town;
-      address.lng = fdata.lng;
-      address.lat = fdata.lat;
-
-      fdata.pictures.forEach((el) => {
-        pictures.value.push(el.name);
-      });
-    });
 
     return {
       details,
