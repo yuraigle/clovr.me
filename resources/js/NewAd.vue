@@ -6,12 +6,16 @@
       :errors="v$['ad']"
     />
 
-    <AdTitleBox v-model:title="ad.title" v-model:bold="ad.bold" :errors="v$['ad']" />
+    <AdTitleBox
+      v-model:title="ad.title"
+      v-model:bold="ad.bold"
+      :errors="v$['ad']"
+    />
 
     <AdLocationBox v-model:address="address" :errors="v$['address']" />
 
     <AdDetailsBox
-      :category="details.category_id"
+      :category="ad.category_id"
       v-model:details="details"
       :errors="v$['details']"
     />
@@ -22,7 +26,11 @@
       :errors="v$['ad']"
     />
 
-    <AdWebsiteBox v-model:has_www="ad.has_www" v-model:www="ad.www" :errors="v$['ad']" />
+    <AdWebsiteBox
+      v-model:has_www="ad.has_www"
+      v-model:www="ad.www"
+      :errors="v$['ad']"
+    />
 
     <div class="w-100 mt-2 mb-2 text-end">
       <button
@@ -62,31 +70,31 @@ export default {
 
   setup() {
     const ad = reactive({
-      id: undefined,
-      category_id: undefined,
-      title: undefined,
+      id: null,
+      category_id: null,
+      title: null,
       is_bold: false,
       has_www: false,
-      www: undefined,
-      youtube: undefined,
+      www: null,
+      youtube: null,
     });
 
     const details = reactive({
-      price: undefined,
-      property_type: undefined,
-      num_beds: undefined,
-      price_freq: undefined,
-      room_type: undefined,
-      description: undefined,
+      price: null,
+      property_type: null,
+      num_beds: null,
+      price_freq: null,
+      room_type: null,
+      description: null,
     });
 
     const address = reactive({
-      postcode: undefined,
-      county: undefined,
-      town: undefined,
-      location: undefined,
-      lng: undefined,
-      lat: undefined,
+      postcode: null,
+      county: null,
+      town: null,
+      location: null,
+      lng: null,
+      lat: null,
     });
 
     const pictures = ref([]);

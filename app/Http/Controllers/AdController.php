@@ -67,19 +67,23 @@ class AdController extends BaseController
             return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
+        $v = $this->sanitize($v, $v['category_id']);
         $pictures = $req->post('pictures', []);
         $pic = $pictures ? $pictures[0] : null;
 
-        $fields = ['title', 'price', 'property_type', 'num_beds', 'price_freq',
+        $fields = [
+            'title', 'price', 'property_type', 'num_beds', 'price_freq',
             'date_avail', 'room_type', 'room_couples', 'www', 'youtube', 'description',
-            'lng', 'lat', 'location', 'postcode', 'county', 'town', 'category_id'];
+            'lng', 'lat', 'location', 'postcode', 'county', 'town', 'category_id'
+        ];
         $vars = [];
         foreach ($fields as $field) {
             $vars[] = $v[$field] ?? null;
         }
 
         DB::beginTransaction();
-        DB::insert("insert into `ads` (`title`, `price`, `property_type`, `num_beds`, `price_freq`,
+        DB::insert(
+            "insert into `ads` (`title`, `price`, `property_type`, `num_beds`, `price_freq`,
                    `date_avail`, `room_type`, `room_couples`, `www`, `youtube`, `description`,
                    `lng`, `lat`, `location`, `postcode`, `county`, `town`, `category_id`, `pic`,
                    `user_id`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -89,12 +93,28 @@ class AdController extends BaseController
         $adId = DB::getPdo()->lastInsertId();
         $i = 0;
         foreach ($pictures as $name) {
-            DB::insert("insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
-                [$adId, $name, $i++]);
+            DB::insert(
+                "insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
+                [$adId, $name, $i++]
+            );
         }
         DB::commit();
 
         return response()->json(["status" => "OK", "id" => $adId]);
+    }
+
+    private function sanitize(array $v, int $cid): array
+    {
+        if (!in_array($cid, [2, 3, 5])) {
+            $v['price_freq'] = null;
+        }
+        if (!in_array($cid, [1, 2])) {
+            $v['num_beds'] = null;
+        }
+        if ($cid != 3) {
+            $v['room_type'] = null;
+        }
+        return $v;
     }
 
     public function editAd($id)
@@ -121,7 +141,11 @@ class AdController extends BaseController
 
         $id = $req->route()->parameter('id');
         $uid = $req->user()->id;
-        // TODO: check rights
+
+        $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
+        if (!$rowAd || $rowAd->user_id !== $uid) {
+            return response()->json(["message" => "Unauthenticated"], 401);
+        }
 
         $validator = Validator::make($req->post(), $this->rules);
         try {
@@ -131,19 +155,23 @@ class AdController extends BaseController
             return response()->json(["message" => $validator->errors()->first()], 400);
         }
 
-        $fields = ['title', 'price', 'property_type', 'num_beds', 'price_freq',
+        $v = $this->sanitize($v, $rowAd->category_id);
+        $pictures = $req->post('pictures', []);
+        $pic = $pictures ? $pictures[0] : null;
+
+        $fields = [
+            'title', 'price', 'property_type', 'num_beds', 'price_freq',
             'date_avail', 'room_type', 'room_couples', 'www', 'youtube', 'description',
-            'lng', 'lat', 'location', 'postcode', 'county', 'town'];
+            'lng', 'lat', 'location', 'postcode', 'county', 'town'
+        ];
         $vars = [];
         foreach ($fields as $field) {
             $vars[] = $v[$field] ?? null;
         }
 
-        $pictures = $req->post('pictures', []);
-        $pic = $pictures ? $pictures[0] : null;
-
         DB::beginTransaction();
-        DB::insert("update `ads` set `title`=?, `price`=?, `property_type`=?, `num_beds`=?,
+        DB::insert(
+            "update `ads` set `title`=?, `price`=?, `property_type`=?, `num_beds`=?,
                    `price_freq`=?, `date_avail`=?, `room_type`=?, `room_couples`=?, `www`=?,
                    `youtube`=?, `description`=?, `lng`=?, `lat`=?, `location`=?, `postcode`=?,
                     `county`=?, `town`=?, `pic`=? where `id`=?",
@@ -155,8 +183,10 @@ class AdController extends BaseController
         $i = 0;
         DB::delete("delete from `pictures` where `ad_id`=?", [$id]);
         foreach ($pictures as $name) {
-            DB::insert("insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
-                [$id, $name, $i++]);
+            DB::insert(
+                "insert into `pictures` (`ad_id`, `name`, `ord`) values (?,?,?)",
+                [$id, $name, $i++]
+            );
         }
         DB::commit();
 
