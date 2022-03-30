@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
@@ -32,3 +33,6 @@ Route::get('/edit-ad/{id}', [AdController::class, 'editAd'])
     ->where('id', '[0-9]+')->name('edit-ad');
 Route::post('/edit-ad/{id}', [AdController::class, 'editAdPost'])
     ->where('id', '[0-9]+');
+
+Route::get('/ad/{id}', [CatalogController::class, 'showAd'])
+    ->where('id', '[0-9]+')->name('show-ad');
