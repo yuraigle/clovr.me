@@ -139,7 +139,6 @@ export default {
       details.price_freq = fdata.price_freq;
       details.room_type = fdata.room_type;
       details.description = fdata.description;
-      console.log(details);
 
       address.location = fdata.location;
       address.postcode = fdata.postcode;
