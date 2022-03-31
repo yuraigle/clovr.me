@@ -190,7 +190,7 @@ class AdController extends BaseController
         }
         DB::commit();
 
-        return response()->json(["status" => "OK", "id" => $id, "a" => $a]);
+        return response()->json(["status" => "OK", "id" => $id]);
     }
 
     public function upload(Request $req): JsonResponse

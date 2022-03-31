@@ -72,9 +72,6 @@
 <script>
 import { ref, reactive, onMounted } from "vue";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-
 export default {
   props: ["address", "errors"],
   emits: ["update:address"],

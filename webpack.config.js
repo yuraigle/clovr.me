@@ -8,8 +8,9 @@ module.exports = {
     mode: "development",
 
     entry: {
-        "new-ad": "./resources/js/new-ad.js",
+        "show-ad": "./resources/js/show-ad.js",
         "edit-ad": "./resources/js/edit-ad.js",
+        "new-ad": "./resources/js/new-ad.js",
         "auth-login-box": "./resources/js/auth-login-box.js",
         "auth-register-box": "./resources/js/auth-register-box.js",
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",
