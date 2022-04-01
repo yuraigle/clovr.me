@@ -20,7 +20,7 @@ class CatalogController extends BaseController
         $rowUsr = DB::selectOne("select * from `users` where `id`=?", [$rowAd->user_id]);
         abort_if(!$rowUsr, 404);
 
-        $pics = DB::select("select * from `pictures` where `ad_id`=?", [$id]);
+        $pics = DB::select("select * from `pictures` where `ad_id`=? order by `ord`", [$id]);
 
         return view('catalog.show-ad', ["ad" => $rowAd, "usr" => $rowUsr, "pics" => $pics]);
     }

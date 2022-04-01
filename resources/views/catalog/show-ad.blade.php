@@ -20,37 +20,42 @@
                     </span>
                 </div>
 
-                <div>
-                    @if (false && $ad->pic)
-                        <img src="{{ '/images/' . substr($ad->pic, 0, 4) . '/X_' . $ad->pic . '.webp' }}"
-                             width="200" height="150" alt="pic"/>
-                    @endif
-                </div>
+                @php
+                    $lng = isset($ad) ? floatval($ad->lng) : 0;
+                    $lat = isset($ad) ? floatval($ad->lat) : 0;
+                    $token = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
+                    $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,11,0/600x250?logo=false&access_token=$token";
 
-                <div class="row">
-                    <div class="col-8 p-0">
-                        <img
-                            src="{{ '/images/' . substr($pics[0]->name, 0, 4) . '/x_' . $pics[0]->name . '.webp' }}"
-                            alt="pic" width="100%" class="pe-1"/>
-                    </div>
-                    <div class="col-4 p-0" style="overflow: hidden">
+                    $p1 = isset($pics[0]) ? $pics[0]->name : null;
+                    $p2 = isset($pics[1]) ? $pics[1]->name : null;
+                    $pic1 = $p1 ? '/images/' . substr($p1, 0, 4) . '/x_' . $p1 . '.webp' : "";
+                    $pic2 = $p2 ? '/images/' . substr($p2, 0, 4) . '/x_' . $p2 . '.webp' :  "";
+                @endphp
+
+                <div class="row pics_row">
+                    <div id="pic1" class="col-lg-8 pe-1 pic_wrap" style="height: 414px">
                         <div>
-                            <img
-                                src="{{ '/images/' . substr($pics[1]->name, 0, 4) . '/x_' . $pics[1]->name . '.webp' }}"
-                                alt="pic" width="100%" class="pb-1"/>
+                            <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                 data-src="{{ $pic1 }}" alt="pic1"/>
                         </div>
-                        @php
-                            $lng = floatval($ad->lng);
-                            $lat = floatval($ad->lat);
-                            $token = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-                            $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,11,0/600x400?logo=false&access_token=$token"
-                        @endphp
-                        <div class="map-static d-flex align-items-center justify-content-center"
-                             style="background-image: url('{{ $mapUrl }}')">
-                            <button class="btn btn-info btn-sm">
-                                <i class="fa-solid fa-location-dot me-1"></i>
-                                Show on map
-                            </button>
+                    </div>
+                    <div class="col-lg-4 ps-0">
+                        <div id="map1" class="pic_wrap" style="height: 205px" title="Show Map"
+                             data-bs-toggle="modal" data-bs-target="#modal_map1">
+                            <div>
+                                <button class="btn btn-sm btn-info">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Show map
+                                </button>
+                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                     data-src="{{ $mapUrl }}" alt="map"/>
+                            </div>
+                        </div>
+                        <div id="pic2" class="mt-1 pic_wrap" style="height: 205px">
+                            <div>
+                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                     data-src="{{ $pic2 }}" alt="pic2"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,6 +103,16 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal_map1" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="map2" style="max-height: 600px" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('inline_styles')
@@ -111,15 +126,42 @@
             color: #1c628b;
         }
 
-        .map-static {
-            width: 100%;
-            height: 50%;
-            background-repeat: no-repeat;
-            background-position: center center;
-            border-bottom: 1px red;
-        }
-        .map-static:hover {
+        #map1:hover {
             opacity: 80%;
+            cursor: pointer;
+        }
+
+        #map1 > div {
+            position: relative
+        }
+
+        #map1 button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pic_wrap > div {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+
+        .pic_wrap img {
+            object-fit: cover;
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .pics_row > div {
+                padding: 0 !important;
+            }
+
+            #pic1 {
+                margin-bottom: 4px;
+            }
         }
     </style>
 @endsection
