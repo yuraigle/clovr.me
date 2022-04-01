@@ -14,9 +14,14 @@ class CatalogController extends BaseController
 
     public function showAd($id)
     {
-        $row = DB::selectOne("select * from `ads` where `id`=?", [$id]);
-        abort_if(!$row, 404);
+        $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
+        abort_if(!$rowAd, 404);
 
-        return view('catalog.show-ad', ["row" => $row]);
+        $rowUsr = DB::selectOne("select * from `users` where `id`=?", [$rowAd->user_id]);
+        abort_if(!$rowUsr, 404);
+
+        $pics = DB::select("select * from `pictures` where `ad_id`=?", [$id]);
+
+        return view('catalog.show-ad', ["ad" => $rowAd, "usr" => $rowUsr, "pics" => $pics]);
     }
 }
