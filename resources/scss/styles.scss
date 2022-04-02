@@ -50,3 +50,9 @@ $body-color:    $gray-700 !default;
 footer {
     height: 100px;
 }
+
+.ratio-4x3.then-2x1 {
+    @include media-breakpoint-down(sm) {
+        --bs-aspect-ratio: 50%;
+    }
+}

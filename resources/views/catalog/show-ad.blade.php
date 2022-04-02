@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <div class="card p-4 mb-2">
                 <h1 class="h3 border-bottom mb-1 pb-2">{{ $ad->title }}</h1>
                 <div class="aa_row d-flex mb-4">
@@ -32,29 +32,29 @@
                     $pic2 = $p2 ? '/images/' . substr($p2, 0, 4) . '/x_' . $p2 . '.webp' :  "";
                 @endphp
 
-                <div class="row pics_row">
-                    <div id="pic1" class="col-lg-8 pe-1 pic_wrap" style="height: 414px">
-                        <div>
+                <div class="row">
+                    <div class="col-sm-8 p-0">
+                        <div class="ratio ratio-4x3">
                             <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                 data-src="{{ $pic1 }}" alt="pic1"/>
+                                 data-src="{{ $pic1 }}" alt="Main picture"/>
                         </div>
                     </div>
-                    <div class="col-lg-4 ps-0">
-                        <div id="map1" class="pic_wrap" style="height: 205px" title="Show Map"
-                             data-bs-toggle="modal" data-bs-target="#modal_map1">
-                            <div>
-                                <button class="btn btn-sm btn-info">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    Show map
-                                </button>
+                    <div class="col-sm-4 p-0">
+                        <div id="map1" title="Show Map"
+                             data-bs-toggle="modal" data-bs-target="#map_modal">
+                            <button class="btn btn-sm btn-info">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Show map
+                            </button>
+                            <div class="ratio ratio-4x3 then-2x1">
                                 <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
                                      data-src="{{ $mapUrl }}" alt="map"/>
                             </div>
                         </div>
-                        <div id="pic2" class="mt-1 pic_wrap" style="height: 205px">
-                            <div>
+                        <div>
+                            <div class="ratio ratio-4x3 then-2x1">
                                 <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                     data-src="{{ $pic2 }}" alt="pic2"/>
+                                     data-src="{{ $pic2 }}" alt="More pictures"/>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                 <div class="text-muted">{!! nl2br($ad->description) !!}</div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
             <div class="card p-4 mb-2">
                 <h5 class="h5">{{ $usr->name }}</h5>
 
@@ -104,11 +104,11 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal_map1" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal fade" id="map_modal" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="map2" style="max-height: 600px" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
+                    <div id="map_cont" class="ratio ratio-16x9" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
                 </div>
             </div>
         </div>
@@ -126,13 +126,13 @@
             color: #1c628b;
         }
 
+        #map1 {
+            position: relative
+        }
+
         #map1:hover {
             opacity: 80%;
             cursor: pointer;
-        }
-
-        #map1 > div {
-            position: relative
         }
 
         #map1 button {
@@ -140,28 +140,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            z-index: 1;
         }
 
-        .pic_wrap > div {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            overflow: hidden
-        }
-
-        .pic_wrap img {
+        .ratio > img {
             object-fit: cover;
-            width: 100%;
-        }
-
-        @media (max-width: 992px) {
-            .pics_row > div {
-                padding: 0 !important;
-            }
-
-            #pic1 {
-                margin-bottom: 4px;
-            }
         }
     </style>
 @endsection
