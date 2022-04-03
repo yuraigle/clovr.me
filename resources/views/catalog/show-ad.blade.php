@@ -14,51 +14,89 @@
                         &euro;{{ number_format($ad->price, 0) }}
                     </span>
                     <span class="ms-1 align-middle">
-                        @if($ad->price_freq === 'per_week') per week
-                        @elseif($ad->price_freq === 'per_month') per month
+                        @if($ad->price_freq === 'per_week')
+                            <span class="d-none d-md-inline-block">per week</span>
+                            <span class="d-inline-block d-md-none">pw</span>
+                        @elseif($ad->price_freq === 'per_month')
+                            <span class="d-none d-md-inline-block">per month</span>
+                            <span class="d-inline-block d-md-none">pm</span>
                         @endif
                     </span>
                 </div>
 
                 @php
+                    $i = 0;
+                    $w = 550;
+                    $h = 250;
                     $lng = isset($ad) ? floatval($ad->lng) : 0;
                     $lat = isset($ad) ? floatval($ad->lat) : 0;
                     $token = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-                    $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,11,0/600x250?logo=false&access_token=$token";
-
-                    $p1 = isset($pics[0]) ? $pics[0]->name : null;
-                    $p2 = isset($pics[1]) ? $pics[1]->name : null;
-                    $pic1 = $p1 ? '/images/' . substr($p1, 0, 4) . '/x_' . $p1 . '.webp' : "";
-                    $pic2 = $p2 ? '/images/' . substr($p2, 0, 4) . '/x_' . $p2 . '.webp' :  "";
+                    $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,13,0/${w}x${h}" .
+                        "?logo=false&access_token=$token";
                 @endphp
 
                 <div class="row">
                     <div class="col-sm-8 p-0">
-                        <div class="ratio ratio-4x3">
-                            <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                 data-src="{{ $pic1 }}" alt="Main picture"/>
+                        <div class="ratio ratio-4x3 then-2x1">
+                            @if(!empty($pics[0]))
+                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                     data-src="{{ '/images/' . substr($pics[0]->name, 0, 4) . '/x_' . $pics[0]->name . '.webp' }}"
+                                     data-toggle="lightbox"
+                                     data-type="image"
+                                     data-gallery="gallery1"
+                                     data-title="{{ ++$i }} / {{ count($pics) }}"
+                                     alt="Main picture"/>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-4 p-0">
-                        <div id="map1" title="Show Map"
-                             data-bs-toggle="modal" data-bs-target="#map_modal">
-                            <button class="btn btn-sm btn-info">
-                                <i class="fa-solid fa-location-dot"></i>
-                                Show map
-                            </button>
-                            <div class="ratio ratio-4x3 then-2x1">
-                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                     data-src="{{ $mapUrl }}" alt="map"/>
+                        <div class="row m-0">
+                            <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
+                                 data-bs-target="#map_modal">
+                                <button class="btn btn-sm btn-info">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span
+                                        class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
+                                    <span
+                                        class="d-inline-block d-sm-inline-block d-md-none d-lg-inline-block d-xl-none">Map</span>
+                                </button>
+                                <div class="ratio ratio-4x3 then-2x1">
+                                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                         data-src="{{ $mapUrl }}" alt="map" style="object-fit: none"/>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="ratio ratio-4x3 then-2x1">
-                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                     data-src="{{ $pic2 }}" alt="More pictures"/>
+                            <div style="position: relative" class="col-6 col-sm-12 p-0">
+                                <div class="ratio ratio-4x3 then-2x1">
+                                    @if(!empty($pics[1]))
+                                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                             data-src="{{ '/images/' . substr($pics[1]->name, 0, 4) . '/x_' . $pics[1]->name . '.webp' }}"
+                                             data-toggle="lightbox"
+                                             data-type="image"
+                                             data-gallery="gallery1"
+                                             data-title="{{ ++$i }} / {{ count($pics) }}"
+                                             alt="More pictures"/>
+                                    @endif
+                                </div>
+                                @if(count($pics) > 2)
+                                    <div class="badge bg-dark" style="position: absolute; bottom: 5px; right: 5px">
+                                        +{{ count($pics) - 2 }}
+                                        <i class="fa-solid fa-images"></i>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
+
+                @foreach(array_slice($pics, 2) as $pic)
+                    <div class="d-none"
+                         data-src="{{ '/images/' . substr($pic->name, 0, 4) . '/x_' . $pic->name . '.webp' }}"
+                         data-toggle="lightbox"
+                         data-type="image"
+                         data-gallery="gallery1"
+                         data-title="{{ ++$i }} / {{ count($pics) }}"
+                    ></div>
+                @endforeach
 
                 <p class="text-center mt-2">{{ $ad->location }}</p>
 
@@ -108,7 +146,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="map_cont" class="ratio ratio-16x9" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
+                    <div id="map_cont" style="height: 500px" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
                 </div>
             </div>
         </div>
@@ -130,11 +168,6 @@
             position: relative
         }
 
-        #map1:hover {
-            opacity: 80%;
-            cursor: pointer;
-        }
-
         #map1 button {
             position: absolute;
             top: 50%;
@@ -143,8 +176,13 @@
             z-index: 1;
         }
 
-        .ratio > img {
+        div.ratio.ratio-4x3 > img {
             object-fit: cover;
+            cursor: pointer;
+        }
+
+        div.ratio.ratio-4x3 > img:hover {
+            opacity: 90%;
         }
     </style>
 @endsection

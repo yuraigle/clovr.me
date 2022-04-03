@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends BaseController
 {
@@ -13,7 +14,8 @@ class IndexController extends BaseController
 
     public function home()
     {
-        return view('home', []);
+        $rows = DB::select("select * from `ads` order by `id` desc limit 10");
+        return view('home', ["rows" => $rows]);
     }
 
     public function about()
