@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @yield('meta')
 
-    <title>@yield('title')clovr.one</title>
+    <title>@yield('title')clovr.me</title>
     <link href="{{ mix('/dist/app-styles.css') }}" rel="stylesheet" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
