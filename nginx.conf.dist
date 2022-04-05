@@ -1,7 +1,17 @@
 server {
     listen 80;
-    server_name 151.ip-51-38-131.eu;
+    server_name clovr.me;
+    return 301 https://clovr.me$request_uri;
+}
 
+server {
+    listen 443 ssl;
+    ssl on;
+    ssl_certificate /var/www/site1/cert/clovr_cf.pem;
+    ssl_certificate_key /var/www/site1/cert/clovr_cf.key;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    server_name clovr.me;
     root /var/www/site1/public;
     index index.php index.html index.htm;
     charset utf-8;

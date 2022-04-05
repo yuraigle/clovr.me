@@ -18,3 +18,4 @@ mix-manifest.json
 deploy.bat
 !.gitkeep
 /public/images/*
+/cert/*
