@@ -20,7 +20,7 @@
                         <img src="/m_noimg.webp" width="200" height="150" alt="main_pic"/>
                     @endif
                     <div class="ms-3 me-auto">
-                        <a href="{{ route("show-ad", ['id' => $row->id]) }}"
+                        <a href="{!! AdUrl::canonical($row) !!}"
                            class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
                         <strong class="text-info">
                             &euro;{{ number_format($row->price, 2) }}
