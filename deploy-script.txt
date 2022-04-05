@@ -1,4 +1,4 @@
-open orlov@iphost
+open orlov@iphoster
 cd /var/www/site1
 rm ./public/dist/*
 put .\package.json ./

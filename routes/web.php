@@ -34,5 +34,8 @@ Route::get('/edit-ad/{id}', [AdController::class, 'editAd'])
 Route::post('/edit-ad/{id}', [AdController::class, 'editAdPost'])
     ->where('id', '[0-9]+');
 
-Route::get('/ad/{id}', [CatalogController::class, 'showAd'])
-    ->where('id', '[0-9]+')->name('show-ad');
+Route::get('/_/{cat}/{title}/{id}', [CatalogController::class, 'showAd'])
+    ->where('cat', '[a-z\-]+')
+    ->where('title', '[a-z0-9\-]+')
+    ->where('id', '[0-9]+')
+    ->name('show-ad');

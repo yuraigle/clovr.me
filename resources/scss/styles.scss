@@ -56,3 +56,18 @@ footer {
         --bs-aspect-ratio: 50%;
     }
 }
+
+.btn.bg-fb {
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+.btn.bg-fb:hover {
+    background-color: #324c81;
+    border-color: #2f477a;
+}
+
+.btn.bg-fb:focus {
+    background-color: #324c81;
+    border-color: #2f477a;
+    box-shadow: 0 0 0 0.25rem rgb(88 114 167 / 50%)
+}

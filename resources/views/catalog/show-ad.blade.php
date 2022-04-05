@@ -154,6 +154,7 @@
 @endsection
 
 @section('inline_styles')
+    <link rel="canonical" href="https://clovr.me{!! AdUrl::canonical($ad) !!}"/>
     <style>
         .aa_row {
             line-height: 26px
@@ -195,5 +196,5 @@
             "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
     </script>
 
-    <script type="text/javascript" src="{{ mix('/dist/show-ad.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/show0.js') }}"></script>
 @endsection

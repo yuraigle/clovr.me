@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-xl-5">
             <div class="card shadow-sm mb-4">
                 <div class="d-flex">
                     <img src="/x_rent.webp" alt="Flats for Rent" style="width: 50%"/>
@@ -33,8 +33,7 @@
             </div>
 
         </div>
-        <div class="col-lg-6">
-
+        <div class="col-lg-6 col-xl-5">
             <div class="card shadow-sm mb-4">
                 <div class="d-flex">
                     <img src="/x_buy.webp" alt="Houses for Sale" style="width: 50%"/>
@@ -63,14 +62,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-2">
+            XL2
+        </div>
     </div>
 
     <div class="card shadow-sm mb-4 px-4 py-2">
         <h3 class="h6">Featured ADs</h3>
     </div>
 
-    <h3 class="mt-4">Latest ADs</h3>
+    <h3 class="mt-4">Latest1 ADs</h3>
     @foreach ($rows as $row)
+
         <div class="pt-4 d-flex">
             @if ($row->pic)
                 <img src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}" width="120"
@@ -79,7 +83,7 @@
                 <img src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
             @endif
             <div class="ms-3 me-auto">
-                <a href="{{ route("show-ad", ['id' => $row->id]) }}"
+                <a href="{!! AdUrl::canonical($row) !!}"
                    class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
                 <strong class="text-info">
                     &euro;{{ number_format($row->price, 0) }}

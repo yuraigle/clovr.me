@@ -1,6 +1,6 @@
 <template>
   <div class="card shadow-sm bg-light mt-4 mb-4 p-4">
-    <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100 bg-gradient">
+    <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100 bg-gradient bg-fb">
       <i class="fa-brands fa-facebook-square me-1"></i>
       Sign in with Facebook
     </a>

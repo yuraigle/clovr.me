@@ -23,5 +23,5 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
-    <script type="text/javascript" src="{{ mix('/dist/edit-ad.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/edit0.js') }}"></script>
 @endsection
