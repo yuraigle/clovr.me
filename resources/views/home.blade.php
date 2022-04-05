@@ -82,7 +82,7 @@
                 <a href="{{ route("show-ad", ['id' => $row->id]) }}"
                    class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
                 <strong class="text-info">
-                    &euro;{{ number_format($row->price, 2) }}
+                    &euro;{{ number_format($row->price, 0) }}
                     @if ($row->price_freq == 'per_month')
                         per month
                     @elseif($row->price_freq == 'per_week')
