@@ -25,9 +25,7 @@
                 <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
                 clovr
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar1">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button>
 
             <div class="collapse navbar-collapse" id="navbar1">
                 <ul class="navbar-nav ms-auto">
@@ -88,8 +86,8 @@
     </footer>
 
     <script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
-    <script src="https://kit.fontawesome.com/e0449c5598.js" crossorigin="anonymous"></script>
     @yield('inline_scripts')
+    <link href="{{ mix('/dist/app-icons.css') }}" rel="stylesheet" />
 </body>
 
 </html>

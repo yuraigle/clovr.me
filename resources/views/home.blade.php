@@ -1,7 +1,6 @@
 @extends('layouts.base')
 
 @section('content')
-
     <div class="row">
         <div class="col-lg-6 col-xl-5">
             <div class="card shadow-sm mb-4">

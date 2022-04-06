@@ -38,15 +38,6 @@ $body-color:    $gray-700 !default;
 
 @import "~bootstrap/scss/bootstrap";
 
-.fa-solid, .fa-brands {
-    width: 16px;
-    display: inline-block;
-}
-
-.fa-2xl {
-    width: 28px !important;
-}
-
 footer {
     height: 100px;
 }

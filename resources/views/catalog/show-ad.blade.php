@@ -195,6 +195,5 @@
         mapboxgl.accessToken =
             "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
     </script>
-
-    <script type="text/javascript" src="{{ mix('/dist/show0.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/show-0.js') }}"></script>
 @endsection

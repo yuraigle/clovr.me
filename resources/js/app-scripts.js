@@ -1,5 +1,8 @@
-import "bootstrap/js/dist/collapse.js";
-import "bootstrap/js/dist/dropdown.js";
+document
+    .querySelector(".navbar-toggler")
+    .addEventListener("click", function () {
+        document.getElementById("navbar1").classList.toggle("show");
+    });
 
 window.csrf = function () {
     return document.querySelector('meta[name="csrf-token"]').content;
@@ -26,13 +29,11 @@ window.showToast = function (content, color = "danger") {
 window.fetchApi = function (
     url,
     opts,
-    _success = () => {
-    },
-    _finally = () => {
-    }
+    _success = () => {},
+    _finally = () => {}
 ) {
     return fetch(url, opts)
-        .then((r) => r.json().then((d) => ({status: r.status, body: d})))
+        .then((r) => r.json().then((d) => ({ status: r.status, body: d })))
         .then((result) => {
             if (result.status !== 200 && result.body.message) {
                 return showToast(result.body.message);

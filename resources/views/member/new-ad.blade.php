@@ -20,7 +20,6 @@
         mapboxgl.accessToken =
             "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
-    <script type="text/javascript" src="{{ mix('/dist/new0.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/new-0.js') }}"></script>
 @endsection

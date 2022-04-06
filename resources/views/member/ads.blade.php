@@ -34,9 +34,9 @@
                     </div>
 
                     <div class="dropdown">
-                        <button class="btn btn-outline-info btn-sm dropdown-toggle" type="button"
+                        <button class="btn btn-sm dropdown-toggle" type="button"
                                 data-bs-toggle="dropdown">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                            <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <ul class="dropdown-menu">
                             <li>
@@ -65,4 +65,8 @@
         }
 
     </style>
+@endsection
+
+@section('inline_scripts')
+    <script type="text/javascript" src="{{ mix('/dist/member-0.js') }}"></script>
 @endsection
