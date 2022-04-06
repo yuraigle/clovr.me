@@ -29,4 +29,15 @@ class CatalogController extends BaseController
 
         return view('catalog.show-ad', ["ad" => $rowAd, "usr" => $rowUsr, "pics" => $pics]);
     }
+
+    public function showCat($cat, Request $req)
+    {
+        $cid = array_search($cat, AdUrl::$CATS);
+        abort_if(!$cid, 404);
+
+        $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$cid]);
+        abort_if(!$rowCat, 404);
+
+        return view('catalog.show-cat', ['cat' => $rowCat]);
+    }
 }

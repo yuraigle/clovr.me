@@ -11,13 +11,13 @@ module.exports = {
         "show-0": "./resources/js/show-ad.js",
         "edit-0": "./resources/js/edit-ad.js",
         "new-0": "./resources/js/new-ad.js",
+        "member-0": "./resources/js/member-index.js",
         "auth-login-box": "./resources/js/auth-login-box.js",
         "auth-register-box": "./resources/js/auth-register-box.js",
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",
         "app-scripts": "./resources/js/app-scripts.js",
         "app-styles": "./resources/js/app-styles.js",
         "app-icons": "./resources/js/app-icons.js",
-        "member-0": "./resources/js/member-index.js",
     },
 
     output: {

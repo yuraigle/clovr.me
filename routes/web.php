@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\AdUrl;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
@@ -39,3 +40,7 @@ Route::get('/_/{cat}/{title}/{id}', [CatalogController::class, 'showAd'])
     ->where('title', '[a-z0-9\-]+')
     ->where('id', '[0-9]+')
     ->name('show-ad');
+
+Route::get('/{cat}', [CatalogController::class, 'showCat'])
+    ->where('cat', join('|', AdUrl::$CATS))
+    ->name('show-cat');

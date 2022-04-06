@@ -9,9 +9,9 @@
                     <div class="mx-4 my-2" style="width: 50%">
                         <h3 class="h6">Rent a Flat</h3>
                         <ul class="list-unstyled small">
-                            <li><a href="#">Studios</a></li>
-                            <li><a href="#">1 bedroom</a></li>
-                            <li><a href="#">2 bedroom</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Studios</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">1 bedroom</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">2 bedroom</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,9 +22,9 @@
                     <div class="mx-4 my-2" style="width: 50%">
                         <h3 class="h6">Flat & House Share</h3>
                         <ul class="list-unstyled small">
-                            <li><a href="#">Shared Houses</a></li>
-                            <li><a href="#">Shared Flats</a></li>
-                            <li><a href="#">Couch Surf</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Houses</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Flats</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Couch Surf</a></li>
                         </ul>
                     </div>
                     <img src="/x_share.webp" alt="Flat & House Share" style="width: 50%"/>
@@ -39,10 +39,10 @@
                     <div class="mx-4 my-2" style="width: 50%">
                         <h3 class="h6">Property for Sale</h3>
                         <ul class="list-unstyled small">
-                            <li><a href="#">Houses</a></li>
-                            <li><a href="#">Studios</a></li>
-                            <li><a href="#">1 bedroom</a></li>
-                            <li><a href="#">2 bedroom</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">1 bedroom</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">2 bedroom</a></li>
                         </ul>
                     </div>
                 </div>
@@ -53,8 +53,10 @@
                     <div class="mx-4 my-2" style="width: 50%">
                         <h3 class="h6">Garages & Parking</h3>
                         <ul class="list-unstyled small">
-                            <li><a href="#">Garages for sale</a></li>
-                            <li><a href="#">Parking places to rent</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'garage-parking-for-sale']) }}">
+                                    Garages for sale</a></li>
+                            <li><a href="{{ route('show-cat', ['cat' => 'garage-parking-to-rent']) }}">
+                                    Parking places to rent</a></li>
                         </ul>
                     </div>
                     <img src="/x_garage.webp" alt="Garages & Parking" style="width: 50%"/>
