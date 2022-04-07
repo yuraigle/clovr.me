@@ -69,6 +69,8 @@
         </div>
     </nav>
 
+    @yield('cover1')
+
     <main class="flex-grow-1 bg-light">
         <div class="container py-4">
             @yield('content')

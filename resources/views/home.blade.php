@@ -1,71 +1,98 @@
 @extends('layouts.base')
 
+@section('cover1')
+    <section class="flex-row" style="height: 490px; width: 100%; background-image: url('/cover.webp')">
+        AZAZA
+    </section>
+@endsection
+
 @section('content')
+
     <div class="row">
-        <div class="col-lg-6 col-xl-5">
-            <div class="card shadow-sm mb-4">
-                <div class="d-flex">
-                    <img src="/x_rent.webp" alt="Flats for Rent" style="width: 50%"/>
-                    <div class="mx-4 my-2" style="width: 50%">
-                        <h3 class="h6">Rent a Flat</h3>
-                        <ul class="list-unstyled small">
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Studios</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">1 bedroom</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">2 bedroom</a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm mb-3">
+                <table>
+                    <tr>
+                        <td style="background-image: url('/x_rent.webp')"></td>
+                        <td class="px-4 py-2">
+                            <h3 class="h6">Rent a Flat</h3>
+                            <ul class="list-unstyled small">
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Studios</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">1 bedroom</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">2 bedroom</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="d-flex">
-                    <div class="mx-4 my-2" style="width: 50%">
-                        <h3 class="h6">Flat & House Share</h3>
-                        <ul class="list-unstyled small">
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Houses</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Flats</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Couch Surf</a></li>
-                        </ul>
-                    </div>
-                    <img src="/x_share.webp" alt="Flat & House Share" style="width: 50%"/>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-xl-5">
-            <div class="card shadow-sm mb-4">
-                <div class="d-flex">
-                    <img src="/x_buy.webp" alt="Houses for Sale" style="width: 50%"/>
-                    <div class="mx-4 my-2" style="width: 50%">
-                        <h3 class="h6">Property for Sale</h3>
-                        <ul class="list-unstyled small">
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">1 bedroom</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">2 bedroom</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow-sm mb-4">
-                <div class="d-flex">
-                    <div class="mx-4 my-2" style="width: 50%">
-                        <h3 class="h6">Garages & Parking</h3>
-                        <ul class="list-unstyled small">
-                            <li><a href="{{ route('show-cat', ['cat' => 'garage-parking-for-sale']) }}">
-                                    Garages for sale</a></li>
-                            <li><a href="{{ route('show-cat', ['cat' => 'garage-parking-to-rent']) }}">
-                                    Parking places to rent</a></li>
-                        </ul>
-                    </div>
-                    <img src="/x_garage.webp" alt="Garages & Parking" style="width: 50%"/>
-                </div>
+            <div class="card shadow-sm mb-3">
+                <table>
+                    <tr>
+                        <td class="px-4 py-2">
+                            <h3 class="h6">Flat & House Share</h3>
+                            <ul class="list-unstyled small">
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Houses</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Flats</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Couch Surf</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td style="background-image: url('/x_share.webp')"></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <div class="col-xl-2">
-            XL2
+        <div class="col-lg-6">
+            <div class="card shadow-sm mb-3">
+                <table>
+                    <tr>
+                        <td style="background-image: url('/x_buy.webp')"></td>
+                        <td class="px-4 py-2">
+                            <h3 class="h6">Property for Sale</h3>
+                            <ul class="list-unstyled small">
+                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a></li>
+                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a></li>
+                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">1 bedroom</a></li>
+                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">2 bedroom</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+                <table>
+                    <tr>
+                        <td class="px-4 py-2">
+                            <h3 class="h6">Garages & Parking</h3>
+                            <ul class="list-unstyled small">
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-for-sale']) }}">
+                                        Garages for sale</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-to-rent']) }}">
+                                        Parking places to rent</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td style="background-image: url('/x_garage.webp')"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -98,4 +125,23 @@
             </div>
         </div>
     @endforeach
+@endsection
+
+@section('inline_styles')
+    <style>
+        .card table {
+            width: 100%;
+            height: 150px;
+        }
+
+        .card table td {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        .card table td {
+            background-size: cover;
+            background-position: center center;
+        }
+    </style>
 @endsection
