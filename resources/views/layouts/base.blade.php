@@ -19,7 +19,7 @@
 
 <body class="d-flex flex-column h-100">
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-sm ps-4 pe-4">
+    <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm ps-4 pe-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbar1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('search') ? 'active' : '' }}"
+                        <a class="nav-link btn btn-sm {{ request()->routeIs('search') ? 'active' : '' }}"
                             href="{{ route('search') }}">
                             <i class="fa-solid fa-magnifying-glass me-1"></i>Search
                         </a>
@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('login') ? 'active' : '' }}"
+                            <a class="nav-link btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
                                 href="{{ route('login') }}">
                                 <i class="fa-solid fa-user me-1"></i>Login
                             </a>
@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-sm btn-light {{ request()->routeIs('profile') ? 'active' : '' }}"
+                            <a class="nav-link btn btn-sm {{ request()->routeIs('profile') ? 'active' : '' }}"
                                 href="{{ route('profile') }}">
                                 <i class="fa-solid fa-user me-1"></i>
                                 {{ auth()->user()['name'] }}
@@ -69,7 +69,7 @@
         </div>
     </nav>
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 bg-light">
         <div class="container py-4">
             @yield('content')
         </div>

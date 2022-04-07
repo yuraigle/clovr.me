@@ -30,8 +30,8 @@
                     <img src="/x_share.webp" alt="Flat & House Share" style="width: 50%"/>
                 </div>
             </div>
-
         </div>
+
         <div class="col-lg-6 col-xl-5">
             <div class="card shadow-sm mb-4">
                 <div class="d-flex">

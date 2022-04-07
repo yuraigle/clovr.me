@@ -1,12 +1,12 @@
 <template>
-  <div class="card shadow-sm bg-light mt-4 mb-4 p-4">
+  <div class="card shadow-sm mt-4 mb-4 p-4">
     <a href="/auth/fb-redirect" class="btn btn-primary btn-lg w-100 bg-gradient bg-fb">
       <i class="fa-brands fa-facebook-square me-1"></i>
       Sign in with Facebook
     </a>
 
     <div class="text-center text-muted mt-4 mb-1 lined_or">
-      <p><span class="bg-light">or</span></p>
+      <p><span class="bg-white px-4">or</span></p>
     </div>
 
     <form method="post">

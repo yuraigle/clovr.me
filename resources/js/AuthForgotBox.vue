@@ -1,9 +1,9 @@
 <template>
-  <div class="card shadow-sm bg-light mt-4 mb-4 p-4">
+  <div class="card shadow-sm mt-4 mb-4 p-4">
     <form method="post">
       <p>
-        Enter your user account's verified email address and we will send you a
-        password reset instructions.
+        Enter your user account's verified email address and we'll send you a
+        password reset link.
       </p>
       <div class="mb-2">
         <label for="email" class="form-label">Email</label>
