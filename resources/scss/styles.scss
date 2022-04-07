@@ -1,7 +1,6 @@
 @import "~bootstrap/scss/functions";
 
-
-$white:    #fff !default;
+$white: #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -11,35 +10,50 @@ $gray-600: #868e96 !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
-$black:    #000 !default;
+$black: #000 !default;
 
-$blue:    #033c73 !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #e83e8c !default;
-$red:     #c71c22 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #dd5600 !default;
-$green:   #73a839 !default;
-$teal:    #20c997 !default;
-$cyan:    #2fa4e7 !default;
+$blue: #033c73 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #c71c22 !default;
+$orange: #fd7e14 !default;
+$yellow: #dd5600 !default;
+$green: #73a839 !default;
+$teal: #20c997 !default;
+$cyan: #2fa4e7 !default;
 
-$primary:       $cyan !default;
-$secondary:     $gray-200 !default;
-$success:       $green !default;
-$info:          $blue !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$primary: $cyan !default;
+$secondary: $gray-200 !default;
+$success: $green !default;
+$info: $blue !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
 
-$min-contrast-ratio:   2.75 !default;
-$body-color:    $gray-700 !default;
+$min-contrast-ratio: 2.75 !default;
+$body-color: $gray-700 !default;
+
+$font-family-sans-serif: "Lato", "Helvetica Neue", Arial, sans-serif !default;
 
 @import "~bootstrap/scss/bootstrap";
 
+body {
+    min-height: 100%;
+}
+
 footer {
     height: 100px;
+}
+
+.cover1 {
+    width: 100%;
+    height: 450px;
+    padding-top: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .ratio-4x3.then-2x1 {
@@ -52,6 +66,7 @@ footer {
     background-color: #3b5998;
     border-color: #3b5998;
 }
+
 .btn.bg-fb:hover {
     background-color: #324c81;
     border-color: #2f477a;

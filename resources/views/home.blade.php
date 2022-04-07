@@ -1,8 +1,32 @@
 @extends('layouts.base')
 
 @section('cover1')
-    <section class="flex-row" style="height: 490px; width: 100%; background-image: url('/cover.webp')">
-        AZAZA
+    <section class="cover1" style="background-image: url('/cover.webp')">
+        <form class="container">
+            <div class="row">
+                <div class="col-3 col-lg-2 mb-2">
+                    <select class="form-select form-select-lg shadow-lg">
+                        <option value="1">Sale</option>
+                        <option value="2">Rent</option>
+                    </select>
+                </div>
+                <div class="col-9 col-lg-10 mb-2">
+                    <input type="search" class="form-control form-control-lg shadow-lg" id="q" name="q"
+                           placeholder="Address, location, keyword...">
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a class="btn btn-light" href="#">
+                    <i class="fa fa-location me-1"></i>
+                    Show on the map
+                </a>
+                <button class="btn btn-info">
+                    Search
+                    <i class="fa fa-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </form>
     </section>
 @endsection
 
