@@ -2,18 +2,45 @@
 
 @section('cover1')
     <section class="cover1" style="background-image: url('/cover.webp')">
-        <form class="container">
-            <div class="row">
-                <div class="col-3 col-lg-2 mb-2">
-                    <select class="form-select form-select-lg shadow-lg">
-                        <option value="1">Sale</option>
-                        <option value="2">Rent</option>
-                    </select>
-                </div>
-                <div class="col-9 col-lg-10 mb-2">
-                    <input type="search" class="form-control form-control-lg shadow-lg" id="q" name="q"
-                           placeholder="Address, location, keyword...">
-                </div>
+        <form class="container" method="get" action="{{ route('search') }}">
+            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button">
+                <i class="fa fa-location-arrow me-1"></i>
+                Dublin
+            </button>
+
+            <div class="d-flex opacity-75 mb-1">
+                <button class="btn btn-dark py-1 me-2 cat1" type="button" data-cat1="sale">Sale</button>
+                <button class="btn btn-light py-1 me-2 cat1" type="button" data-cat1="rent">Rent</button>
+                <button class="btn btn-light py-1 cat1" type="button" data-cat1="share">Share</button>
+            </div>
+
+            <div class="input-group shadow-sm mb-2">
+                <button class="btn btn-light dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
+                    <span class="sp_prop1" id="prop1_house"><i class="fa-solid fa-house-chimney me-1"></i> House</span>
+                    <span class="sp_prop1 d-none" id="prop1_flat"><i class="fa-solid fa-city me-1"></i> Apartment</span>
+                    <span class="sp_prop1 d-none" id="prop1_garage">
+                        <i class="fa-solid fa-warehouse me-1"></i> Garage
+                    </span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="house">
+                            <i class="fa-solid fa-house-chimney me-1"></i> House
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="flat">
+                            <i class="fa-solid fa-city me-1"></i> Apartment
+                        </button>
+                    </li>
+                    <li id="garage2">
+                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="garage">
+                            <i class="fa-solid fa-warehouse me-1"></i> Garage
+                        </button>
+                    </li>
+                </ul>
+                <input type="search" class="form-control py-2 px-3" id="q" name="q"
+                       placeholder="Address, location, keyword...">
             </div>
 
             <div class="text-end">
@@ -26,6 +53,9 @@
                     <i class="fa fa-arrow-right ms-1"></i>
                 </button>
             </div>
+
+            <input type="hidden" id="prop1" name="prop" value="house">
+            <input type="hidden" id="cat1" name="cat" value="sale">
         </form>
     </section>
 @endsection
@@ -151,21 +181,6 @@
     @endforeach
 @endsection
 
-@section('inline_styles')
-    <style>
-        .card table {
-            width: 100%;
-            height: 150px;
-        }
-
-        .card table td {
-            width: 50%;
-            vertical-align: top;
-        }
-
-        .card table td {
-            background-size: cover;
-            background-position: center center;
-        }
-    </style>
+@section('inline_scripts')
+    <script type="text/javascript" src="{{ mix('/dist/home-0.js') }}"></script>
 @endsection

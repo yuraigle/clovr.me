@@ -50,10 +50,20 @@ footer {
 .cover1 {
     width: 100%;
     height: 450px;
-    padding-top: 200px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.cover1 > form {
+    padding-top: 150px;
+    position: relative;
+}
+
+.cover1 > form > .location_btn {
+    position: absolute;
+    top: 10px;
+    left: 12px;
 }
 
 .ratio-4x3.then-2x1 {
@@ -76,4 +86,19 @@ footer {
     background-color: #324c81;
     border-color: #2f477a;
     box-shadow: 0 0 0 0.25rem rgb(88 114 167 / 50%)
+}
+
+.card > table {
+    width: 100%;
+    height: 150px;
+}
+
+.card > table td {
+    width: 50%;
+    vertical-align: top;
+}
+
+.card > table td {
+    background-size: cover;
+    background-position: center center;
 }

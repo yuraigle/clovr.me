@@ -17,57 +17,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-
     @yield('inline_styles')
 </head>
 
 <body class="d-flex flex-column">
-
 <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm ps-4 pe-4">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/logo-28x28.png" alt="Logo" width="28" height="28" class="d-inline-block align-text-top">
-            clovr
+            <img src="/favicon-32x32.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top"/>
+            <span class="brand ms-1">clovr</span>
         </a>
         <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button>
-
-        <div class="collapse navbar-collapse" id="navbar1">
+        <div class="collapse navbar-collapse py-2" id="navbar1">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-sm {{ request()->routeIs('search') ? 'active' : '' }}"
-                       href="{{ route('search') }}">
-                        <i class="fa-solid fa-magnifying-glass me-1"></i>Search
+                <li class="nav-item me-2">
+                    <a class="nav-link px-3 py-1 btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
+                       href="{{ auth() ? route('new-ad') : route('login') . '?back=new-ad' }}">
+                        <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
                     </a>
                 </li>
-                @guest
-                    <li class="nav-item ms-1 me-1">
-                        <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
-                           href="{{ route('login') }}?back=new-ad">
-                            <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
-                           href="{{ route('login') }}">
-                            <i class="fa-solid fa-user me-1"></i>Login
-                        </a>
-                    </li>
-                @endguest
-                @auth
-                    <li class="nav-item ms-1 me-1">
-                        <a class="nav-link btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
-                           href="{{ route('new-ad') }}">
-                            <i class="fa-solid fa-pen-to-square me-1"></i>Post Ad
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-sm {{ request()->routeIs('profile') ? 'active' : '' }}"
-                           href="{{ route('profile') }}">
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ auth()->user()['name'] }}
-                        </a>
-                    </li>
-                @endauth
+                <li class="nav-item">
+                    <a class="nav-link px-3 py-1 btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
+                       href="{{ auth() ? route('profile') : route('login') }}">
+                        <i class="fa-solid fa-user me-1"></i>
+                        {{ auth()->user()['name'] }}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -95,5 +70,4 @@
 @yield('inline_scripts')
 <link href="{{ mix('/dist/app-icons.css') }}" rel="stylesheet"/>
 </body>
-
 </html>

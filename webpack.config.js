@@ -8,6 +8,7 @@ module.exports = {
     mode: "development",
 
     entry: {
+        "home-0": "./resources/js/home.js",
         "show-0": "./resources/js/show-ad.js",
         "edit-0": "./resources/js/edit-ad.js",
         "new-0": "./resources/js/new-ad.js",
