@@ -3,7 +3,8 @@
 @section('cover1')
     <section class="cover1" style="background-image: url('/cover.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
-            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button">
+            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#locationModal">
                 <i class="fa fa-location-arrow me-1"></i>
                 Dublin
             </button>
@@ -16,41 +17,43 @@
 
             <div class="input-group shadow-sm mb-2">
                 <button class="btn btn-light dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
-                    <span class="sp_prop1" id="prop1_house"><i class="fa-solid fa-house-chimney me-1"></i> House</span>
-                    <span class="sp_prop1 d-none" id="prop1_flat"><i class="fa-solid fa-city me-1"></i> Apartment</span>
+                    <span class="sp_prop1" id="prop1_house">
+                        <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
+                    </span>
+                    <span class="sp_prop1 d-none" id="prop1_flat">
+                        <i class="fa-solid fa-city fa-fw me-1"></i> Apartment
+                    </span>
                     <span class="sp_prop1 d-none" id="prop1_garage">
-                        <i class="fa-solid fa-warehouse me-1"></i> Garage
+                        <i class="fa-solid fa-warehouse fa-fw me-1"></i> Garage
                     </span>
                 </button>
                 <ul class="dropdown-menu">
                     <li>
                         <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="house">
-                            <i class="fa-solid fa-house-chimney me-1"></i> House
+                            <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
                         </button>
                     </li>
                     <li>
                         <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="flat">
-                            <i class="fa-solid fa-city me-1"></i> Apartment
+                            <i class="fa-solid fa-city fa-fw me-1"></i> Apartment
                         </button>
                     </li>
                     <li id="garage2">
                         <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="garage">
-                            <i class="fa-solid fa-warehouse me-1"></i> Garage
+                            <i class="fa-solid fa-warehouse fa-fw me-1"></i> Garage
                         </button>
                     </li>
                 </ul>
                 <input type="search" class="form-control py-2 px-3" id="q" name="q"
-                       placeholder="Address, location, keyword...">
+                    placeholder="Address, location, keyword...">
             </div>
 
             <div class="text-end">
-                <a class="btn btn-light" href="#">
-                    <i class="fa fa-location me-1"></i>
-                    Show on the map
-                </a>
+                <button class="btn btn-light me-1">
+                    <i class="fa fa-fw fa-location me-1"></i> Show on the map
+                </button>
                 <button class="btn btn-info">
-                    Search
-                    <i class="fa fa-arrow-right ms-1"></i>
+                    Search <i class="fa fa-fw fa-arrow-right ms-1"></i>
                 </button>
             </div>
 
@@ -61,7 +64,6 @@
 @endsection
 
 @section('content')
-
     <div class="row">
         <div class="col-lg-6">
             <div class="card shadow-sm mb-3">
@@ -156,17 +158,15 @@
 
     <h3 class="mt-4">Latest1 ADs</h3>
     @foreach ($rows as $row)
-
         <div class="pt-4 d-flex">
             @if ($row->pic)
                 <img src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}" width="120"
-                     height="90" alt="main_pic"/>
+                    height="90" alt="main_pic" />
             @else
-                <img src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
+                <img src="/s_noimg.webp" width="120" height="90" alt="main_pic" />
             @endif
             <div class="ms-3 me-auto">
-                <a href="{!! AdUrl::canonical($row) !!}"
-                   class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
+                <a href="{!! AdUrl::canonical($row) !!}" class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br />
                 <strong class="text-info">
                     &euro;{{ number_format($row->price, 0) }}
                     @if ($row->price_freq == 'per_month')
@@ -174,11 +174,35 @@
                     @elseif($row->price_freq == 'per_week')
                         per week
                     @endif
-                </strong><br/>
+                </strong><br />
                 <small class="text-muted">{{ $row->location }}</small>
             </div>
         </div>
     @endforeach
+
+    <div class="modal fade" id="locationModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Location</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row lh-lg text-center pb-2">
+                        <div class="col-4 fw-bold">Dublin</div>
+                        <div class="col-4"><a href="#">Cork</a></div>
+                        <div class="col-4"><a href="#">Limerick</a></div>
+                        <div class="col-4"><a href="#">Galway</a></div>
+                        <div class="col-4"><a href="#">Waterford</a></div>
+                        <div class="col-4"><a href="#">Drogheda</a></div>
+                        <div class="col-4"><a href="#">Dundalk</a></div>
+                        <div class="col-4"><a href="#">Bray</a></div>
+                        <div class="col-4"><a href="#">Navan</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('inline_scripts')

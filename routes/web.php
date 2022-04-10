@@ -17,7 +17,7 @@ Route::get('/forgot', [AuthController::class, 'forgot'])->name('forgot');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/auth/fb-redirect', [AuthController::class, 'fbRedirect']);
 Route::get('/auth/fb-callback', [AuthController::class, 'fbCallback']);
-Route::get('/member/profile', [MemberController::class, 'profile'])->name('profile');
+Route::get('/member', [MemberController::class, 'profile'])->name('profile');
 Route::get('/member/ads', [MemberController::class, 'ads'])->name('my-ads');
 Route::get('/member/favorites', [MemberController::class, 'favorites'])->name('favorites');
 Route::get('/member/messages', [MemberController::class, 'messages'])->name('messages');

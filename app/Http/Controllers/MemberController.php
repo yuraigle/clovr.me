@@ -17,7 +17,7 @@ class MemberController extends BaseController
     public function profile()
     {
         if (!Auth::check()) {
-            return redirect('/login?back=' . urlencode(route('profile', [], false)));
+            return redirect('/login?back=member');
         }
 
         return view('member.profile', []);

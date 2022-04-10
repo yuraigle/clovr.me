@@ -45,7 +45,7 @@ class AdController extends BaseController
     public function newAd()
     {
         if (!Auth::check()) {
-            return redirect('/login?back=' . urlencode(route('new-ad', [], false)));
+            return redirect('/login?back=new-ad');
         }
 
         return view('member.new-ad', []);

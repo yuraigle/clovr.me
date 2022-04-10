@@ -107,7 +107,7 @@ export default {
             },
             () => {
               const urlParams = new URLSearchParams(window.location.search);
-              window.location.href = urlParams.get("back") || "/member/profile";
+              window.location.href = urlParams.get("back") || "/member";
             },
             () => (loading.value = false)
           );

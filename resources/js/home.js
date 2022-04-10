@@ -1,4 +1,5 @@
 import "bootstrap/js/dist/dropdown.js";
+import "bootstrap/js/dist/modal.js";
 
 const elProp1 = document.getElementById('prop1');
 const elCat1 = document.getElementById('cat1');
