@@ -38,6 +38,7 @@ CREATE TABLE `users`
     `created_at`        TIMESTAMP           NULL DEFAULT NULL,
     `updated_at`        TIMESTAMP           NULL DEFAULT NULL,
     `fb_id`             VARCHAR(20)         NULL DEFAULT NULL,
+    `phone`             VARCHAR(20)         NULL DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `IX_USERS_EMAIL_UNIQUE` (`email`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'
@@ -55,7 +56,6 @@ CREATE TABLE `ads`
     `price_freq`     VARCHAR(10)         NULL, -- per_month / per_week
     `date_avail`     DATE                NULL,
     `room_type`      VARCHAR(10)         NULL, -- single / double / twin / triple / shared / couch
-    `room_couples`   INT                 NULL,
     `www`            VARCHAR(500)        NULL,
     `youtube`        VARCHAR(100)        NULL,
     `description`    TEXT                NULL,
