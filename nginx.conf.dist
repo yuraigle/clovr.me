@@ -28,13 +28,27 @@ server {
 
     gzip on;
     gzip_comp_level 5;
-    gzip_types text/plain text/css application/json text/javascript;
+    gzip_types text/plain text/css text/javascript application/json application/javascript;
+
+    ## All static files will be served directly.
+    location ~* ^.+\.(?:css|js|jpe?g|ico|webp|png|html|xml|ttf|eot|woff|woff2|svg)$ {
+        access_log off;
+        expires 30d;
+        add_header Cache-Control public;
+
+        tcp_nodelay off;
+
+        ## Set the OS file cache.
+        open_file_cache max=3000 inactive=120s;
+        open_file_cache_valid 45s;
+        open_file_cache_min_uses 2;
+        open_file_cache_errors off;
+    }
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
-    location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
     error_log  /var/log/nginx/site1-error.log error;
     access_log /var/log/nginx/site1-access.log combined;

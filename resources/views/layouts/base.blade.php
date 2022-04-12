@@ -14,9 +14,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     @yield('inline_styles')
 </head>
 
@@ -76,6 +73,10 @@
     <script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
     @yield('inline_scripts')
     <link href="{{ mix('/dist/app-icons.css') }}" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 </body>
 
 </html>
