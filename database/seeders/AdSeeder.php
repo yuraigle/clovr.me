@@ -21,7 +21,6 @@ class AdSeeder extends Seeder
         self::$addressProvider = new Address(self::$faker);
     }
 
-
     public function run()
     {
 

@@ -12,12 +12,12 @@ class DatabaseSeeder extends Seeder
         $userSeeder = new UserSeeder();
         $adSeeder = new AdSeeder();
 
-//        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $userSeeder->run();
-//        }
+        }
 
         for ($i = 0; $i < 100; $i++) {
-//            $adSeeder->run();
+            $adSeeder->run();
         }
     }
 

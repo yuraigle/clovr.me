@@ -3,6 +3,15 @@
 @section('content')
     <div class="row">
         <div class="col-lg-8">
+            <div class="d-flex small mb-2">
+                <span class="text-muted me-auto">
+                    {{ \Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}
+                </span>
+                <span class="text-primary">
+                    <i class="fa-solid fa-eye me-1"></i>
+                    0 views, 0 today
+                </span>
+            </div>
             <div class="card p-4 mb-2">
                 <h1 class="h3 border-bottom mb-1 pb-2">{{ $ad->title }}</h1>
                 <div class="aa_row d-flex mb-4">
@@ -119,8 +128,19 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card p-4 mb-2">
-                <h5 class="h5">{{ $usr->name }}</h5>
+            <div class="card p-4 d-flex mb-2">
+                <div class="mb-2">
+                    <img src="/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
+
+                    <h5 class="h5">{{ $usr->name }}</h5>
+
+                    @if($usr->phone)
+                        <div>
+                            <i class="fa-solid fa-phone me-1"></i>
+                            Call me: {{ $usr->phone }}
+                        </div>
+                    @endif
+                </div>
 
                 <a href="#" class="btn btn-warning">
                     <i class="fa-solid fa-message me-1"></i>
@@ -154,7 +174,7 @@
 @endsection
 
 @section('inline_styles')
-    <link rel="canonical" href="https://clovr.me{!! AdUrl::canonical($ad) !!}"/>
+    <link rel="canonical" href="{!! AdUrl::canonical($ad) !!}"/>
     <style>
         .aa_row {
             line-height: 26px
