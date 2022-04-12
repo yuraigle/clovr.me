@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('cover1')
-    <section class="cover1" style="background-image: url('/cover.webp')">
+    <section class="cover1" style="background-image: url('/cover_house.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
             <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#locationModal">
