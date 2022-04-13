@@ -4,9 +4,9 @@
     <section class="cover1" style="background-image: url('/cover_house.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
             <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button" data-bs-toggle="modal"
-                data-bs-target="#locationModal">
+                    data-bs-target="#locationModal">
                 <i class="fa fa-location-arrow me-1"></i>
-                Dublin
+                {{ $town }}
             </button>
 
             <div class="d-flex opacity-75 mb-1">
@@ -45,7 +45,7 @@
                     </li>
                 </ul>
                 <input type="search" class="form-control py-2 px-3" id="q" name="q"
-                    placeholder="Address, location, keyword...">
+                       placeholder="Address, location, keyword...">
             </div>
 
             <div class="text-end">
@@ -154,6 +154,7 @@
 
     <div class="card shadow-sm mb-4 px-4 py-2">
         <h3 class="h6">Featured ADs</h3>
+        <p>{{ $town }}</p>
     </div>
 
     <h3 class="mt-4">Latest1 ADs</h3>
@@ -161,12 +162,12 @@
         <div class="pt-4 d-flex">
             @if ($row->pic)
                 <img src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}" width="120"
-                    height="90" alt="main_pic" />
+                     height="90" alt="main_pic"/>
             @else
-                <img src="/s_noimg.webp" width="120" height="90" alt="main_pic" />
+                <img src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
             @endif
             <div class="ms-3 me-auto">
-                <a href="{!! AdUrl::canonical($row) !!}" class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br />
+                <a href="{!! AdUrl::canonical($row) !!}" class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
                 <strong class="text-info">
                     &euro;{{ number_format($row->price, 0) }}
                     @if ($row->price_freq == 'per_month')
@@ -174,7 +175,7 @@
                     @elseif($row->price_freq == 'per_week')
                         per week
                     @endif
-                </strong><br />
+                </strong><br/>
                 <small class="text-muted">{{ $row->location }}</small>
             </div>
         </div>
@@ -189,15 +190,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="row lh-lg text-center pb-2">
-                        <div class="col-4 fw-bold">Dublin</div>
-                        <div class="col-4"><a href="#">Cork</a></div>
-                        <div class="col-4"><a href="#">Limerick</a></div>
-                        <div class="col-4"><a href="#">Galway</a></div>
-                        <div class="col-4"><a href="#">Waterford</a></div>
-                        <div class="col-4"><a href="#">Drogheda</a></div>
-                        <div class="col-4"><a href="#">Dundalk</a></div>
-                        <div class="col-4"><a href="#">Bray</a></div>
-                        <div class="col-4"><a href="#">Navan</a></div>
+                        @foreach($towns as $t)
+                            <div class="col-4">
+                                <a class="btn btn-link {{ $town == $t ? 'disabled text-black fw-bold' : '' }}"
+                                   href="?loc={{ $t }}">{{ $t }}</a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

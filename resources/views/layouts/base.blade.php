@@ -43,7 +43,8 @@
                         @guest
                             <a class="nav-link px-3 py-1 btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
                                 href="{{ route('login') }}">
-                                <i class="fa-solid fa-user fa-fw"></i>
+                                <i class="fa-solid fa-user fa-fw me-1"></i>
+                                <span class="d-inline-block d-sm-none">Login</span>
                             </a>
                         @endguest
                     </li>
