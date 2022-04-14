@@ -4,6 +4,14 @@ document
         document.getElementById("navbar1").classList.toggle("show");
     });
 
+for (let el of document.querySelectorAll('[data-bg], img[data-src]')) {
+    if (el.hasAttribute('data-bg')) {
+        el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
+    } else if (el.hasAttribute('data-src')) {
+        el.setAttribute("src", el.getAttribute('data-src'));
+    }
+}
+
 window.csrf = function () {
     return document.querySelector('meta[name="csrf-token"]').content;
 };
@@ -29,11 +37,13 @@ window.showToast = function (content, color = "danger") {
 window.fetchApi = function (
     url,
     opts,
-    _success = () => {},
-    _finally = () => {}
+    _success = () => {
+    },
+    _finally = () => {
+    }
 ) {
     return fetch(url, opts)
-        .then((r) => r.json().then((d) => ({ status: r.status, body: d })))
+        .then((r) => r.json().then((d) => ({status: r.status, body: d})))
         .then((result) => {
             if (result.status !== 200 && result.body.message) {
                 return showToast(result.body.message);

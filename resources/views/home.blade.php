@@ -69,7 +69,7 @@
             <div class="card shadow-sm mb-3">
                 <table>
                     <tr>
-                        <td style="background-image: url('/x_rent.webp')"></td>
+                        <td data-bg="/x_rent.webp"></td>
                         <td class="px-4 py-2">
                             <h3 class="h6">Rent a Flat</h3>
                             <ul class="list-unstyled small">
@@ -105,7 +105,7 @@
                                 </li>
                             </ul>
                         </td>
-                        <td style="background-image: url('/x_share.webp')"></td>
+                        <td data-bg="/x_share.webp"></td>
                     </tr>
                 </table>
             </div>
@@ -115,7 +115,7 @@
             <div class="card shadow-sm mb-3">
                 <table>
                     <tr>
-                        <td style="background-image: url('/x_buy.webp')"></td>
+                        <td data-bg="/x_buy.webp"></td>
                         <td class="px-4 py-2">
                             <h3 class="h6">Property for Sale</h3>
                             <ul class="list-unstyled small">
@@ -145,7 +145,7 @@
                                 </li>
                             </ul>
                         </td>
-                        <td style="background-image: url('/x_garage.webp')"></td>
+                        <td data-bg="/x_garage.webp"></td>
                     </tr>
                 </table>
             </div>
@@ -161,10 +161,12 @@
     @foreach ($rows as $row)
         <div class="pt-4 d-flex">
             @if ($row->pic)
-                <img src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}" width="120"
-                     height="90" alt="main_pic"/>
+                <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                     data-src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}"
+                     width="120" height="90" alt="main_pic"/>
             @else
-                <img src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
+                <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                     data-src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
             @endif
             <div class="ms-3 me-auto">
                 <a href="{!! AdUrl::canonical($row) !!}" class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
@@ -204,5 +206,6 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/home-0.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/home-1.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/home-2.js') }}"></script>
 @endsection

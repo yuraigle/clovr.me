@@ -33,7 +33,7 @@ server {
     ## All static files will be served directly.
     location ~* ^.+\.(?:css|js|jpe?g|ico|webp|png|html|xml|ttf|eot|woff|woff2|svg)$ {
         access_log off;
-        expires 30d;
+        expires 365d;
         add_header Cache-Control public;
 
         tcp_nodelay off;

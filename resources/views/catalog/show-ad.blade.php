@@ -130,7 +130,8 @@
         <div class="col-lg-4">
             <div class="card p-4 d-flex mb-2">
                 <div class="mb-2">
-                    <img src="/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                         data-src="/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
 
                     <h5 class="h5">{{ $usr->name }}</h5>
 
@@ -211,9 +212,6 @@
 @section('inline_scripts')
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet'/>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
-    <script type="text/javascript">
-        mapboxgl.accessToken =
-            "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-    </script>
-    <script type="text/javascript" src="{{ mix('/dist/show-0.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/show-1.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/show-2.js') }}"></script>
 @endsection

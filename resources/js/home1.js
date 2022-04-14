@@ -1,9 +1,9 @@
-import "bootstrap/js/dist/dropdown.js";
-import "bootstrap/js/dist/modal.js";
-
 const elProp1 = document.getElementById('prop1');
 const elCat1 = document.getElementById('cat1');
 const elCover = document.querySelectorAll('section.cover1')[0];
+
+elCover.style.backgroundImage += ", url('/cover_flat.webp')";
+elCover.style.backgroundImage += ", url('/cover_garage.webp')";
 
 document.querySelectorAll('button.prop1').forEach(el => {
     el.addEventListener('click', () => setProp1(el.dataset.prop1));
@@ -25,9 +25,7 @@ function setProp1(s) {
     document.querySelectorAll('.sp_prop1').forEach(el1 => el1.classList.add('d-none'));
     document.getElementById('prop1_' + s).classList.remove('d-none');
     elProp1.value = s;
-
-    const bg = 'cover_' + s + '.webp';
-    elCover.style.backgroundImage = "url('/" + bg + "')";
+    elCover.style.backgroundImage = `url('/cover_${s}.webp')`;
 }
 
 function setCat1(s) {

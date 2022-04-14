@@ -1,6 +1,5 @@
-import "bootstrap/js/dist/modal.js";
-import "bootstrap/js/dist/carousel.js";
-import Lightbox from "bs5-lightbox";
+mapboxgl.accessToken =
+    "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
 const elMapModal = document.getElementById("map_modal");
 const elMapCont = document.getElementById("map_cont");
@@ -8,13 +7,6 @@ const lng = elMapCont.getAttribute("data-lng");
 const lat = elMapCont.getAttribute("data-lat");
 let map1 = null;
 let marker1 = null;
-
-const imgDefer = document.getElementsByTagName("img");
-for (let i = 0; i < imgDefer.length; i++) {
-    if (imgDefer[i].getAttribute("data-src")) {
-        imgDefer[i].setAttribute("src", imgDefer[i].getAttribute("data-src"));
-    }
-}
 
 window.addEventListener("resize", function () {
     if (map1 && elMapModal && !elMapModal.classList.contains("show")) {
