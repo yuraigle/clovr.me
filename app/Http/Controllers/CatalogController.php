@@ -46,22 +46,22 @@ class CatalogController extends BaseController
         $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$cid]);
         abort_if(!$rowCat, 404);
 
-        $adsPerPage = 15;
-        $currentPage = $req->query('page', 1);
-        $offset = ($currentPage - 1) * $adsPerPage;
-
         $town = $this->locationService->getTown(); // TODO: filter by town
 
+        $perPage = 15;
+        $currentPage = $req->query('page', 1);
+        $offset = ($currentPage - 1) * $perPage;
+
         $rowCnt = DB::selectOne("select count(*) as c from `ads` where `category_id`=?", [$cid]);
-        $totalAds = $rowCnt->c;
-        $totalPages = ceil($totalAds / $adsPerPage);
 
-        $rows = DB::select("select * from `ads` where `category_id`=?
-            order by `created_at` desc limit ? offset ?", [$cid, $adsPerPage, $offset]);
+        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `location`,
+                `pic`, `created_at`
+            from `ads` where `category_id`=?
+            order by `created_at` desc limit ? offset ?", [$cid, $perPage, $offset]);
 
-        $paginator = new LengthAwarePaginator($rows, $totalAds, $adsPerPage, $currentPage);
+        $paginator = new LengthAwarePaginator($rows, $rowCnt->c, $perPage, $currentPage,
+            ["path" => ""]);
         $paginator::useBootstrap();
-        $paginator->setPath("");
 
         return view('catalog.show-cat', [
             'town' => $town,
