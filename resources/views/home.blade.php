@@ -3,20 +3,25 @@
 @section('cover1')
     <section class="cover1" style="background-image: url('/cover_house.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
-            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button" data-bs-toggle="modal"
+            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button"
+                    data-bs-toggle="modal"
                     data-bs-target="#locationModal">
                 <i class="fa fa-location-arrow me-1"></i>
                 {{ $town }}
             </button>
 
             <div class="d-flex opacity-75 mb-1">
-                <button class="btn btn-dark py-1 me-2 cat1" type="button" data-cat1="sale">Sale</button>
-                <button class="btn btn-light py-1 me-2 cat1" type="button" data-cat1="rent">Rent</button>
-                <button class="btn btn-light py-1 cat1" type="button" data-cat1="share">Share</button>
+                <button class="btn btn-dark py-1 me-2 cat1" type="button" data-cat1="sale">Sale
+                </button>
+                <button class="btn btn-light py-1 me-2 cat1" type="button" data-cat1="rent">Rent
+                </button>
+                <button class="btn btn-light py-1 cat1" type="button" data-cat1="share">Share
+                </button>
             </div>
 
             <div class="input-group shadow-sm mb-2">
-                <button class="btn btn-light dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
+                <button class="btn btn-light dropdown-toggle py-2 px-3" type="button"
+                        data-bs-toggle="dropdown">
                     <span class="sp_prop1" id="prop1_house">
                         <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
                     </span>
@@ -29,17 +34,20 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="house">
+                        <button class="btn btn-link dropdown-item prop1" type="button"
+                                data-prop1="house">
                             <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
                         </button>
                     </li>
                     <li>
-                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="flat">
+                        <button class="btn btn-link dropdown-item prop1" type="button"
+                                data-prop1="flat">
                             <i class="fa-solid fa-city fa-fw me-1"></i> Apartment
                         </button>
                     </li>
                     <li id="garage2">
-                        <button class="btn btn-link dropdown-item prop1" type="button" data-prop1="garage">
+                        <button class="btn btn-link dropdown-item prop1" type="button"
+                                data-prop1="garage">
                             <i class="fa-solid fa-warehouse fa-fw me-1"></i> Garage
                         </button>
                     </li>
@@ -77,10 +85,12 @@
                                     <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Studios</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">1 bedroom</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">1
+                                        bedroom</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">2 bedroom</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">2
+                                        bedroom</a>
                                 </li>
                             </ul>
                         </td>
@@ -95,13 +105,16 @@
                             <h3 class="h6">Flat & House Share</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Houses</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared
+                                        Houses</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared Flats</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Shared
+                                        Flats</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Couch Surf</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Couch
+                                        Surf</a>
                                 </li>
                             </ul>
                         </td>
@@ -119,10 +132,18 @@
                         <td class="px-4 py-2">
                             <h3 class="h6">Property for Sale</h3>
                             <ul class="list-unstyled small">
-                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a></li>
-                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a></li>
-                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">1 bedroom</a></li>
-                                <li><a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">2 bedroom</a></li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">1
+                                        bedroom</a></li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">2
+                                        bedroom</a></li>
                             </ul>
                         </td>
                     </tr>
@@ -154,34 +175,7 @@
 
     <div class="card shadow-sm mb-4 px-4 py-2">
         <h3 class="h6">Featured ADs</h3>
-        <p>{{ $town }}</p>
     </div>
-
-    <h3 class="mt-4">Latest1 ADs</h3>
-    @foreach ($rows as $row)
-        <div class="pt-4 d-flex">
-            @if ($row->pic)
-                <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                     data-src="{{ '/images/' . substr($row->pic, 0, 4) . '/s_' . $row->pic . '.webp' }}"
-                     width="120" height="90" alt="main_pic"/>
-            @else
-                <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                     data-src="/s_noimg.webp" width="120" height="90" alt="main_pic"/>
-            @endif
-            <div class="ms-3 me-auto">
-                <a href="{!! AdUrl::canonical($row) !!}" class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
-                <strong class="text-info">
-                    &euro;{{ number_format($row->price, 0) }}
-                    @if ($row->price_freq == 'per_month')
-                        per month
-                    @elseif($row->price_freq == 'per_week')
-                        per week
-                    @endif
-                </strong><br/>
-                <small class="text-muted">{{ $row->location }}</small>
-            </div>
-        </div>
-    @endforeach
 
     <div class="modal fade" id="locationModal" tabindex="-1">
         <div class="modal-dialog">
