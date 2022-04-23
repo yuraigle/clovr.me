@@ -103,3 +103,30 @@ footer {
     background-size: cover;
     background-position: center center;
 }
+
+.hover-milk:hover {
+    background-color: #faf7f7;
+}
+
+.a0 {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.a0 .fav {
+    position: absolute;
+    top: 0;
+    color: #bbb;
+    transition: all .3s ease;
+    opacity: 0;
+    right: -20px;
+}
+
+.a0:hover .fav {
+    opacity: 1;
+    right: -5px;
+}
+
+.a0 .fav:hover {
+    color: #c71c22;
+}

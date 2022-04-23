@@ -55,7 +55,7 @@ class CatalogController extends BaseController
         $rowCnt = DB::selectOne("select count(*) as c from `ads` where `category_id`=?", [$cid]);
 
         $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `location`,
-                `pic`, `created_at`
+                `pic`, `created_at`, `description`
             from `ads` where `category_id`=?
             order by `created_at` desc limit ? offset ?", [$cid, $perPage, $offset]);
 
