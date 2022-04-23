@@ -1,4 +1,8 @@
-mapboxgl.accessToken =
+import "bootstrap/js/dist/modal.js";
+import "bootstrap/js/dist/carousel.js";
+import "bs5-lightbox";
+
+const token =
     "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
 
 const elMapModal = document.getElementById("map_modal");
@@ -15,10 +19,11 @@ window.addEventListener("resize", function () {
     }
 });
 
-elMapModal.addEventListener("shown.bs.modal", function (e) {
+elMapModal.addEventListener("shown.bs.modal", function () {
     if (map1 == null) {
-        marker1 = new mapboxgl.Marker();
-        map1 = new mapboxgl.Map({
+        marker1 = new window.mapbox.Marker();
+        map1 = new window.mapbox.Map({
+            accessToken: token,
             container: elMapCont,
             style: "mapbox://styles/mapbox/streets-v11",
             center: [lng, lat],

@@ -1,3 +1,4 @@
-import "bootstrap/js/dist/modal.js";
-import "bootstrap/js/dist/carousel.js";
-import Lightbox from "bs5-lightbox";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+window.mapbox = mapboxgl;

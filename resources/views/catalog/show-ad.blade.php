@@ -210,8 +210,6 @@
 @endsection
 
 @section('inline_scripts')
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet'/>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
     <script type="text/javascript" src="{{ mix('/dist/show-1.js') }}"></script>
     <script type="text/javascript" src="{{ mix('/dist/show-2.js') }}"></script>
 @endsection
