@@ -130,3 +130,20 @@ footer {
 .a0 .fav:hover {
     color: #c71c22;
 }
+
+.a0 .a1 {
+    position: relative;
+    padding-bottom: 30px
+}
+
+.a0 .a1 > .a1pr {
+    position: absolute;
+    bottom: 0;
+}
+
+.a0 .a1 > .a1dt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+

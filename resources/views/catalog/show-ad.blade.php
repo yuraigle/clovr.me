@@ -42,6 +42,7 @@
                     $token = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
                     $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,13,0/${w}x${h}" .
                         "?logo=false&access_token=$token";
+                    $hasMap = $lng || $lat;
                 @endphp
 
                 <div class="row">
@@ -60,24 +61,26 @@
                     </div>
                     <div class="col-sm-4 p-0">
                         <div class="row m-0">
-                            <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
-                                 data-bs-target="#map_modal">
-                                <button class="btn btn-sm btn-info">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <span
-                                        class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
-                                    <span
-                                        class="d-inline-block d-sm-inline-block d-md-none d-lg-inline-block d-xl-none">Map</span>
-                                </button>
-                                <div class="ratio ratio-4x3 then-2x1">
-                                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                         data-src="{{ $mapUrl }}" alt="map" style="object-fit: none"/>
+                            @if ($hasMap)
+                                <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
+                                     data-bs-target="#map_modal">
+                                    <button class="btn btn-sm btn-info">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span
+                                            class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
+                                        <span
+                                            class="d-inline-block d-sm-inline-block d-md-none d-lg-inline-block d-xl-none">Map</span>
+                                    </button>
+                                    <div class="ratio ratio-4x3 then-2x1">
+                                        <img src="{{ AdPic::placeholder() }}"
+                                             data-src="{{ $mapUrl }}" alt="map" style="object-fit: none"/>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div style="position: relative" class="col-6 col-sm-12 p-0">
                                 <div class="ratio ratio-4x3 then-2x1">
                                     @if(!empty($pics[1]))
-                                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                        <img src="{{ AdPic::placeholder() }}"
                                              data-src="{{ '/images/' . substr($pics[1]->name, 0, 4) . '/x_' . $pics[1]->name . '.webp' }}"
                                              data-toggle="lightbox"
                                              data-type="image"
@@ -130,7 +133,7 @@
         <div class="col-lg-4">
             <div class="card p-4 d-flex mb-2">
                 <div class="mb-2">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                    <img src="{{ AdPic::placeholder() }}"
                          data-src="/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
 
                     <h5 class="h5">{{ $usr->name }}</h5>

@@ -33,7 +33,7 @@
                             <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, "m") }}"
                                  width="200" height="150" alt="main_pic"/>
 
-                            <div class="flex-grow-1 ms-3">
+                            <div class="a1 flex-grow-1 ms-3">
                                 <h5 class="text-primary" style="margin-right: 40px">{{ Str::of($row->title)->limit(100) }}</h5>
 
                                 @if ($row->location)
@@ -44,16 +44,14 @@
                                     {{ Str::of($row->description)->limit(150) }}
                                 </div>
 
-                                <div class="d-flex">
-                                    <strong class="text-info me-auto">
-                                        &euro;{{ number_format($row->price) }}
-                                        {{ $row->price_freq ? preg_replace('|_|', ' ', $row->price_freq) : '' }}
-                                    </strong>
+                                <strong class="a1pr text-info me-auto">
+                                    &euro;{{ number_format($row->price) }}
+                                    {{ $row->price_freq ? preg_replace('|_|', ' ', $row->price_freq) : '' }}
+                                </strong>
 
-                                    <span class="text-muted">
-                                        {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
-                                    </span>
-                                </div>
+                                <span class="a1dt text-muted">
+                                    {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
+                                </span>
                             </div>
                         </a>
                         <a href="#" class="fav pt-3 pe-3 pb-1 ps-1" title="Add to Favorites">
