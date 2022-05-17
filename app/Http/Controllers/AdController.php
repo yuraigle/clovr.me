@@ -124,9 +124,10 @@ class AdController extends BaseController
         }
 
         $row = DB::selectOne("select * from `ads` where id=?", [$id]);
+        abort_if(!$row, 404, "Ad not found");
+
         $pics = DB::select("select * from `pictures` where ad_id=? order by ord", [$id]);
         $row->pictures = $pics;
-        abort_if(!$row, 404, "Ad not found");
 
         return view('member.edit-ad', [
             "row_json" => json_encode($row),

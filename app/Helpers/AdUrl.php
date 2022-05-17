@@ -6,8 +6,6 @@ use Illuminate\Support\Str;
 
 class AdUrl
 {
-    public static int $PROJECT_STARTED_TS = 1649173518;
-
     public static array $CATS = [
         1 => "property-for-sale",
         2 => "property-to-rent",
@@ -20,8 +18,6 @@ class AdUrl
     {
         $cat = self::$CATS[$row->category_id] ?? "";
         $title = Str::of($row->title)->words(8)->slug();
-        $id = $row->id + self::$PROJECT_STARTED_TS;
-
-        return route("show-ad", ["cat" => $cat, "title" => $title, "id" => $id]);
+        return route("show-ad", ["cat" => $cat, "title" => $title, "id" => $row->id]);
     }
 }

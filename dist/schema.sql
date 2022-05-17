@@ -56,6 +56,7 @@ CREATE TABLE `ads`
     `price_freq`     VARCHAR(10)         NULL, -- per_month / per_week
     `date_avail`     DATE                NULL,
     `room_type`      VARCHAR(10)         NULL, -- single / double / twin / triple / shared / couch
+    `room_couples`   INT                 NULL,
     `www`            VARCHAR(500)        NULL,
     `youtube`        VARCHAR(100)        NULL,
     `description`    TEXT                NULL,
@@ -81,7 +82,8 @@ CREATE TABLE `ads`
     INDEX `IX_ADS_USER` (`user_id`) USING BTREE,
     INDEX `IX_ADS_CATEGORY` (`category_id`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'
-  ENGINE = InnoDB;
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1649173518;
 
 CREATE TABLE `pictures`
 (

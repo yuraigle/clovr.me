@@ -25,8 +25,7 @@ class CatalogController extends BaseController
 
     public function showAd(Request $req)
     {
-        $id = $req->route()->parameter('id') - AdUrl::$PROJECT_STARTED_TS;
-
+        $id = $req->route()->parameter('id');
         $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
         abort_if(!$rowAd, 404);
 
@@ -38,7 +37,7 @@ class CatalogController extends BaseController
         return view('catalog.show-ad', ["ad" => $rowAd, "usr" => $rowUsr, "pics" => $pics]);
     }
 
-    public function showCat($cat, Request $req)
+    public function showCat(Request $req, $cat)
     {
         $cid = array_search($cat, AdUrl::$CATS);
         abort_if(!$cid, 404);
