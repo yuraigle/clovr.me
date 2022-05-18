@@ -12,25 +12,36 @@
         </div>
         <div class="col-lg-9 col-md-8">
             @foreach ($rows as $row)
-                <div class="pt-4 d-flex">
-                    @if ($row->pic)
-                        <img src="{{ '/images/' . substr($row->pic, 0, 4) . '/m_' . $row->pic . '.webp' }}" width="200"
-                             height="150" alt="main_pic"/>
-                    @else
-                        <img src="/m_noimg.webp" width="200" height="150" alt="main_pic"/>
-                    @endif
-                    <div class="ms-3 me-auto">
-                        <a href="{!! AdUrl::canonical($row) !!}"
-                           class="h4 text-dark text-decoration-none">{{ $row->title }}</a><br/>
-                        <strong class="text-info">
-                            &euro;{{ number_format($row->price, 2) }}
-                            @if ($row->price_freq == 'per_month')
-                                per month
-                            @elseif($row->price_freq == 'per_week')
-                                per week
-                            @endif
-                        </strong><br/>
-                        <small class="text-muted">{{ $row->location }}</small>
+                <article class="p-2 d-flex border-bottom">
+                    <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, 'm') }}"
+                        width="200" height="150" alt="main_pic"/>
+
+                    <div class="a1 ms-3 me-auto">
+                        <a href="{{ AdUrl::canonical($row) }}"
+                           class="h5 text-decoration-none">
+                           {{ Str::of($row->title)->limit(100) }}
+                        </a>
+                        <br/>
+
+                        @if ($row->location)
+                            <strong>{{ $row->location }}</strong>
+                            <br/>
+                        @endif
+
+                        <div class="small lh-sm text-muted my-2">
+                            {{ Str::of($row->description)->limit(150) }}
+                        </div>
+
+                        <div class="d-flex">
+                            <strong class="a1pr text-info me-auto">
+                                &euro;{{ number_format($row->price) }}
+                                {{ $row->price_freq ? preg_replace('|_|', ' ', $row->price_freq) : '' }}
+                            </strong>
+
+                            <span class="a1dt text-muted">
+                                {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
+                            </span>
+                        </div>
                     </div>
 
                     <div class="dropdown">
@@ -51,7 +62,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </article>
             @endforeach
         </div>
     </div>

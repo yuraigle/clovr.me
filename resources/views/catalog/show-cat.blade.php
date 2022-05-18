@@ -30,12 +30,13 @@
                     <article class="a0 border-bottom hover-milk position-relative p-2">
                         <a href="{{ AdUrl::canonical($row) }}" class="d-flex text-dark text-decoration-none py-2">
 
-                            <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, "m") }}"
-                                 alt="main_pic"/>
+                            <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, 'm') }}"
+                                alt="main_pic"/>
 
                             <div class="a1 flex-grow-1 ms-3">
-                                <h5 class="text-primary"
-                                    style="margin-right: 40px">{{ Str::of($row->title)->limit(100) }}</h5>
+                                <h5 class="text-primary" style="margin-right: 40px">
+                                    {{ Str::of($row->title)->limit(100) }}
+                                </h5>
 
                                 @if ($row->location)
                                     <strong>{{ $row->location }}</strong>
