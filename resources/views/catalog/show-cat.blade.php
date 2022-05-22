@@ -28,10 +28,14 @@
             <div class="bg-white shadow-sm">
                 @foreach ($paginator as $row)
                     <article class="a0 border-bottom hover-milk position-relative p-2">
-                        <a href="{{ AdUrl::canonical($row) }}" class="d-flex text-dark text-decoration-none py-2">
+                        <a href="{{ App\Helpers\AdUrl::canonical($row) }}"
+                           class="d-flex text-dark text-decoration-none py-2">
 
-                            <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, 'm') }}"
-                                alt="main_pic"/>
+                            <picture>
+                                <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 768px)">
+                                <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp">
+                                <img src="{{ App\Helpers\AdPic::main($row, 'm', 'jpg') }}" alt="pic" loading="lazy">
+                            </picture>
 
                             <div class="a1 flex-grow-1 ms-3">
                                 <h5 class="text-primary" style="margin-right: 40px">
@@ -76,13 +80,14 @@
 
 @section("inline_styles")
     <style>
-        .a0 img {
+        .a0 picture, .a0 img {
             width: 200px;
             height: 150px;
+            background-color: #eee;
         }
 
         @media (max-width: 768px) {
-            .a0 img {
+            .a0 picture, .a0 img {
                 width: 120px;
                 height: 90px;
             }

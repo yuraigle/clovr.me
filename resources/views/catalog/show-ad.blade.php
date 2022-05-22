@@ -49,8 +49,8 @@
                     <div class="col-sm-8 p-0">
                         <div class="ratio ratio-4x3 then-2x1">
                             @if(!empty($pics[0]))
-                                <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                     data-src="{{ '/images/' . substr($pics[0]->name, 0, 4) . '/x_' . $pics[0]->name . '.webp' }}"
+                                <img src="{{ App\Helpers\AdPic::placeholder() }}"
+                                     data-src="{{ App\Helpers\AdPic::named($pics[0]->name, 'x') }}"
                                      data-toggle="lightbox"
                                      data-type="image"
                                      data-gallery="gallery1"
@@ -64,7 +64,7 @@
                             @if ($hasMap)
                                 <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
                                      data-bs-target="#map_modal">
-                                    <button class="btn btn-sm btn-info">
+                                    <button class="btn btn-sm btn-info opacity-75">
                                         <i class="fa-solid fa-location-dot"></i>
                                         <span
                                             class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
@@ -72,7 +72,7 @@
                                             class="d-inline-block d-sm-inline-block d-md-none d-lg-inline-block d-xl-none">Map</span>
                                     </button>
                                     <div class="ratio ratio-4x3 then-2x1">
-                                        <img src="{{ AdPic::placeholder() }}"
+                                        <img src="{{ App\Helpers\AdPic::placeholder() }}"
                                              data-src="{{ $mapUrl }}" alt="map" style="object-fit: none"/>
                                     </div>
                                 </div>
@@ -80,8 +80,8 @@
                             <div style="position: relative" class="col-6 col-sm-12 p-0">
                                 <div class="ratio ratio-4x3 then-2x1">
                                     @if(!empty($pics[1]))
-                                        <img src="{{ AdPic::placeholder() }}"
-                                             data-src="{{ '/images/' . substr($pics[1]->name, 0, 4) . '/x_' . $pics[1]->name . '.webp' }}"
+                                        <img src="{{ App\Helpers\AdPic::placeholder() }}"
+                                             data-src="{{ App\Helpers\AdPic::named($pics[1]->name, 'x') }}"
                                              data-toggle="lightbox"
                                              data-type="image"
                                              data-gallery="gallery1"
@@ -102,7 +102,7 @@
 
                 @foreach(array_slice($pics, 2) as $pic)
                     <div class="d-none"
-                         data-src="{{ '/images/' . substr($pic->name, 0, 4) . '/x_' . $pic->name . '.webp' }}"
+                         data-src="{{ App\Helpers\AdPic::named($pic->name, 'x') }}"
                          data-toggle="lightbox"
                          data-type="image"
                          data-gallery="gallery1"
@@ -133,7 +133,7 @@
         <div class="col-lg-4">
             <div class="card p-4 d-flex mb-2">
                 <div class="mb-2">
-                    <img src="{{ AdPic::placeholder() }}"
+                    <img src="{{ App\Helpers\AdPic::placeholder() }}"
                          data-src="/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
 
                     <h5 class="h5">{{ $usr->name }}</h5>

@@ -10,7 +10,12 @@ class AdPic
             return "/${size}_noimg.$ext";
         }
 
-        return '/images/' . substr($row->pic, 0, 4) . "/${size}_" . $row->pic . ".$ext";
+        return self::named($row->pic, $size, $ext);
+    }
+
+    static function named($name, $size = 's', $ext = 'webp'): string
+    {
+        return '/images/' . substr($name, 0, 4) . "/${size}_$name.$ext";
     }
 
     static function placeholder(): string

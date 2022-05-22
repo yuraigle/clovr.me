@@ -7,14 +7,18 @@
 @section('content')
     <h3 class="text-center">Hi {{ auth()->user()['name'] }}!</h3>
     <div class="row">
-        <div class="col-lg-3 col-md-4">
+        <div class="col-xxl-2 col-lg-3">
             @include('member._nav')
         </div>
-        <div class="col-lg-9 col-md-8">
+        <div class="col-xxl-10 col-lg-9">
             @foreach ($rows as $row)
-                <article class="p-2 d-flex border-bottom">
-                    <img src="{{ AdPic::placeholder() }}" data-src="{{ AdPic::main($row, 'm') }}"
-                        width="200" height="150" alt="main_pic"/>
+                <article class="a0 p-2 d-flex border-bottom">
+
+                    <picture>
+                        <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 768px)">
+                        <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp">
+                        <img src="{{ App\Helpers\AdPic::main($row, 'm', 'jpg') }}" alt="pic" loading="lazy">
+                    </picture>
 
                     <div class="a1 ms-3 me-auto">
                         <a href="{{ AdUrl::canonical($row) }}"
@@ -70,6 +74,19 @@
 
 @section('inline_styles')
     <style>
+        .a0 picture, .a0 img {
+            width: 200px;
+            height: 150px;
+            background-color: #eee;
+        }
+
+        @media (max-width: 768px) {
+            .a0 picture, .a0 img {
+                width: 120px;
+                height: 90px;
+            }
+        }
+
         .dropdown-toggle::after {
             content: none !important;
             border: none !important;
