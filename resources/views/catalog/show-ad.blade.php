@@ -178,7 +178,7 @@
 @endsection
 
 @section('inline_styles')
-    <link rel="canonical" href="{!! AdUrl::canonical($ad) !!}"/>
+    <link rel="canonical" href="{{ App\Helpers\AdUrl::canonical($ad) }}"/>
     <style>
         .aa_row {
             line-height: 26px

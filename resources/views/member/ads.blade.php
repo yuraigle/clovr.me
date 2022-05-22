@@ -15,13 +15,13 @@
                 <article class="a0 p-2 d-flex border-bottom">
 
                     <picture>
-                        <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 768px)">
-                        <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp">
+                        <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 769px)">
+                        <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp" media="(max-width: 768px)">
                         <img src="{{ App\Helpers\AdPic::main($row, 'm', 'jpg') }}" alt="pic" loading="lazy">
                     </picture>
 
                     <div class="a1 ms-3 me-auto">
-                        <a href="{{ AdUrl::canonical($row) }}"
+                        <a href="{{ App\Helpers\AdUrl::canonical($row) }}"
                            class="h5 text-decoration-none">
                            {{ Str::of($row->title)->limit(100) }}
                         </a>
