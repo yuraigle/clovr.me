@@ -82,15 +82,15 @@
                             <h3 class="h6">Rent a Flat</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Studios</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">Studios</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
                                         1 bedroom
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
                                         2 bedroom
                                     </a>
                                 </li>
@@ -107,12 +107,12 @@
                             <h3 class="h6">Flat & House Share</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share', 'propType' => 'house']) }}">
                                         Shared Houses
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-share', 'propType' => 'flat']) }}">
                                         Shared Flats
                                     </a>
                                 </li>
@@ -138,18 +138,18 @@
                             <h3 class="h6">Property for Sale</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Houses</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'house']) }}">Houses</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Studios</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">Studios</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">
                                         1 bedroom
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">
                                         2 bedroom
                                     </a>
                                 </li>
@@ -166,12 +166,12 @@
                             <h3 class="h6">Garages & Parking</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-for-sale']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-for-sale', 'propType' => 'garage']) }}">
                                         Garages for sale
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-to-rent']) }}">
+                                    <a href="{{ route('show-cat', ['cat' => 'garage-parking-to-rent', 'propType' => 'parking']) }}">
                                         Parking places to rent
                                     </a>
                                 </li>

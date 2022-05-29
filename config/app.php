@@ -233,6 +233,7 @@ return [
         'AdUrl' => App\Helpers\AdUrl::class,
         'AdPic' => App\Helpers\AdPic::class,
         'AdPrice' => App\Helpers\AdPrice::class,
+        'Breadcrumbs' => App\Helpers\Breadcrumbs::class,
     ],
 
 ];

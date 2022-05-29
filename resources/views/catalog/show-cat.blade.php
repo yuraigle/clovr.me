@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('partials.ad_breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => null])
+    @include('partials.ad_breadcrumbs', ['town' => $town, 'cat' => $cat, 'propType' => $propType, 'ad' => null])
 
     <h1 class="h3">{{ $cat->name }}</h1>
 

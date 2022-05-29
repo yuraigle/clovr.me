@@ -1,49 +1,15 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
 
-        <li class="breadcrumb-item">
-            <a href="/">
-                @if($ad && $ad->property_type === 'flat')
-                    Flats in {{ $town }}
-                @elseif($ad && $ad->property_type === 'house')
-                    Houses in {{ $town }}
-                @elseif($ad && in_array($ad->property_type, ['garage', 'parking']))
-                    Garages & Parking in {{ $town }}
-                @elseif($cat && preg_match('|Parking|', $cat->name))
-                    Garages & Parking in {{ $town }}
+        @foreach(App\Helpers\Breadcrumbs::for($town, $cat, $propType, $ad) as $b)
+            <li class="breadcrumb-item {{ $b['active'] ? 'active' : '' }}">
+                @if($b['active'])
+                    {{ $b['name'] }}
                 @else
-                    Property in {{ $town }}
-                @endif
-            </a>
-        </li>
-
-        @if($cat && !$ad)
-            <li class="breadcrumb-item active">
-                @if($cat && preg_match('|To Rent|', $cat->name))
-                    To Rent
-                @elseif($cat && preg_match('|To Share|', $cat->name))
-                    To Share
-                @else
-                    For Sale
+                    <a href="{{ $b['path'] }}">{{ $b['name'] }}</a>
                 @endif
             </li>
-        @elseif($ad)
-            <li class="breadcrumb-item">
-                <a href="/{{ $cat->slug }}">
-                    @if($cat && preg_match('|To Rent|', $cat->name))
-                        To Rent
-                    @elseif($cat && preg_match('|To Share|', $cat->name))
-                        To Share
-                    @else
-                        For Sale
-                    @endif
-                </a>
-            </li>
-
-            <li class="breadcrumb-item active">
-                {{ Illuminate\Support\Str::of($ad->title)->limit(100) }}
-            </li>
-        @endif
+        @endforeach
 
     </ol>
 </nav>

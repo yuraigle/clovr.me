@@ -44,11 +44,12 @@ class CatalogController extends BaseController
             "cat" => $rowCat,
             "usr" => $rowUsr,
             "pics" => $pics,
+            'propType' => $rowAd->property_type,
             "town" => $town,
         ]);
     }
 
-    public function showCat(Request $req, $cat)
+    public function showCat(Request $req, $cat, $propType = null)
     {
         $cid = array_search($cat, AdUrl::$CATS);
         abort_if(!$cid, 404);
@@ -56,18 +57,28 @@ class CatalogController extends BaseController
         $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$cid]);
         abort_if(!$rowCat, 404);
 
-        $town = $this->locationService->getTown(); // TODO: filter by town
+        $town = $this->locationService->getTown();
 
         $perPage = 15;
         $currentPage = $req->query('page', 1);
         $offset = ($currentPage - 1) * $perPage;
 
-        $rowCnt = DB::selectOne("select count(*) as c from `ads` where `category_id`=?", [$cid]);
+        $cond = "`category_id` = ?";
+        $vars = [$cid];
+
+        if ($propType) {
+            $cond .= " and `property_type` = ?";
+            $vars[] = $propType;
+        }
+
+        // TODO: +filter by town
+
+        $rowCnt = DB::selectOne("select count(*) as c from `ads` where $cond", $vars);
 
         $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `location`,
                 `pic`, `created_at`, `description`
-            from `ads` where `category_id`=?
-            order by `created_at` desc limit ? offset ?", [$cid, $perPage, $offset]);
+            from `ads` where $cond
+            order by `created_at` desc limit ? offset ?", [...$vars, $perPage, $offset]);
 
         $paginator = new LengthAwarePaginator($rows, $rowCnt->c, $perPage, $currentPage,
             ["path" => ""]);
@@ -76,6 +87,7 @@ class CatalogController extends BaseController
         return view('catalog.show-cat', [
             'paginator' => $paginator,
             'cat' => $rowCat,
+            'propType' => $propType,
             'town' => $town,
         ]);
     }
