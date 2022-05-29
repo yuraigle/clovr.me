@@ -15,6 +15,20 @@
     <link rel="manifest" href="/site.webmanifest"/>
 
     @yield('inline_styles')
+    <style>
+        .a0 picture, .a0 img {
+            width: 200px;
+            height: 150px;
+            background-color: #eee;
+        }
+
+        @media (max-width: 768px) {
+            .a0 picture, .a0 img {
+                width: 120px;
+                height: 90px;
+            }
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column">

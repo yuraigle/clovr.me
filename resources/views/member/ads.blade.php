@@ -14,16 +14,12 @@
             @foreach ($rows as $row)
                 <article class="a0 p-2 d-flex border-bottom">
 
-                    <picture>
-                        <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 769px)">
-                        <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp" media="(max-width: 768px)">
-                        <img src="{{ App\Helpers\AdPic::main($row, 'm', 'jpg') }}" alt="pic" loading="lazy">
-                    </picture>
+                    @include('partials.ad_main_pic', ['row' => $row])
 
-                    <div class="a1 ms-3 me-auto">
+                    <div class="a1 ms-3 flex-grow-1">
                         <a href="{{ App\Helpers\AdUrl::canonical($row) }}"
                            class="h5 text-decoration-none">
-                           {{ Str::of($row->title)->limit(100) }}
+                           {{ Illuminate\Support\Str::of($row->title)->limit(100) }}
                         </a>
                         <br/>
 
@@ -33,17 +29,16 @@
                         @endif
 
                         <div class="small lh-sm text-muted my-2">
-                            {{ Str::of($row->description)->limit(150) }}
+                            {{ Illuminate\Support\Str::of($row->description)->limit(150) }}
                         </div>
 
                         <div class="d-flex">
                             <strong class="a1pr text-info me-auto">
-                                &euro;{{ number_format($row->price) }}
-                                {{ $row->price_freq ? preg_replace('|_|', ' ', $row->price_freq) : '' }}
+                                {!! App\Helpers\AdPrice::full($row, 0) !!}
                             </strong>
 
                             <span class="a1dt text-muted">
-                                {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
+                                {{ Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
                             </span>
                         </div>
                     </div>
@@ -74,19 +69,6 @@
 
 @section('inline_styles')
     <style>
-        .a0 picture, .a0 img {
-            width: 200px;
-            height: 150px;
-            background-color: #eee;
-        }
-
-        @media (max-width: 768px) {
-            .a0 picture, .a0 img {
-                width: 120px;
-                height: 90px;
-            }
-        }
-
         .dropdown-toggle::after {
             content: none !important;
             border: none !important;

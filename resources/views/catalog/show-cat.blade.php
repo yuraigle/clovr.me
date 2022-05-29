@@ -2,16 +2,7 @@
 
 @section('content')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/">Property in {{ $town }}</a>
-            </li>
-            <li class="breadcrumb-item active">
-                For Sale
-            </li>
-        </ol>
-    </nav>
+    @include('partials.ad_breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => null])
 
     <h1 class="h3">{{ $cat->name }}</h1>
 
@@ -21,7 +12,6 @@
         <div class="col-lg-3">
             <div class="sticky-lg-top pt-4">
                 <h4>Filters</h4>
-                AZAZA
             </div>
         </div>
         <div class="col-xxl-7 col-xl-8 col-lg-9 p-0">
@@ -31,15 +21,11 @@
                         <a href="{{ App\Helpers\AdUrl::canonical($row) }}"
                            class="d-flex text-dark text-decoration-none py-2">
 
-                            <picture>
-                                <source srcset="{{ App\Helpers\AdPic::main($row, 'm') }}" type="image/webp" media="(min-width: 769px)">
-                                <source srcset="{{ App\Helpers\AdPic::main($row, 's') }}" type="image/webp" media="(max-width: 768px)">
-                                <img src="{{ App\Helpers\AdPic::main($row, 'm', 'jpg') }}" alt="pic" loading="lazy">
-                            </picture>
+                            @include('partials.ad_main_pic', ['row' => $row])
 
                             <div class="a1 flex-grow-1 ms-3">
                                 <h5 class="text-primary" style="margin-right: 40px">
-                                    {{ Str::of($row->title)->limit(100) }}
+                                    {{ Illuminate\Support\Str::of($row->title)->limit(100) }}
                                 </h5>
 
                                 @if ($row->location)
@@ -47,16 +33,15 @@
                                 @endif
 
                                 <div class="small lh-sm text-muted my-2">
-                                    {{ Str::of($row->description)->limit(150) }}
+                                    {{ Illuminate\Support\Str::of($row->description)->limit(150) }}
                                 </div>
 
                                 <strong class="a1pr text-info me-auto">
-                                    &euro;{{ number_format($row->price) }}
-                                    {{ $row->price_freq ? preg_replace('|_|', ' ', $row->price_freq) : '' }}
+                                    {!! App\Helpers\AdPrice::full($row, 0) !!}
                                 </strong>
 
                                 <span class="a1dt text-muted">
-                                    {{ \Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
+                                    {{ Carbon\Carbon::parse($row->created_at)->diffForHumans() }}
                                 </span>
                             </div>
                         </a>
@@ -76,21 +61,4 @@
         </div>
     </div>
 
-@endsection
-
-@section("inline_styles")
-    <style>
-        .a0 picture, .a0 img {
-            width: 200px;
-            height: 150px;
-            background-color: #eee;
-        }
-
-        @media (max-width: 768px) {
-            .a0 picture, .a0 img {
-                width: 120px;
-                height: 90px;
-            }
-        }
-    </style>
 @endsection

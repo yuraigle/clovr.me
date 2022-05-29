@@ -2,10 +2,15 @@
 
 @section('content')
     <div class="row">
+
+        <div>
+            @include('partials.ad_breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => $ad])
+        </div>
+
         <div class="col-lg-8">
             <div class="d-flex small mb-2">
                 <span class="text-muted me-auto">
-                    {{ \Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}
+                    {{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}
                 </span>
                 <span class="text-primary">
                     <i class="fa-solid fa-eye me-1"></i>
@@ -19,8 +24,9 @@
                         @if($ad->town){{ $ad->town }}@endif
                         @if($ad->county && $ad->county !== $ad->town), {{ $ad->county }}@endif
                     </span>
+
                     <span class="aa_price">
-                        &euro;{{ number_format($ad->price, 0) }}
+                        &euro;{{ number_format($ad->price) }}
                     </span>
                     <span class="ms-1 align-middle">
                         @if($ad->price_freq === 'per_week')

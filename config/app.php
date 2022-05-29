@@ -232,7 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'AdUrl' => App\Helpers\AdUrl::class,
         'AdPic' => App\Helpers\AdPic::class,
-
+        'AdPrice' => App\Helpers\AdPrice::class,
     ],
 
 ];

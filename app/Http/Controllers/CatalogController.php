@@ -29,12 +29,23 @@ class CatalogController extends BaseController
         $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
         abort_if(!$rowAd, 404);
 
+        $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$rowAd->category_id]);
+        abort_if(!$rowCat, 404);
+
         $rowUsr = DB::selectOne("select * from `users` where `id`=?", [$rowAd->user_id]);
         abort_if(!$rowUsr, 404);
 
         $pics = DB::select("select * from `pictures` where `ad_id`=? order by `ord`", [$id]);
 
-        return view('catalog.show-ad', ["ad" => $rowAd, "usr" => $rowUsr, "pics" => $pics]);
+        $town = $this->locationService->getTown();
+
+        return view('catalog.show-ad', [
+            "ad" => $rowAd,
+            "cat" => $rowCat,
+            "usr" => $rowUsr,
+            "pics" => $pics,
+            "town" => $town,
+        ]);
     }
 
     public function showCat(Request $req, $cat)
@@ -63,9 +74,9 @@ class CatalogController extends BaseController
         $paginator::useBootstrap();
 
         return view('catalog.show-cat', [
-            'town' => $town,
-            'cat' => $rowCat,
             'paginator' => $paginator,
+            'cat' => $rowCat,
+            'town' => $town,
         ]);
     }
 }
