@@ -29,7 +29,8 @@ class MemberController extends BaseController
             return redirect('/login?back=' . urlencode(route('my-ads', [], false)));
         }
 
-        $rows = DB::select("select * from `ads` where `user_id` = ?", [$req->user()->id]);
+        $rows = DB::select("select * from `ads` where `user_id` = ? order by `created_at` desc",
+            [$req->user()->id]);
 
         return view('member.ads', ["rows" => $rows]);
     }

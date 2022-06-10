@@ -53,7 +53,7 @@ footer {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    transition: all 1s ease;
+    transition: background-image .7s ease-in-out;
 }
 
 .cover1 > form {
