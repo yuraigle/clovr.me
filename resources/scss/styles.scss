@@ -1,0 +1,149 @@
+@import "~bootstrap/scss/functions";
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$blue: #033c73 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #c71c22 !default;
+$orange: #fd7e14 !default;
+$yellow: #dd5600 !default;
+$green: #73a839 !default;
+$teal: #20c997 !default;
+$cyan: #2fa4e7 !default;
+
+$primary: $cyan !default;
+$secondary: $gray-200 !default;
+$success: $green !default;
+$info: $blue !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+$min-contrast-ratio: 2.75 !default;
+$body-color: $gray-700 !default;
+
+$font-family-sans-serif: "Lato", "Helvetica Neue", Arial, sans-serif !default;
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    min-height: 100%;
+}
+
+footer {
+    height: 100px;
+}
+
+.cover1 {
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 1s ease;
+}
+
+.cover1 > form {
+    padding-top: 150px;
+    position: relative;
+}
+
+.cover1 > form > .location_btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+
+.ratio-4x3.then-2x1 {
+    @include media-breakpoint-down(sm) {
+        --bs-aspect-ratio: 50%;
+    }
+}
+
+.btn.bg-fb {
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+
+.btn.bg-fb:hover {
+    background-color: #324c81;
+    border-color: #2f477a;
+}
+
+.btn.bg-fb:focus {
+    background-color: #324c81;
+    border-color: #2f477a;
+    box-shadow: 0 0 0 0.25rem rgb(88 114 167 / 50%)
+}
+
+.card > table {
+    width: 100%;
+    height: 150px;
+}
+
+.card > table td {
+    width: 50%;
+    vertical-align: top;
+}
+
+.card > table td {
+    background-size: cover;
+    background-position: center center;
+}
+
+.hover-milk:hover {
+    background-color: #faf7f7;
+}
+
+.a0 {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.a0 .fav {
+    position: absolute;
+    top: 0;
+    color: #bbb;
+    transition: all .3s ease;
+    opacity: 0;
+    right: -20px;
+}
+
+.a0:hover .fav {
+    opacity: 1;
+    right: -5px;
+}
+
+.a0 .fav:hover {
+    color: #c71c22;
+}
+
+.a0 .a1 {
+    position: relative;
+    padding-bottom: 30px
+}
+
+.a0 .a1 > .a1pr {
+    position: absolute;
+    bottom: 0;
+}
+
+.a0 .a1 > .a1dt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+

@@ -1,0 +1,4 @@
+CD /D %~dp0
+call npm run prod
+winscp.com /script=./dist/deploy-script.txt
+plink -ssh <login>@<server> -P <port> -pw <password> -batch "cd /var/www/site1;./speed-up.sh"
