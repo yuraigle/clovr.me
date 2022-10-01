@@ -3,33 +3,38 @@
     <AdCategoryBox
       v-model:category_id="ad.category_id"
       :editable="true"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <AdTitleBox
       v-model:title="ad.title"
       v-model:bold="ad.bold"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
-    <AdLocationBox v-model:address="address" :errors="v$['address']" />
+    <AdLocationBox
+      mode="input"
+      v-model:address="address"
+      :errors="v$.address"
+      @validate="v$.address.$validate()"
+    />
 
     <AdDetailsBox
       :category="ad.category_id"
       v-model:details="details"
-      :errors="v$['details']"
+      :errors="v$.details"
     />
 
     <AdImagesBox
       v-model:pictures="pictures"
       v-model:youtube="ad.youtube"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <AdWebsiteBox
       v-model:has_www="ad.has_www"
       v-model:www="ad.www"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <div class="w-100 mt-2 mb-2 text-end">
@@ -48,9 +53,9 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers, url } from "@vuelidate/validators";
+import {required, helpers, url, minLength, maxLength} from "@vuelidate/validators";
 import AdCategoryBox from "./components/AdCategoryBox.vue";
 import AdTitleBox from "./components/AdTitleBox.vue";
 import AdDetailsBox from "./components/AdDetailsBox.vue";
@@ -89,10 +94,10 @@ export default {
     });
 
     const address = reactive({
-      postcode: null,
-      county: null,
-      town: null,
       location: null,
+      town: null,
+      county: null,
+      postcode: null,
       lng: null,
       lat: null,
     });
@@ -103,11 +108,11 @@ export default {
 
     function handleSubmit() {
       this.v$.$validate().then((res) => {
-        if (res) {
-          loading.value = true;
-
-          const postData = Object.assign({}, ad, details, address);
+        if (!res) {
+          showToast("Correct highlighted errors and try again.");
+        } else {
           const formData = new FormData();
+          const postData = Object.assign({}, ad, details, address);
           for (const key in postData) {
             if (postData[key] !== undefined && postData[key] !== null) {
               formData.append(key, postData[key]);
@@ -117,11 +122,12 @@ export default {
             formData.append("pictures[]", pic);
           }
 
+          loading.value = true;
           fetchApi(
             "/new-ad",
             {
               method: "POST",
-              headers: { "X-CSRF-TOKEN": csrf() },
+              headers: {"X-CSRF-TOKEN": csrf()},
               body: formData,
             },
             (resp) => (window.location.href = "/activate?id=" + resp.id),
@@ -132,12 +138,12 @@ export default {
     }
 
     return {
+      v$,
       ad,
       details,
       address,
       pictures,
       loading,
-      v$,
       handleSubmit,
     };
   },
@@ -179,7 +185,9 @@ export default {
     },
     address: {
       location: {
-        required,
+        required: helpers.withMessage("Required", required),
+        min: helpers.withMessage("Too short", minLength(5)),
+        max: helpers.withMessage("Too long", maxLength(250)),
       },
     },
   },

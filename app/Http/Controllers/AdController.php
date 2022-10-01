@@ -34,7 +34,7 @@ class AdController extends BaseController
         'description' => 'required|string|max:10000',
         'lng' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
         'lat' => 'nullable|regex:/^\-?[0-9]{1,3}\.[0-9]{0,20}$/',
-        'location' => 'required|string|max:250',
+        'location' => 'required|string|min:5|max:250',
         'postcode' => 'nullable|string|max:10',
         'county' => 'nullable|string|max:50',
         'town' => 'nullable|string|max:100',

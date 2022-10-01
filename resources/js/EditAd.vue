@@ -3,33 +3,38 @@
     <AdCategoryBox
       v-model:category_id="ad.category_id"
       :editable="false"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <AdTitleBox
       v-model:title="ad.title"
       v-model:bold="ad.bold"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
-    <AdLocationBox v-model:address="address" :errors="v$['address']" />
+    <AdLocationBox
+      mode="line"
+      v-model:address="address"
+      :errors="v$.address"
+      @validate="v$.address.$validate()"
+    />
 
     <AdDetailsBox
       :category="ad.category_id"
       v-model:details="details"
-      :errors="v$['details']"
+      :errors="v$.details"
     />
 
     <AdImagesBox
       v-model:pictures="pictures"
       v-model:youtube="ad.youtube"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <AdWebsiteBox
       v-model:has_www="ad.has_www"
       v-model:www="ad.www"
-      :errors="v$['ad']"
+      :errors="v$.ad"
     />
 
     <div class="w-100 mt-2 mb-2 text-end">
@@ -50,7 +55,7 @@
 <script>
 import { reactive, ref, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers, url } from "@vuelidate/validators";
+import {required, helpers, url, minLength, maxLength} from "@vuelidate/validators";
 import AdCategoryBox from "./components/AdCategoryBox.vue";
 import AdTitleBox from "./components/AdTitleBox.vue";
 import AdDetailsBox from "./components/AdDetailsBox.vue";
@@ -89,10 +94,10 @@ export default {
     });
 
     const address = reactive({
-      postcode: null,
-      county: null,
-      town: null,
       location: null,
+      town: null,
+      county: null,
+      postcode: null,
       lng: null,
       lat: null,
     });
@@ -103,11 +108,11 @@ export default {
 
     function handleSubmit() {
       this.v$.$validate().then((res) => {
-        if (res) {
-          loading.value = true;
-
-          const postData = Object.assign({}, ad, details, address);
+        if (!res) {
+          showToast("Correct highlighted errors and try again.");
+        } else {
           const formData = new FormData();
+          const postData = Object.assign({}, ad, details, address);
           for (const key in postData) {
             if (postData[key] !== undefined && postData[key] !== null) {
               formData.append(key, postData[key]);
@@ -117,6 +122,7 @@ export default {
             formData.append("pictures[]", pic);
           }
 
+          loading.value = true;
           fetchApi(
             "/edit-ad/" + ad.id,
             {
@@ -132,42 +138,41 @@ export default {
     }
 
     onMounted(() => {
-      const mdata = document.querySelector('meta[name="form-data"]').content;
-      const fdata = JSON.parse(mdata);
+      const fData = JSON.parse(document.querySelector('meta[name="form-data"]').content);
 
-      ad.id = fdata.id;
-      ad.category_id = fdata.category_id;
-      ad.title = fdata.title;
-      ad.youtube = fdata.youtube;
-      ad.www = fdata.www;
-      ad.has_www = !!fdata.www;
+      ad.id = fData.id;
+      ad.category_id = fData.category_id;
+      ad.title = fData.title;
+      ad.youtube = fData.youtube;
+      ad.www = fData.www;
+      ad.has_www = !!fData.www;
 
-      details.price = fdata.price;
-      details.property_type = fdata.property_type;
-      details.num_beds = fdata.num_beds;
-      details.price_freq = fdata.price_freq;
-      details.room_type = fdata.room_type;
-      details.description = fdata.description;
+      details.price = fData.price;
+      details.property_type = fData.property_type;
+      details.num_beds = fData.num_beds;
+      details.price_freq = fData.price_freq;
+      details.room_type = fData.room_type;
+      details.description = fData.description;
 
-      address.location = fdata.location;
-      address.postcode = fdata.postcode;
-      address.county = fdata.county;
-      address.town = fdata.town;
-      address.lng = fdata.lng;
-      address.lat = fdata.lat;
+      address.location = fData.location;
+      address.postcode = fData.postcode;
+      address.county = fData.county;
+      address.town = fData.town;
+      address.lng = fData.lng;
+      address.lat = fData.lat;
 
-      fdata.pictures.forEach((el) => {
+      fData.pictures.forEach((el) => {
         pictures.value.push(el.name);
       });
     });
 
     return {
+      v$,
       ad,
       details,
       address,
       pictures,
       loading,
-      v$,
       handleSubmit,
     };
   },
@@ -209,7 +214,9 @@ export default {
     },
     address: {
       location: {
-        required,
+        required: helpers.withMessage("Required", required),
+        min: helpers.withMessage("Too short", minLength(5)),
+        max: helpers.withMessage("Too long", maxLength(250)),
       },
     },
   },

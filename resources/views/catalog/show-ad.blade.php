@@ -28,6 +28,7 @@
                     <span class="aa_price">
                         &euro;{{ number_format($ad->price) }}
                     </span>
+
                     <span class="ms-1 align-middle">
                         @if($ad->price_freq === 'per_week')
                             <span class="d-none d-md-inline-block">per week</span>
