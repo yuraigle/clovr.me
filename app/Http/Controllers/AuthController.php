@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -18,11 +20,6 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function login()
-    {
-        return view('auth.login', []);
-    }
 
     public function loginPost(Request $req): JsonResponse
     {
@@ -44,7 +41,7 @@ class AuthController extends BaseController
         return response()->json(['status' => 'OK']);
     }
 
-    public function register()
+    public function register(): View
     {
         return view('auth.register', []);
     }
@@ -73,23 +70,28 @@ class AuthController extends BaseController
         return response()->json(['status' => 'OK']);
     }
 
-    public function forgot()
+    public function login(): View
+    {
+        return view('auth.login', []);
+    }
+
+    public function forgot(): View
     {
         return view('auth.forgot', []);
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect('/');
     }
 
-    public function fbRedirect()
+    public function fbRedirect(): RedirectResponse
     {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function fbCallback()
+    public function fbCallback(): RedirectResponse
     {
         try {
             $fbUser = Socialite::driver('facebook')->user();

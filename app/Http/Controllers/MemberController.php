@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +16,7 @@ class MemberController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function profile()
+    public function profile(): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=member');
@@ -23,7 +25,7 @@ class MemberController extends BaseController
         return view('member.profile', []);
     }
 
-    public function ads(Request $req)
+    public function ads(Request $req): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=' . urlencode(route('my-ads', [], false)));
@@ -35,7 +37,7 @@ class MemberController extends BaseController
         return view('member.ads', ["rows" => $rows]);
     }
 
-    public function favorites()
+    public function favorites(): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=' . urlencode(route('favorites', [], false)));
@@ -44,7 +46,7 @@ class MemberController extends BaseController
         return view('member.favorites');
     }
 
-    public function messages()
+    public function messages(): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=' . urlencode(route('messages', [], false)));

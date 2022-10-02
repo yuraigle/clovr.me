@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller as BaseController;
@@ -42,7 +44,7 @@ class AdController extends BaseController
         'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
     ];
 
-    public function newAd()
+    public function newAd(): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=new-ad');
@@ -117,7 +119,7 @@ class AdController extends BaseController
         return $v;
     }
 
-    public function editAd($id)
+    public function editAd($id): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login');

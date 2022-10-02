@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Services\LocationService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -20,7 +22,7 @@ class IndexController extends BaseController
         $this->locationService = $locationService;
     }
 
-    public function home(Request $req)
+    public function home(Request $req): View|RedirectResponse
     {
         $loc = $req->query("loc");
         if ($loc && in_array($loc, $this->locationService->getTowns())) {
@@ -34,17 +36,17 @@ class IndexController extends BaseController
         ]);
     }
 
-    public function about()
+    public function about(): View
     {
         return view('about.about-us', []);
     }
 
-    public function terms()
+    public function terms(): View
     {
         return view('about.terms', []);
     }
 
-    public function search()
+    public function search(): View
     {
         return view('search', []);
     }

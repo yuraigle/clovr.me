@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AdUrl;
 use App\Services\LocationService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -23,7 +24,7 @@ class CatalogController extends BaseController
         $this->locationService = $locationService;
     }
 
-    public function showAd(Request $req)
+    public function showAd(Request $req): View
     {
         $id = $req->route()->parameter('id');
         $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
@@ -49,7 +50,7 @@ class CatalogController extends BaseController
         ]);
     }
 
-    public function showCat(Request $req, $cat, $propType = null)
+    public function showCat(Request $req, $cat, $propType = null): View
     {
         $cid = array_search($cat, AdUrl::$CATS);
         abort_if(!$cid, 404);
