@@ -8,11 +8,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CatalogController extends BaseController
@@ -98,5 +98,29 @@ class CatalogController extends BaseController
     public function search(Request $req): View|RedirectResponse
     {
         return view('catalog.search', []);
+    }
+
+    public function markers(Request $req): JsonResponse
+    {
+        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `pic`, `lat`, `lng` from `ads`");
+
+        $features = [];
+        foreach ($rows as $row) {
+            $features[] = [
+                "type" => "Feature",
+                "geometry" => [
+                    "type" => "Point",
+                    "coordinates" => [$row->lng, $row->lat],
+                ],
+                "properties" => [
+                    "title" => $row->title,
+                    "price" => $row->price,
+                    "pic" => $row->pic,
+                    "url" => AdUrl::canonical($row),
+                ]
+            ];
+        }
+
+        return response()->json(["type" => "FeatureCollection", "features" => $features]);
     }
 }

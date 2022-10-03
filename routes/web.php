@@ -46,3 +46,5 @@ Route::get('/{cat}/{propType?}', [CatalogController::class, 'showCat'])
     ->name('show-cat');
 
 Route::get('/search', [CatalogController::class, 'search'])->name('search');
+Route::get('/markers', [CatalogController::class, 'markers']);
+
