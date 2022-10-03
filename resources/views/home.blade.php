@@ -57,7 +57,7 @@
             </div>
 
             <div class="text-end">
-                <button class="btn btn-light me-1" type="submit" name="map" value="1">
+                <button class="btn btn-light me-1" name="map" value="1">
                     <i class="fa fa-fw fa-location me-1"></i> Show on the map
                 </button>
                 <button class="btn btn-info" type="submit">

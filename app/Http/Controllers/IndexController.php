@@ -45,9 +45,4 @@ class IndexController extends BaseController
     {
         return view('about.terms', []);
     }
-
-    public function search(): View
-    {
-        return view('search', []);
-    }
 }

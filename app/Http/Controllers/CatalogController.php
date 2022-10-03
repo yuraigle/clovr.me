@@ -8,9 +8,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CatalogController extends BaseController
@@ -91,5 +93,10 @@ class CatalogController extends BaseController
             'propType' => $propType,
             'town' => $town,
         ]);
+    }
+
+    public function search(Request $req): View|RedirectResponse
+    {
+        return view('catalog.search', []);
     }
 }

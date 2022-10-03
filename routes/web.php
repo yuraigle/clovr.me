@@ -23,7 +23,6 @@ Route::get('/member/favorites', [MemberController::class, 'favorites'])->name('f
 Route::get('/member/messages', [MemberController::class, 'messages'])->name('messages');
 
 Route::get('/', [IndexController::class, 'home'])->name('home');
-Route::get('/search', [IndexController::class, 'search'])->name('search');
 Route::get('/about', [IndexController::class, 'about'])->name('about');
 Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
 Route::get('/new-ad', [AdController::class, 'newAd'])->name('new-ad');
@@ -45,3 +44,5 @@ Route::get('/{cat}/{propType?}', [CatalogController::class, 'showCat'])
     ->where('cat', join('|', AdUrl::$CATS))
     ->where('propType', 'house|flat|other|garage|parking')
     ->name('show-cat');
+
+Route::get('/search', [CatalogController::class, 'search'])->name('search');
