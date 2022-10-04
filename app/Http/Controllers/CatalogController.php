@@ -102,7 +102,7 @@ class CatalogController extends BaseController
 
     public function markers(Request $req): JsonResponse
     {
-        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `pic`, `lat`, `lng` from `ads`");
+        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `pic`, `lat`, `lng` from `ads`");
 
         $features = [];
         foreach ($rows as $row) {
@@ -113,11 +113,14 @@ class CatalogController extends BaseController
                     "coordinates" => [$row->lng, $row->lat],
                 ],
                 "properties" => [
+                    "id" => $row->id,
                     "title" => $row->title,
                     "price" => $row->price,
+                    "price_freq" => $row->price_freq,
                     "pic" => $row->pic,
                     "url" => AdUrl::canonical($row),
-                ]
+                ],
+                "id" => $row->id,
             ];
         }
 
