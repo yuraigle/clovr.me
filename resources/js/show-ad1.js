@@ -1,8 +1,6 @@
 import "bootstrap/js/dist/modal.js";
-import "bootstrap/js/dist/carousel.js";
-import Lightbox from 'bs5-lightbox'
-
-console.log(Lightbox.defaultSelector);
+import Lightbox from 'bs5-lightbox';
+Lightbox.defaultSelector = '[data-toggle="lightbox"]';
 
 const token =
     "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";

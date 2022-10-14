@@ -71,7 +71,7 @@
                             @if ($hasMap)
                                 <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
                                      data-bs-target="#map_modal">
-                                    <button class="btn btn-sm btn-info opacity-75">
+                                    <button class="btn btn-sm btn-info opacity-75" type="button">
                                         <i class="fa-solid fa-location-dot"></i>
                                         <span
                                             class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
@@ -80,11 +80,11 @@
                                     </button>
                                     <div class="ratio ratio-4x3 then-2x1">
                                         <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                                             data-src="{{ $mapUrl }}" alt="map" style="object-fit: none"/>
+                                             data-src="{{ $mapUrl }}" alt="map" class="fit-none" />
                                     </div>
                                 </div>
                             @endif
-                            <div style="position: relative" class="col-6 col-sm-12 p-0">
+                            <div class="col-6 col-sm-12 p-0 position-relative">
                                 <div class="ratio ratio-4x3 then-2x1">
                                     @if(!empty($pics[1]))
                                         <img src="{{ App\Helpers\AdPic::placeholder() }}"
@@ -97,7 +97,7 @@
                                     @endif
                                 </div>
                                 @if(count($pics) > 2)
-                                    <div class="badge bg-dark" style="position: absolute; bottom: 5px; right: 5px">
+                                    <div class="badge bg-dark position-absolute" style="bottom: 5px; right: 5px">
                                         +{{ count($pics) - 2 }}
                                         <i class="fa-solid fa-images"></i>
                                     </div>
@@ -177,7 +177,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="map_cont" style="height: 500px" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
+                    <div id="map_cont" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
                 </div>
             </div>
         </div>
@@ -187,6 +187,14 @@
 @section('inline_styles')
     <link rel="canonical" href="{{ App\Helpers\AdUrl::canonical($ad) }}"/>
     <style>
+        #map_cont {
+            height: 500px;
+        }
+
+        .fit-none {
+            object-fit: none;
+        }
+
         .aa_row {
             line-height: 26px
         }

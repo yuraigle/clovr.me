@@ -31,11 +31,12 @@ server {
     gzip_types text/plain text/css text/javascript application/json application/javascript;
 
     ## All static files will be served directly.
-    location ~* ^.+\.(?:css|js|jpe?g|ico|webp|png|html|xml|ttf|eot|woff|woff2|svg)$ {
+    location ~* ^.+\.(?:css|js|jpe?g|ico|webp|png|html|xml|ttf|eot|woff|woff2|svg|webmanifest)$ {
         access_log off;
-        expires 365d;
-        add_header Cache-Control public;
-
+        add_header Cache-Control 'max-age=31536000, immutable';
+        add_header X-Content-Type-Options 'nosniff';
+        sendfile on;
+        tcp_nopush on;
         tcp_nodelay off;
 
         ## Set the OS file cache.
@@ -56,9 +57,18 @@ server {
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
         fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        add_header X-Content-Type-Options 'nosniff';
     }
 
     location ~ /\.ht {
         deny all;
     }
+
+    include /etc/nginx/mime.types;
+    types {
+        'application/manifest+json; charset=utf-8'   webmanifest;
+        'text/css; charset=utf-8'                    css;
+        font/woff2                                   woff2;
+    }
+
 }

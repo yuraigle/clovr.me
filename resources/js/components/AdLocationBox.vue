@@ -128,10 +128,6 @@ export default {
       mode.value = props.mode;
     }
 
-    if (props.errors['$invalid']) {
-      console.log(props.errors['$invalid']);
-    }
-
     const addressOneLine = computed(() => {
       const parts = [];
       const s = [address1.county ?? '', address1.postcode ?? ''].join(' ').trim();

@@ -7,28 +7,21 @@
     @yield('meta')
 
     <title>@yield('title')clovr.me</title>
-    <link href="{{ mix('/dist/app-styles.css') }}" rel="stylesheet"/>
-
+    <link href="{{ mix('/dist/styles-app.css') }}" rel="stylesheet"/>
+    <link href="{{ mix('/dist/styles-bs5.css') }}" rel="stylesheet"/>
+{{--
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          rel="stylesheet"
+          crossorigin="anonymous"
+    />
+--}}
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
     <link rel="manifest" href="/site.webmanifest"/>
 
     @yield('inline_styles')
-    <style>
-        .a0 picture, .a0 img {
-            width: 200px;
-            height: 150px;
-            background-color: #eee;
-        }
-
-        @media (max-width: 768px) {
-            .a0 picture, .a0 img {
-                width: 120px;
-                height: 90px;
-            }
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column">
@@ -38,7 +31,9 @@
             <img src="/logo.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top"/>
             <span class="brand ms-1">clovr</span>
         </a>
-        <button class="navbar-toggler" type="button"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" title="Toggle Menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse py-2" id="navbar1">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-2">
@@ -57,7 +52,7 @@
                     @guest
                         <a class="nav-link px-3 py-1 btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
                            href="{{ route('login') }}">
-                            <i class="fa-solid fa-user fa-fw me-1"></i>
+                            <i class="fa-solid fa-user fa-fw"></i>
                             <span class="d-inline-block d-sm-none">Login</span>
                         </a>
                     @endguest
@@ -85,13 +80,14 @@
     <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
 </footer>
 
-<script type="text/javascript" src="{{ mix('/dist/app-scripts.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/dist/scripts-app.js') }}"></script>
 @yield('inline_scripts')
-<link href="{{ mix('/dist/app-icons.css') }}" rel="stylesheet"/>
+<link href="{{ mix('/dist/styles-fa6.css') }}" rel="stylesheet"/>
 
+{{--
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+--}}
 </body>
-
 </html>

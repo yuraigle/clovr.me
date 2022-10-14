@@ -52,12 +52,12 @@
                         </button>
                     </li>
                 </ul>
-                <input type="search" class="form-control py-2 px-3" id="q" name="q"
+                <input type="search" class="form-control form-control-lg py-2 px-3" id="q" name="q"
                        placeholder="Address, location, keyword...">
             </div>
 
             <div class="text-end">
-                <button class="btn btn-light me-1" name="map" value="1">
+                <button class="btn btn-light me-1" name="map" value="1" type="submit">
                     <i class="fa fa-fw fa-location me-1"></i> Show on the map
                 </button>
                 <button class="btn btn-info" type="submit">
@@ -193,7 +193,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Select Location</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" title="close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row lh-lg text-center pb-2">

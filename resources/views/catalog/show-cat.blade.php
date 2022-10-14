@@ -24,7 +24,7 @@
                             @include('partials.ad_main_pic', ['row' => $row])
 
                             <div class="a1 flex-grow-1 ms-3">
-                                <h5 class="text-primary" style="margin-right: 40px">
+                                <h5 class="text-primary me-5">
                                     {{ Illuminate\Support\Str::of($row->title)->limit(100) }}
                                 </h5>
 

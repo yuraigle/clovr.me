@@ -19,9 +19,10 @@ module.exports = {
         "auth-login-box": "./resources/js/auth-login-box.js",
         "auth-register-box": "./resources/js/auth-register-box.js",
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",
-        "app-scripts": "./resources/js/app-scripts.js",
-        "app-styles": "./resources/js/app-styles.js",
-        "app-icons": "./resources/js/app-icons.js",
+        "scripts-app": "./resources/js/scripts-app.js",
+        "styles-app": "./resources/js/styles-app.js",
+        "styles-bs5": "./resources/js/styles-bs5.js",
+        "styles-fa6": "./resources/js/styles-fa6.js",
     },
 
     output: {
