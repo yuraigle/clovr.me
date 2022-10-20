@@ -1,6 +1,8 @@
 @extends('layouts.wide')
 
-@section('title')Search - @endsection
+@section('title')
+    Search -
+@endsection
 
 @section('content')
     <div id="app"></div>
@@ -14,4 +16,10 @@
             "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
     </script>
     <script type="text/javascript" src="{{ mix('/dist/search.js') }}"></script>
+
+    <style>
+        #map, .mapboxgl-canvas-container.mapboxgl-interactive {
+            cursor: default !important;
+        }
+    </style>
 @endsection

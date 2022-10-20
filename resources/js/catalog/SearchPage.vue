@@ -97,14 +97,14 @@ export default {
           }
         });
 
-        map.value.getCanvas().style.cursor = "grab";
+        map.value.getCanvas().style.cursor = "default";
 
         map.value.on("mouseenter", ['clusters', 'point'], () => {
           map.value.getCanvas().style.cursor = "pointer";
         });
 
         map.value.on("mouseleave", ['clusters', 'point'], () => {
-          map.value.getCanvas().style.cursor = "grab";
+          map.value.getCanvas().style.cursor = "default";
         });
 
         let selId = null;
@@ -138,10 +138,6 @@ export default {
           }
         });
       }
-
-      map.value.on("moveend", function (e) {
-        // reloadMarkers();
-      });
     });
 
     function hash2img(s) {
