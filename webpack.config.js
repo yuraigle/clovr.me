@@ -4,8 +4,10 @@ const {VueLoaderPlugin} = require("vue-loader");
 const {WebpackManifestPlugin} = require("webpack-manifest-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const devMode = process.env.NODE_ENV !== "production";
+
 module.exports = {
-    mode: "development",
+    mode: devMode ? "development" : "production",
 
     entry: {
         "home-1": "./resources/js/home1.js",
@@ -45,10 +47,20 @@ module.exports = {
                 ],
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: () => [
+                                    require('autoprefixer')
+                                ]
+                            }
+                        }
+                    },
                     "sass-loader"
                 ],
             },
@@ -61,13 +73,14 @@ module.exports = {
             __VUE_OPTIONS_API__: false,
             __VUE_PROD_DEVTOOLS__: false,
         }),
+        new MiniCssExtractPlugin({
+            filename: "[name].[contenthash].css",
+            chunkFilename: "[id].css"
+        }),
         new WebpackManifestPlugin({
             basePath: "/dist/",
             publicPath: "/dist/",
             fileName: path.resolve(__dirname, "./public/mix-manifest.json"),
-        }),
-        new MiniCssExtractPlugin({
-            filename: "[name].[contenthash].css",
         }),
     ],
 };

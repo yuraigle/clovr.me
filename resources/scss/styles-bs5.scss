@@ -34,14 +34,9 @@ $dark: $gray-800 !default;
 
 $min-contrast-ratio: 2.75 !default;
 $body-color: $gray-700 !default;
-// $font-family-sans-serif: "Lato", "Helvetica Neue", Arial, sans-serif !default;
-
-// @import "~bootstrap/scss/bootstrap";
-
-//@import "~bootstrap/scss/mixins/banner";
-//@include bsBanner("");
 
 @import "~bootstrap/scss/variables";
+
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/utilities";
