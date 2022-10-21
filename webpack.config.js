@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const { VueLoaderPlugin } = require("vue-loader");
-const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const {VueLoaderPlugin} = require("vue-loader");
+const {WebpackManifestPlugin} = require("webpack-manifest-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
@@ -39,11 +39,18 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["vue-style-loader", "css-loader"],
+                use: [
+                    "vue-style-loader",
+                    "css-loader"
+                ],
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "sass-loader"
+                ],
             },
         ],
     },

@@ -162,11 +162,11 @@
             <div class="d-flex py-2 my-4">
                 <h5 class="me-auto">Share:</h5>
                 <span>
-                    <a href="#" style="color: #3b5998" title="Share on Facebook">
+                    <a href="#" class="color-fb" title="Share on Facebook">
                         <i class="fa-2xl fa-brands fa-facebook-square"></i></a>
-                    <a href="#" style="color: #00acee" title="Share on Twitter">
+                    <a href="#" class="color-tw" title="Share on Twitter">
                         <i class="fa-2xl fa-brands fa-twitter-square"></i></a>
-                    <a href="#" style="color: #656656" title="Share via Email">
+                    <a href="#" class="color-gr" title="Share via Email">
                         <i class="fa-2xl fa-solid fa-square-envelope"></i></a>
                 </span>
             </div>

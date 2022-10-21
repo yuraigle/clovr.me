@@ -28,7 +28,7 @@ server {
 
     gzip on;
     gzip_comp_level 5;
-    gzip_types text/plain text/css text/javascript application/json application/javascript;
+    gzip_types text/plain text/css text/javascript application/json application/javascript 'text/css; charset=utf-8';
 
     ## All static files will be served directly.
     location ~* ^.+\.(?:css|js|jpe?g|ico|webp|png|html|xml|ttf|eot|woff|woff2|svg|webmanifest)$ {
