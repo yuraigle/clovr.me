@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm ps-4 pe-4">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/logo.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top"/>
+            <img src="/layout/logo.1666414703.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top"/>
             <span class="brand ms-1">clovr</span>
         </a>
         <button class="navbar-toggler" type="button" title="Toggle Menu">

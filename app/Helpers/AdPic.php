@@ -7,7 +7,7 @@ class AdPic
     static function main($row, $size = 's', $ext = 'webp'): string
     {
         if (!$row || !$row->pic) {
-            return "/${size}_noimg.$ext";
+            return "/layout/${size}_noimg.$ext";
         }
 
         return self::named($row->pic, $size, $ext);

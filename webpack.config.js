@@ -86,7 +86,13 @@ module.exports = {
         }),
         devMode ? () => {} : new PurgeCSSPlugin({
             paths: glob.sync(`${dirNix}/resources/**/*`, { nodir: true }),
-            safelist: [/^bg-[a-z]+$/]
+            safelist: [
+                /^bg-[a-z]+$/,
+                /modal-backdrop/,
+                /carousel-(inner|item|control)/,
+                /ratio-16x9/,
+                /visually-hidden/,
+            ]
         }),
     ],
 };

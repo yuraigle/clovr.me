@@ -2,8 +2,8 @@ const elProp1 = document.getElementById("prop1");
 const elCat1 = document.getElementById("cat1");
 const elCover = document.querySelectorAll("section.cover1")[0];
 
-elCover.style.backgroundImage += ", url('/cover_flat.webp')";
-elCover.style.backgroundImage += ", url('/cover_garage.webp')";
+elCover.style.backgroundImage += ", url('/layout/cover_flat.webp')";
+elCover.style.backgroundImage += ", url('/layout/cover_garage.webp')";
 
 document.querySelectorAll("button.prop1").forEach((el) => {
     el.addEventListener("click", () => setProp1(el.dataset.prop1));
