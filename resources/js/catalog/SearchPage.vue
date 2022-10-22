@@ -11,7 +11,7 @@
           <ul v-if="shownPoints.length">
             <li v-for="p in shownPoints" :key="p.id" class="py-2 border-bottom">
               <a :href="p.url" target="_blank" class="text-dark">
-                <img :src="hash2img(p.pic)" alt="pic" width="200" height="150" />
+                <img :src="hash2img(p.pic)" alt="pic" width="200" height="150"/>
                 <br/>
                 {{ price_fmt(p.price) }}{{ price_fq(p.price_freq) }}
               </a>
@@ -42,10 +42,13 @@ export default {
     const shownPoints = ref([]);
 
     onMounted(() => {
-      const center = [-6.29726611, 53.34677576]; // todo depend on town
-      const zoom = 11;
-      const style = "mapbox://styles/mapbox/streets-v11";
-      map.value = new mapboxgl.Map({container: "map", style, center, zoom});
+      map.value = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        accessToken: window.mapboxToken,
+        center: [-6.29726611, 53.34677576], // todo depend on town
+        zoom: 11
+      });
 
       map.value.on("load", function (e) {
 

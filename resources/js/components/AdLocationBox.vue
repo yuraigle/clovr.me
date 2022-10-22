@@ -146,7 +146,7 @@ export default {
       t = setTimeout(() => {
         const urlBase = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
         const urlParams = new URLSearchParams({
-          access_token: mapboxgl.accessToken,
+          access_token: window.mapboxToken,
           autocomplete: 'true',
           fuzzyMatch: 'false',
           country: 'ie',
@@ -208,8 +208,13 @@ export default {
     function mountMap() {
       const center = address1.lng ? [address1.lng, address1.lat] : [-6.29726611, 53.34677576];
       const zoom = address1.lng ? 16 : 11;
-      const style = "mapbox://styles/mapbox/streets-v11";
-      map.value = new mapboxgl.Map({container: "map", style, center, zoom});
+      map.value = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        accessToken: window.mapboxToken,
+        center,
+        zoom
+      });
       marker.value = new mapboxgl.Marker({draggable: true});
 
       if (address1.lng) {

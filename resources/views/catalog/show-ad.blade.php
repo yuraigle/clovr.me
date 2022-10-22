@@ -21,8 +21,12 @@
                 <h1 class="h3 border-bottom mb-1 pb-2">{{ $ad->title }}</h1>
                 <div class="aa_row d-flex mb-4">
                     <span class="me-auto text-muted">
-                        @if($ad->town){{ $ad->town }}@endif
-                        @if($ad->county && $ad->county !== $ad->town), {{ $ad->county }}@endif
+                        @if($ad->town)
+                            {{ $ad->town }}
+                        @endif
+                        @if($ad->county && $ad->county !== $ad->town)
+                            , {{ $ad->county }}
+                        @endif
                     </span>
 
                     <span class="aa_price">
@@ -40,17 +44,7 @@
                     </span>
                 </div>
 
-                @php
-                    $i = 0;
-                    $w = 550;
-                    $h = 250;
-                    $lng = isset($ad) ? floatval($ad->lng) : 0;
-                    $lat = isset($ad) ? floatval($ad->lat) : 0;
-                    $token = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-                    $mapUrl = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/$lng,$lat,13,0/${w}x${h}" .
-                        "?logo=false&access_token=$token";
-                    $hasMap = $lng || $lat;
-                @endphp
+                @php $i = 0; @endphp
 
                 <div class="row">
                     <div class="col-sm-8 p-0">
@@ -68,7 +62,7 @@
                     </div>
                     <div class="col-sm-4 p-0">
                         <div class="row m-0">
-                            @if ($hasMap)
+                            @if ($ad->lng && $ad->lat)
                                 <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
                                      data-bs-target="#map_modal">
                                     <button class="btn btn-sm btn-info opacity-75" type="button">
@@ -80,7 +74,23 @@
                                     </button>
                                     <div class="ratio ratio-4x3 then-2x1">
                                         <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                                             data-src="{{ $mapUrl }}" alt="map" class="fit-none" />
+                                             id="map_placeholder"
+                                             class="fit-none"
+                                             data-lng="{{ $ad->lng }}"
+                                             data-lat="{{ $ad->lat }}"
+                                             alt="map"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="map_modal" data-bs-keyboard="false" tabindex="-1">
+                                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div id="map_cont" data-lng="{{ $ad->lng }}"
+                                                     data-lat="{{ $ad->lat }}"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
@@ -120,7 +130,9 @@
                 <p class="text-center mt-2">{{ $ad->location }}</p>
 
                 <div class="my-2">
-                    @if($ad->postcode)<p class="mb-0">Postal Code: {{ $ad->postcode }}</p>@endif
+                    @if($ad->postcode)
+                        <p class="mb-0">Postal Code: {{ $ad->postcode }}</p>
+                    @endif
 
                     @if($ad->property_type)
                         <p class="mb-0">Property Type: {{ ucfirst($ad->property_type) }}</p>
@@ -169,16 +181,6 @@
                     <a href="#" class="color-gr" title="Share via Email">
                         <i class="fa-2xl fa-solid fa-square-envelope"></i></a>
                 </span>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="map_modal" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div id="map_cont" data-lng="{{ $lng }}" data-lat="{{ $lat }}"></div>
-                </div>
             </div>
         </div>
     </div>

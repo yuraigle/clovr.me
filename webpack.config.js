@@ -25,7 +25,6 @@ module.exports = {
         "auth-register-box": "./resources/js/auth-register-box.js",
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",
         "scripts-app": "./resources/js/scripts-app.js",
-        "styles-app": "./resources/js/styles-app.js",
         "styles-bs5": "./resources/js/styles-bs5.js",
         "styles-fa6": "./resources/js/styles-fa6.js",
     },
@@ -85,7 +84,7 @@ module.exports = {
             publicPath: "/dist/",
             fileName: path.resolve(__dirname, "./public/mix-manifest.json"),
         }),
-        new PurgeCSSPlugin({
+        devMode ? () => {} : new PurgeCSSPlugin({
             paths: glob.sync(`${dirNix}/resources/**/*`, { nodir: true }),
             safelist: [/^bg-[a-z]+$/]
         }),
