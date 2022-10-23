@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table class="bg-light">
     <tr style="height: 47px; border-bottom: 1px solid #ccc">
       <td colspan="2">
         <SearchFilter :filter="filter"/>

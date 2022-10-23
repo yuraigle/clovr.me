@@ -56,7 +56,7 @@
 
 @yield('cover1')
 
-<main class="flex-grow-1 bg-light">
+<main class="flex-grow-1">
     <div class="container py-4">
         @yield('content')
     </div>

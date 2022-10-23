@@ -88,7 +88,7 @@ export default {
           opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
           _success: () => {
             const urlParams = new URLSearchParams(window.location.search);
-            window.location.href = urlParams.get("back") || "/member";
+            window.location.href = urlParams.get("back") || "/member/profile";
           },
           _finally: () => loading.value = false,
         });

@@ -126,7 +126,7 @@ export default {
 
         loading.value = true;
         fetchApi({
-            url: "/new-ad",
+            url: "/new",
             opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
             _success: (resp) => (window.location.href = "/activate?id=" + resp.id),
             _finally: () => (loading.value = false)
