@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LocationService;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -20,6 +21,8 @@ use Intervention\Image\Facades\Image;
 class AdController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected LocationService $locationService;
 
     private array $rules = [
         'category_id' => 'required|numeric|min:1|max:5',
@@ -44,13 +47,20 @@ class AdController extends BaseController
         'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
     ];
 
+    public function __construct(LocationService $locationService)
+    {
+        $this->locationService = $locationService;
+    }
+
     public function newAd(): RedirectResponse|View
     {
         if (!Auth::check()) {
             return redirect('/login?back=new-ad');
         }
 
-        return view('member.new-ad', []);
+        return view('member.new-ad', [
+            "town" => $this->locationService->getTownFromCookie()
+        ]);
     }
 
     public function newAdPost(Request $req): JsonResponse
@@ -133,6 +143,7 @@ class AdController extends BaseController
 
         return view('member.edit-ad', [
             "row_json" => json_encode($row),
+            "town" => $this->locationService->getTownFromCookie(),
         ]);
     }
 

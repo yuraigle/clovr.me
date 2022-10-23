@@ -206,8 +206,9 @@ export default {
     }
 
     function mountMap() {
-      const center = address1.lng ? [address1.lng, address1.lat] : [-6.29726611, 53.34677576];
-      const zoom = address1.lng ? 16 : 11;
+      const townData = JSON.parse(document.querySelector('meta[name="town"]').content);
+      const center = address1.lng ? [address1.lng, address1.lat] : [townData.lng, townData.lat];
+      const zoom = address1.lng ? 16 : townData.zoom;
       map.value = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",

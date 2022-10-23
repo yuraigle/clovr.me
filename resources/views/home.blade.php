@@ -199,8 +199,8 @@
                     <div class="row lh-lg text-center pb-2">
                         @foreach($towns as $t)
                             <div class="col-4">
-                                <a class="btn btn-link {{ $town == $t ? 'disabled text-black fw-bold' : '' }}"
-                                   href="?loc={{ $t }}">{{ $t }}</a>
+                                <a class="btn btn-link {{ $town == $t->getName() ? 'disabled text-black fw-bold' : '' }}"
+                                   href="?loc={{ urlencode($t->getName()) }}">{{ $t->getName() }}</a>
                             </div>
                         @endforeach
                     </div>

@@ -8,12 +8,12 @@ class Breadcrumbs
     {
         $arr = [];
 
-        $c1 = preg_match("|Garage|", $cat->name) ? "Garages & Parking" : "Property";
+        $c1 = str_contains($cat->name, "Garage") ? "Garages & Parking" : "Property";
         $arr[] = ["name" => "$c1 in $town", "path" => "/", "active" => false];
 
-        if (preg_match("|To Rent|", $cat->name)) {
+        if (str_contains($cat->name, "To Rent")) {
             $cat1Name = "To Rent";
-        } elseif (preg_match("|To Share|", $cat->name)) {
+        } elseif (str_contains($cat->name, "To Share")) {
             $cat1Name = "To Share";
         } else {
             $cat1Name = "For Sale";

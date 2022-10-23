@@ -40,7 +40,7 @@ class CatalogController extends BaseController
 
         $pics = DB::select("select * from `pictures` where `ad_id`=? order by `ord`", [$id]);
 
-        $town = $this->locationService->getTown();
+        $town = $this->locationService->getTownFromCookie()->getName();
 
         return view('catalog.show-ad', [
             "ad" => $rowAd,
@@ -60,8 +60,6 @@ class CatalogController extends BaseController
         $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$cid]);
         abort_if(!$rowCat, 404);
 
-        $town = $this->locationService->getTown();
-
         $perPage = 15;
         $currentPage = $req->query('page', 1);
         $offset = ($currentPage - 1) * $perPage;
@@ -74,7 +72,8 @@ class CatalogController extends BaseController
             $vars[] = $propType;
         }
 
-        // TODO: +filter by town
+        $town = $this->locationService->getTownFromCookie()->getName();
+        // todo: +filter by town
 
         $rowCnt = DB::selectOne("select count(*) as c from `ads` where $cond", $vars);
 
@@ -97,7 +96,9 @@ class CatalogController extends BaseController
 
     public function search(Request $req): View|RedirectResponse
     {
-        return view('catalog.search', []);
+        return view('catalog.search', [
+            "town" => $this->locationService->getTownFromCookie(),
+        ]);
     }
 
     public function markers(Request $req): JsonResponse

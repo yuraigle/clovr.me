@@ -24,15 +24,15 @@ class IndexController extends BaseController
 
     public function home(Request $req): View|RedirectResponse
     {
-        $loc = $req->query("loc");
-        if ($loc && in_array($loc, $this->locationService->getTowns())) {
+        if ($loc = $req->query("loc")) {
+            $exists = $this->locationService->getTownByName($loc);
+            $loc = $exists ? urlencode($loc) : "Dublin";
             return redirect('/')->withCookie(cookie("location", $loc, 60 * 24 * 10));
         }
 
-        $town = $this->locationService->getTown();
         return view('home', [
             "towns" => $this->locationService->getTowns(),
-            "town" => $town
+            "town" => $this->locationService->getTownFromCookie()->getName()
         ]);
     }
 

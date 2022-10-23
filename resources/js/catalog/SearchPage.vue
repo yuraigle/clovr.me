@@ -42,12 +42,14 @@ export default {
     const shownPoints = ref([]);
 
     onMounted(() => {
+      const townData = JSON.parse(document.querySelector('meta[name="town"]').content);
+
       map.value = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",
         accessToken: window.mapboxToken,
-        center: [-6.29726611, 53.34677576], // todo depend on town
-        zoom: 11
+        center: [townData.lng, townData.lat],
+        zoom: townData.zoom,
       });
 
       map.value.on("load", function (e) {
@@ -145,7 +147,7 @@ export default {
 
     function hash2img(s) {
       if (!s) {
-        return "/m_noimg.webp";
+        return "/layout/m_noimg.webp";
       }
       return "/images/" + s.substring(0, 4) + "/m_" + s + ".webp";
     }

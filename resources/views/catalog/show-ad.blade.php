@@ -4,7 +4,7 @@
     <div class="row">
 
         <div>
-            @include('partials.ad_breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => $ad])
+            @include('partials.breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => $ad])
         </div>
 
         <div class="col-lg-8">

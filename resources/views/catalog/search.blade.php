@@ -1,5 +1,9 @@
 @extends('layouts.wide')
 
+@section('meta')
+    <meta name="town" content="{{ $town }}">
+@endsection
+
 @section('title')
     Search -
 @endsection

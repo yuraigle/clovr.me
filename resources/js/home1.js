@@ -28,7 +28,7 @@ function setProp1(s) {
         .forEach((el1) => el1.classList.add("d-none"));
     document.getElementById("prop1_" + s).classList.remove("d-none");
     elProp1.value = s;
-    elCover.style.backgroundImage = `url('/cover_${s}.webp')`;
+    elCover.style.backgroundImage = `url('/layout/cover_${s}.webp')`;
 }
 
 function setCat1(s) {
