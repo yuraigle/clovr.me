@@ -87,31 +87,26 @@ export default {
     const v$ = useVuelidate();
 
     function submitForm() {
-      this.v$.$validate().then((res) => {
-        if (res) {
-          loading.value = true;
+      this.v$.$validate().then((valid) => {
+        if (!valid) return;
 
-          const formData = new FormData();
-          for (const key in form) {
-            if (form[key] !== undefined) {
-              formData.append(key, form[key]);
-            }
+        const body = new FormData();
+        for (const key in form) {
+          if (form[key] !== undefined) {
+            body.append(key, form[key]);
           }
-
-          fetchApi(
-            "/register",
-            {
-              method: "POST",
-              headers: {"X-CSRF-TOKEN": csrf()},
-              body: formData,
-            },
-            () => {
-              const urlParams = new URLSearchParams(window.location.search);
-              window.location.href = urlParams.get("back") || "/member";
-            },
-            () => (loading.value = false)
-          );
         }
+
+        loading.value = true;
+        fetchApi({
+          url: "/register",
+          opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
+          _success: () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            window.location.href = urlParams.get("back") || "/member";
+          },
+          _finally: () => (loading.value = false)
+        });
       });
     }
 

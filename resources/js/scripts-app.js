@@ -18,45 +18,47 @@ window.csrf = function () {
     return document.querySelector('meta[name="csrf-token"]').content;
 };
 
-let numToasts = 0;
 window.showToast = function (content, color = "danger") {
+    const id = 'toast_' + new Date().getTime() + '_' + Math.floor(Math.random() * 100);
     document.querySelector(".toast-container").innerHTML += `
-    <div class="toast bg-${color} text-white fade show" id="toast_${++numToasts}" role="alert">
+    <div class="toast bg-${color} text-white fade show" id="${id}" role="alert">
         <div class="d-flex">
             <div class="toast-body">${content}</div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                onclick="document.getElementById('toast_${numToasts}').remove()"></button>
+                onclick="document.getElementById('${id}').remove()"></button>
         </div>
     </div>
     `;
 
-    setTimeout(
-        () => document.getElementById("toast_" + numToasts).remove(),
-        3000
-    );
+    setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }, 3000);
 };
 
-window.fetchApi = function (
-    url,
-    opts,
-    _success = () => {
-    },
-    _finally = () => {
-    }
-) {
+window.fetchApi = function ({url, opts, _success, _finally}) {
     return fetch(url, opts)
-        .then((r) => r.json().then((d) => ({status: r.status, body: d})))
-        .then((result) => {
-            if (result.status !== 200 && result.body.message) {
-                return showToast(result.body.message);
-            } else if (result.status !== 200 || result.body.status !== "OK") {
-                return showToast("Something went wrong");
+        .then((response) => {
+            if (!response.ok) {
+                return response.text().then((text) => {
+                    let msg = "Something went wrong";
+                    try {
+                        const data = JSON.parse(text);
+                        if (data && data.message) {
+                            msg = data.message;
+                        }
+                    } catch (ignore) {
+                    }
+                    throw new Error(msg);
+                })
             }
-            _success(result.body);
+            return response.json().then((data) => ({status: response.status, data}));
         })
-        .catch((err) => {
-            console.error(err);
-            return showToast("Something went wrong");
+        .then(({status, data}) => {
+            if (status === 200) {
+                _success(data);
+            }
         })
-        .finally(() => _finally());
-};
+        .catch((err) => showToast(err.message))
+        .finally((() => _finally()));
+}

@@ -62,6 +62,7 @@
 import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {email, helpers, maxLength, minLength, required,} from "@vuelidate/validators";
+import "bootstrap/js/dist/toast.js";
 
 export default {
   setup() {
@@ -74,31 +75,23 @@ export default {
     const v$ = useVuelidate();
 
     function submitForm() {
-      this.v$.$validate().then((res) => {
-        if (res) {
-          loading.value = true;
+      this.v$.$validate().then((valid) => {
+        if (!valid) return;
 
-          const formData = new FormData();
-          for (const key in form) {
-            if (form[key] !== undefined) {
-              formData.append(key, form[key]);
-            }
-          }
+        const body = new FormData();
+        body.append('email', form.email);
+        body.append('password', form.password);
 
-          fetchApi(
-            "/login",
-            {
-              method: "POST",
-              headers: {"X-CSRF-TOKEN": csrf()},
-              body: formData,
-            },
-            () => {
-              const urlParams = new URLSearchParams(window.location.search);
-              window.location.href = urlParams.get("back") || "/member";
-            },
-            () => (loading.value = false)
-          );
-        }
+        loading.value = true;
+        fetchApi({
+          url: "/login",
+          opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
+          _success: () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            window.location.href = urlParams.get("back") || "/member";
+          },
+          _finally: () => loading.value = false,
+        });
       });
     }
 

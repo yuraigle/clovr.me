@@ -18,7 +18,7 @@
               >
                 &nbsp;
               </button>
-              <img :src="hash2img(hash)" alt="img" />
+              <img :src="hash2img(hash)" alt="img"/>
             </div>
 
             <label
@@ -77,13 +77,13 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import {ref} from "vue";
 
 export default {
   props: ["pictures", "youtube", "errors"],
   emits: ["update:pictures", "update:youtube"],
 
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const pictures1 = ref(props.pictures);
     const uploading = ref(false);
 
@@ -93,29 +93,28 @@ export default {
 
     function addImg(e) {
       const files = e.target.files || e.dataTransfer.files;
-      if (files.length) {
-        uploading.value = true;
-
-        const formData = new FormData();
-        formData.append("pic", files[0]);
-
-        fetchApi(
-          "/image-upload",
-          {
-            method: "POST",
-            headers: { "X-CSRF-TOKEN": csrf() },
-            body: formData,
-          },
-          (resp) => {
-            pictures1.value.push(resp.hash);
-            emit("update:pictures", pictures1.value);
-          },
-          () => {
-            uploading.value = false;
-            document.getElementById("picture1").value = null;
-          }
-        );
+      if (!files.length) return;
+      if (files[0].size > 4 * 1024 * 1024) {
+        showToast('Maximum file size to upload is 4MB');
+        return;
       }
+
+      const body = new FormData();
+      body.append("pic", files[0]);
+
+      uploading.value = true;
+      fetchApi({
+        url: "/image-upload",
+        opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
+        _success: (resp) => {
+          pictures1.value.push(resp.hash);
+          emit("update:pictures", pictures1.value);
+        },
+        _finally: () => {
+          uploading.value = false;
+          document.getElementById("picture1").value = null;
+        }
+      });
     }
 
     function removeImg(hash) {
@@ -142,6 +141,7 @@ export default {
 .img-thumbnail {
   position: relative;
 }
+
 .img-thumbnail > .btn-close {
   background-color: #8a848d;
   position: absolute;

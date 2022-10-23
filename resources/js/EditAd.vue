@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted } from "vue";
+import {onMounted, reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
-import {required, helpers, url, minLength, maxLength} from "@vuelidate/validators";
+import {helpers, maxLength, minLength, required, url} from "@vuelidate/validators";
 import AdCategoryBox from "./components/AdCategoryBox.vue";
 import AdTitleBox from "./components/AdTitleBox.vue";
 import AdDetailsBox from "./components/AdDetailsBox.vue";
@@ -107,33 +107,31 @@ export default {
     const v$ = useVuelidate();
 
     function handleSubmit() {
-      this.v$.$validate().then((res) => {
-        if (!res) {
+      this.v$.$validate().then((valid) => {
+        if (!valid) {
           showToast("Correct highlighted errors and try again.");
-        } else {
-          const formData = new FormData();
-          const postData = Object.assign({}, ad, details, address);
-          for (const key in postData) {
-            if (postData[key] !== undefined && postData[key] !== null) {
-              formData.append(key, postData[key]);
-            }
-          }
-          for (const pic of pictures.value) {
-            formData.append("pictures[]", pic);
-          }
-
-          loading.value = true;
-          fetchApi(
-            "/edit-ad/" + ad.id,
-            {
-              method: "POST",
-              headers: { "X-CSRF-TOKEN": csrf() },
-              body: formData,
-            },
-            (resp) => (window.location.href = "/activate?id=" + resp.id),
-            () => (loading.value = false)
-          );
+          return;
         }
+
+        const body = new FormData();
+        const postData = Object.assign({}, ad, details, address);
+        for (const key in postData) {
+          if (postData[key] !== undefined && postData[key] !== null) {
+            body.append(key, postData[key]);
+          }
+        }
+        for (const pic of pictures.value) {
+          body.append("pictures[]", pic);
+        }
+
+        loading.value = true;
+        fetchApi({
+            url: "/edit-ad/" + ad.id,
+            opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
+            _success: (resp) => (window.location.href = "/activate?id=" + resp.id),
+            _finally: () => (loading.value = false)
+          }
+        );
       });
     }
 

@@ -25,8 +25,8 @@ class IndexController extends BaseController
     public function home(Request $req): View|RedirectResponse
     {
         if ($loc = $req->query("loc")) {
-            $exists = $this->locationService->getTownByName($loc);
-            $loc = $exists ? urlencode($loc) : "Dublin";
+            $isCorrect = $this->locationService->getTownByName($loc);
+            $loc = $isCorrect ? urlencode($loc) : "Dublin";
             return redirect('/')->withCookie(cookie("location", $loc, 60 * 24 * 10));
         }
 

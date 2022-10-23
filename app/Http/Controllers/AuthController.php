@@ -38,7 +38,7 @@ class AuthController extends BaseController
             return response()->json(["message" => "Invalid login details"], 401);
         }
 
-        return response()->json(['status' => 'OK']);
+        return response()->json(['result' => 'OK']);
     }
 
     public function register(): View
@@ -67,7 +67,7 @@ class AuthController extends BaseController
         ]);
 
         Auth::login($user);
-        return response()->json(['status' => 'OK']);
+        return response()->json(['result' => 'OK']);
     }
 
     public function login(): View

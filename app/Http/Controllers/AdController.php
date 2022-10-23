@@ -112,7 +112,7 @@ class AdController extends BaseController
         }
         DB::commit();
 
-        return response()->json(["status" => "OK", "id" => $adId]);
+        return response()->json(["result" => "OK", "id" => $adId]);
     }
 
     private function sanitize(array $v, int $cid): array
@@ -204,7 +204,7 @@ class AdController extends BaseController
         }
         DB::commit();
 
-        return response()->json(["status" => "OK", "id" => $id]);
+        return response()->json(["result" => "OK", "id" => $id]);
     }
 
     public function upload(Request $req): JsonResponse
@@ -215,7 +215,7 @@ class AdController extends BaseController
 
         try {
             $hash = $this->uploadImage($req->file('pic'));
-            return response()->json(["status" => "OK", "hash" => $hash]);
+            return response()->json(["result" => "OK", "hash" => $hash]);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], 500);
         }
@@ -226,6 +226,10 @@ class AdController extends BaseController
      */
     private function uploadImage(UploadedFile $file1): string
     {
+        if ($file1->getSize() > 4 * 1024 * 1024) {
+            throw new Exception('Maximum file size to upload is 4MB');
+        }
+
         $hash = date('ym') . substr(md5(rand()), 0, 10);
         $dest = '/' . substr($hash, 0, 4) . '/';
         $destAbs = base_path('public/images' . $dest);
