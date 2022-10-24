@@ -6,8 +6,7 @@
             <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#locationModal">
-                <i class="fa fa-location-arrow me-1"></i>
-                {{ $town }}
+                @svg('mini-location', '') {{ $town }}
             </button>
 
             <div class="d-flex opacity-75 mb-1">
@@ -20,35 +19,35 @@
             </div>
 
             <div class="input-group shadow-sm mb-2">
-                <button class="btn btn-light dropdown-toggle py-2 px-3" type="button"
+                <button class="btn btn-light dropdown-toggle py-2 px-3 w-150px" type="button"
                         data-bs-toggle="dropdown">
                     <span class="sp_prop1" id="prop1_house">
-                        <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
+                        @svg('home-check') House
                     </span>
                     <span class="sp_prop1 d-none" id="prop1_flat">
-                        <i class="fa-solid fa-city fa-fw me-1"></i> Apartment
+                        @svg('building-skyscraper') Apartment
                     </span>
                     <span class="sp_prop1 d-none" id="prop1_garage">
-                        <i class="fa-solid fa-warehouse fa-fw me-1"></i> Garage
+                        @svg('building-warehouse') Garage
                     </span>
                 </button>
                 <ul class="dropdown-menu">
                     <li>
                         <button class="btn btn-link dropdown-item prop1" type="button"
                                 data-prop1="house">
-                            <i class="fa-solid fa-house-chimney fa-fw me-1"></i> House
+                            @svg('home-check') House
                         </button>
                     </li>
                     <li>
                         <button class="btn btn-link dropdown-item prop1" type="button"
                                 data-prop1="flat">
-                            <i class="fa-solid fa-city fa-fw me-1"></i> Apartment
+                            @svg('building-skyscraper') Apartment
                         </button>
                     </li>
                     <li id="garage2">
                         <button class="btn btn-link dropdown-item prop1" type="button"
                                 data-prop1="garage">
-                            <i class="fa-solid fa-warehouse fa-fw me-1"></i> Garage
+                            @svg('building-warehouse') Garage
                         </button>
                     </li>
                 </ul>
@@ -58,10 +57,10 @@
 
             <div class="text-end">
                 <button class="btn btn-light me-1" name="map" value="1" type="submit">
-                    <i class="fa fa-fw fa-location me-1"></i> Show on the map
+                    @svg('map-search') Show on the map
                 </button>
                 <button class="btn btn-info" type="submit">
-                    Search <i class="fa fa-fw fa-arrow-right ms-1"></i>
+                    Search @svg('arrow-right')
                 </button>
             </div>
 

@@ -26,7 +26,6 @@ module.exports = {
         "auth-forgot-box": "./resources/js/auth-forgot-box.js",
         "scripts-app": "./resources/js/scripts-app.js",
         "styles-bs5": "./resources/js/styles-bs5.js",
-        "styles-fa6": "./resources/js/styles-fa6.js",
     },
 
     output: {
@@ -46,6 +45,13 @@ module.exports = {
                 use: [
                     "vue-style-loader",
                     "css-loader"
+                ],
+            },
+            {
+                test: /\.svg$/,
+                use: [
+                    'vue-loader',
+                    'vue-svg-loader',
                 ],
             },
             {

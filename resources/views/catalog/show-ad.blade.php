@@ -13,8 +13,7 @@
                     {{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}
                 </span>
                 <span class="text-primary">
-                    <i class="fa-solid fa-eye me-1"></i>
-                    0 views, 0 today
+                    @svg('mini-eye') 0 views, 0 today
                 </span>
             </div>
             <div class="card p-4 mb-2">
@@ -66,7 +65,7 @@
                                 <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
                                      data-bs-target="#map_modal">
                                     <button class="btn btn-sm btn-info opacity-75" type="button">
-                                        <i class="fa-solid fa-location-dot"></i>
+                                        @svg('mini-map-pin')
                                         <span
                                             class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
                                         <span
@@ -109,7 +108,7 @@
                                 @if(count($pics) > 2)
                                     <div class="badge bg-dark position-absolute" style="bottom: 5px; right: 5px">
                                         +{{ count($pics) - 2 }}
-                                        <i class="fa-solid fa-images"></i>
+                                        @svg('mini-photo')
                                     </div>
                                 @endif
                             </div>
@@ -159,15 +158,13 @@
 
                     @if($usr->phone)
                         <div>
-                            <i class="fa-solid fa-phone me-1"></i>
-                            Call me: {{ $usr->phone }}
+                            @svg('phone-call') Call me: {{ $usr->phone }}
                         </div>
                     @endif
                 </div>
 
                 <a href="#" class="btn btn-warning">
-                    <i class="fa-solid fa-message me-1"></i>
-                    Message me
+                    @svg('message') Message me
                 </a>
             </div>
 
@@ -175,11 +172,11 @@
                 <h5 class="me-auto">Share:</h5>
                 <span>
                     <a href="#" class="color-fb" title="Share on Facebook">
-                        <i class="fa-2xl fa-brands fa-facebook-square"></i></a>
+                        @svg('brand-facebook')</a>
                     <a href="#" class="color-tw" title="Share on Twitter">
-                        <i class="fa-2xl fa-brands fa-twitter-square"></i></a>
+                        @svg('brand-twitter')</a>
                     <a href="#" class="color-gr" title="Share via Email">
-                        <i class="fa-2xl fa-solid fa-square-envelope"></i></a>
+                        @svg('mail')</a>
                 </span>
             </div>
         </div>

@@ -24,20 +24,33 @@
             <label
               class="btn btn-link text-decoration-none ps-3"
               :class="{ disabled: uploading }"
-              style="height: 100px"
+              style="height: 100px; width: 100px"
             >
               <span style="line-height: 85px">
-                <i class="fa-solid fa-spinner" v-if="uploading"></i>
-                <i class="fa-solid fa-camera-retro" v-else></i>
-                Add image
-                <input
-                  id="picture1"
-                  type="file"
-                  class="d-none"
-                  accept="image/*"
-                  @change="addImg"
-                />
+                <span class="spinner-border" role="status" v-if="uploading">
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+                <span v-else>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24"
+                       height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="15" y1="8" x2="15.01" y2="8"/>
+                    <rect x="4" y="4" width="16" height="16" rx="3"/>
+                    <path d="M4 15l4 -4a3 5 0 0 1 3 0l5 5"/>
+                    <path d="M14 14l1 -1a3 5 0 0 1 3 0l2 2"/>
+                  </svg>
+                  Add
+                </span>
               </span>
+
+              <input
+                id="picture1"
+                type="file"
+                class="d-none"
+                accept="image/*"
+                @change="addImg"
+              />
             </label>
           </div>
           <div class="col-lg-3 col-md-4 lh-sm">
@@ -54,7 +67,15 @@
           </label>
           <div class="flex-grow-1">
             <div class="input-group">
-              <span class="input-group-text"><i class="fa-brands fa-youtube"></i></span>
+              <span class="input-group-text">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler-brand-youtube" width="24"
+                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <rect x="3" y="5" width="18" height="14" rx="4"/>
+                  <path d="M10 9l5 3l-5 3z"/>
+                </svg>
+              </span>
               <input
                 type="text"
                 id="youtube"

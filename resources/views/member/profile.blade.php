@@ -46,8 +46,7 @@
                     <form method="post">
                         <label class="btn btn-primary bg-gradient">
                     <span>
-                        <i class="fa-solid fa-camera-retro"></i>
-                        Upload Picture
+                        @svg('camera') Upload Picture
                         <input
                             id="picture1"
                             type="file"

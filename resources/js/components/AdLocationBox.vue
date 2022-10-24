@@ -8,7 +8,13 @@
           <div v-if="mode === 'line'">
             <p class="mb-0">{{ addressOneLine }}</p>
             <button type="button" class="btn btn-sm btn-link p-0" @click="editAddressDetails">
-              <i class="fa fa-pen me-1"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="16" height="16"
+                   viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                   stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"/>
+                <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/>
+              </svg>
               Edit address details
             </button>
           </div>
@@ -37,7 +43,14 @@
                 @click="editAddressDetails"
                 v-if="mode !== 'details'"
               >
-                <i class="fa fa-pen me-1"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="16"
+                     height="16"
+                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                     stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"/>
+                  <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/>
+                </svg>
                 Enter location details manually
               </button>
             </div>
@@ -85,11 +98,23 @@
 
               <div class="mt-2" v-if="mode === 'details'">
                 <button type="button" class="btn btn-link text-success me-2" @click="submitAddressDetails">
-                  <i class="fa-solid fa-check"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="16"
+                       height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M5 12l5 5l10 -10"/>
+                  </svg>
+
                   Yes, it's the correct location
                 </button>
                 <button type="button" class="btn btn-link text-warning" @click="resetAddressDetails">
-                  <i class="fa-solid fa-remove"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="16" height="16"
+                       viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                       stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
                   Reset
                 </button>
               </div>
@@ -109,7 +134,7 @@
 </template>
 
 <script>
-import {ref, reactive, computed, toRaw} from "vue";
+import {computed, reactive, ref, toRaw} from "vue";
 
 export default {
   props: ["address", "errors", "mode"],

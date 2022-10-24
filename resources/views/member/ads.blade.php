@@ -46,17 +46,17 @@
                         <div class="dropdown">
                             <button class="btn btn-sm dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-ellipsis"></i>
+                                @svg('dots')
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{ route('edit-ad', ['id' => $row->id]) }}" class="dropdown-item">
-                                        <i class="fa-solid fa-pen me-1"></i>Edit
+                                        @svg('mini-pencil') Edit
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        <i class="fa-solid fa-trash-can me-1"></i>Archive
+                                        @svg('mini-trash') Archive
                                     </a>
                                 </li>
                             </ul>

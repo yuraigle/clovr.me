@@ -1,10 +1,10 @@
 @php
     $links = [
-        'Profile' => ['profile', 'fa-user-gear'],
-        'Security' => ['security', 'fa-shield-halved'],
-        'My ADs' => ['my-ads', 'fa-folder-open'],
-        'Messages' => ['messages', 'fa-envelope'],
-        'Favorites' => ['favorites', 'fa-star'],
+        'Profile' => ['profile', 'id'],
+        'Security' => ['security', 'shield-lock'],
+        'My ADs' => ['my-ads', 'list-details'],
+        'Messages' => ['messages', 'mail'],
+        'Favorites' => ['favorites', 'star'],
     ];
 @endphp
 
@@ -22,15 +22,13 @@
             @if(request()->routeIs($v[0]))
                 <li class="nav-item border-end border-primary border-2 bg-light">
                     <a class="nav-link disabled text-primary" href="{{ route($v[0]) }}">
-                        <i class="fa-solid {{ $v[1] }} me-1"></i>
-                        {{ $k }}
+                        @svg($v[1]) {{ $k }}
                     </a>
                 </li>
             @else
                 <li class="nav-item">
                     <a class="nav-link text-muted" href="{{ route($v[0]) }}">
-                        <i class="fa-solid {{ $v[1] }} me-1"></i>
-                        {{ $k }}
+                        @svg($v[1]) {{ $k }}
                     </a>
                 </li>
             @endif
@@ -40,8 +38,7 @@
     <ul class="nav flex-column border-top mt-2 pt-2">
         <li class="nav-item">
             <a class="nav-link text-muted" href="{{ route('logout') }}">
-                <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>
-                Logout
+                @svg('logout') Logout
             </a>
         </li>
     </ul>

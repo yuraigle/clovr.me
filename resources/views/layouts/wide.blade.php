@@ -31,20 +31,20 @@
                 <li class="nav-item me-2">
                     <a class="nav-link px-3 py-1 btn btn-sm btn-outline-warning {{ request()->routeIs('new-ad') ? 'active' : '' }}"
                        href="{{ route('new-ad') }}">
-                        <i class="fa-solid fa-pen-to-square fa-fw me-1"></i>Post Ad
+                        @svg('edit') Post Ad
                     </a>
                 </li>
                 <li class="nav-item">
                     @auth
                         <a class="nav-link px-3 py-1 btn btn-sm {{ request()->routeIs('profile') ? 'active' : '' }}"
                            href="{{ route('profile') }}">
-                            <i class="fa-solid fa-user fa-fw me-1"></i>{{ auth()->user()['name'] }}
+                            @svg('user') {{ auth()->user()['name'] }}
                         </a>
                     @endauth
                     @guest
                         <a class="nav-link px-3 py-1 btn btn-sm {{ request()->routeIs('login') ? 'active' : '' }}"
                            href="{{ route('login') }}">
-                            <i class="fa-solid fa-user fa-fw"></i>
+                            @svg('user')
                             <span class="d-inline-block d-sm-none">Login</span>
                         </a>
                     @endguest
@@ -62,6 +62,5 @@
 
 <script type="text/javascript" src="{{ mix('/dist/scripts-app.js') }}"></script>
 @yield('inline_scripts')
-<link href="{{ mix('/dist/styles-fa6.css') }}" rel="stylesheet"/>
 </body>
 </html>

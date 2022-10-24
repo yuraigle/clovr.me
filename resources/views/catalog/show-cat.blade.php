@@ -46,7 +46,7 @@
                             </div>
                         </a>
                         <a href="#" class="fav pt-3 pe-3 pb-1 ps-1" title="Add to Favorites">
-                            <i class="fa-lg fa-regular fa-heart"></i>
+                            @svg('heart')
                         </a>
                     </article>
                 @endforeach

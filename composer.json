@@ -11,6 +11,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
+        "blade-ui-kit/blade-icons": "^1.4",
         "fakerphp/faker": "^1.19",
         "fruitcake/laravel-cors": "^2.2",
         "guzzlehttp/guzzle": "^7.4",
