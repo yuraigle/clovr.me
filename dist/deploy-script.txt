@@ -6,6 +6,7 @@ put .\composer.json ./
 put -neweronly .\app\* ./app/*
 put -neweronly .\config\* ./config/*
 put -neweronly .\public\dist\* ./public/dist/*
+put -neweronly .\public\layout\* ./public/layout/*
 put -neweronly .\public\mix-manifest.json ./public/mix-manifest.json
 put -neweronly .\resources\* ./resources/*
 put -neweronly .\routes\* ./routes/*

@@ -1,6 +1,6 @@
 {
-	"name": "clovr",
-	"short_name": "clovr",
+	"name": "Clovr",
+	"short_name": "Clovr",
 	"start_url": "/",
 	"icons": [{
 			"src": "/android-chrome-192x192.png",

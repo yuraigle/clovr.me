@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @yield('meta')
 
-    <title>@yield('title')clovr.me</title>
+    <title>@yield('title')Clovr - Real Estate Marketplace</title>
     <link href="{{ mix('/dist/styles-bs5.css') }}" rel="stylesheet"/>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
@@ -19,9 +19,8 @@
 <body class="d-flex flex-column">
 <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm ps-4 pe-4">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="/layout/logo.1666414703.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top"/>
-            <span class="brand ms-1">clovr</span>
+        <a class="navbar-brand p-0" href="/">
+            <img src="/layout/logo.1666414703.png" alt="Logo" width="120" height="48" class="d-inline-block"/>
         </a>
         <button class="navbar-toggler" type="button" title="Toggle Menu">
             <span class="navbar-toggler-icon"></span>
