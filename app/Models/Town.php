@@ -27,11 +27,43 @@ class Town
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLng(): float
+    {
+        return $this->lng;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLat(): float
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getZoom(): int
+    {
+        return $this->zoom;
     }
 
     public function __toString(): string
