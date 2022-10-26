@@ -1,6 +1,6 @@
-composer update --no-ansi &&
-composer install --optimize-autoloader --no-dev --no-ansi &&
+php artisan clear-compiled &&
 php artisan optimize:clear --no-ansi &&
+composer dump-autoload --optimize &&
 php artisan icons:cache --no-ansi &&
 php artisan config:cache --no-ansi &&
 php artisan route:cache --no-ansi &&

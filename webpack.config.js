@@ -16,7 +16,6 @@ module.exports = {
         "home-1": "./resources/js/home1.js",
         "home-2": "./resources/js/home2.js",
         "show-1": "./resources/js/show-ad1.js",
-        "show-2": "./resources/js/show-ad2.js",
         "search": "./resources/js/catalog/search.js",
         "edit-0": "./resources/js/edit-ad.js",
         "new-0": "./resources/js/new-ad.js",

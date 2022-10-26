@@ -224,9 +224,11 @@
             opacity: 90%;
         }
     </style>
+
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet'/>
+    <script async src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
 @endsection
 
 @section('inline_scripts')
     <script type="text/javascript" src="{{ mix('/dist/show-1.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/dist/show-2.js') }}"></script>
 @endsection

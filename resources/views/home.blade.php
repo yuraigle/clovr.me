@@ -56,10 +56,10 @@
             </div>
 
             <div class="text-end">
-                <button class="btn btn-light me-1" name="map" value="1" type="submit">
+                <button class="btn btn-light bg-gradient me-1" name="map" value="1" type="submit">
                     @svg('map-search') Show on the map
                 </button>
-                <button class="btn btn-info" type="submit">
+                <button class="btn btn-success bg-gradient" type="submit">
                     Search @svg('arrow-right')
                 </button>
             </div>
