@@ -52,7 +52,7 @@ export default {
         zoom: townData.zoom,
       });
 
-      map.value.on("load", function (e) {
+      map.value.on("load", function () {
 
         map.value.addSource('houses', {
           type: 'geojson',
@@ -147,7 +147,7 @@ export default {
 
     function hash2img(s) {
       if (!s) {
-        return "/layout/m_noimg.webp";
+        return "/layout/m_noimg.1666414708.webp";
       }
       return "/images/" + s.substring(0, 4) + "/m_" + s + ".webp";
     }

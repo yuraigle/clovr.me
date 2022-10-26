@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-    <link rel="manifest" href="/site.webmanifest"/>
+    <link rel="manifest" href="/site.1666414708.webmanifest"/>
 
     @yield('inline_styles')
 </head>
@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm ps-4 pe-4">
     <div class="container">
         <a class="navbar-brand p-0" href="/">
-            <img src="/layout/logo.1666414703.png" alt="Logo" width="120" height="48" class="d-inline-block"/>
+            <img src="/layout/logo.1666414708.png" alt="Logo" width="120" height="48" class="d-inline-block"/>
         </a>
         <button class="navbar-toggler" type="button" title="Toggle Menu">
             <span class="navbar-toggler-icon"></span>

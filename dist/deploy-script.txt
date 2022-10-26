@@ -1,6 +1,7 @@
 open orlov@iphoster
 cd /var/www/site1
 rm ./public/dist/*
+rm ./public/layout/*
 put .\package.json ./
 put .\composer.json ./
 put -neweronly .\app\* ./app/*

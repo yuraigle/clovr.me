@@ -10,7 +10,7 @@
 
 <div class="border-end">
     <div class="d-flex pb-2 mb-4">
-        <img src="/layout/m_noavatar.webp" class="rounded d-block" alt="User Avatar">
+        <img src="/layout/m_noavatar.1666414708.webp" class="rounded d-block" alt="User Avatar">
         <div class="ms-2">
             <strong>{{ $user->name }}</strong><br/>
             <small class="text-muted">ID {{ $user->id }}</small>

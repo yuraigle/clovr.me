@@ -152,7 +152,7 @@
             <div class="card p-4 d-flex mb-2">
                 <div class="mb-2">
                     <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                         data-src="/layout/m_noavatar.webp" alt="" width="64" height="64" class="float-end ms-4"/>
+                         data-src="/layout/m_noavatar.1666414708.webp" alt="" width="64" height="64" class="float-end ms-4"/>
 
                     <h5 class="h5">{{ $usr->name }}</h5>
 
