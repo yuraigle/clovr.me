@@ -16,16 +16,15 @@
                     @svg('mini-eye') 0 views, 0 today
                 </span>
             </div>
-            <div class="card p-4 mb-2">
+            <div class="card p-4">
                 <h1 class="h3 border-bottom mb-1 pb-2">{{ $ad->title }}</h1>
                 <div class="aa_row d-flex mb-4">
                     <span class="me-auto text-muted">
-                        @if($ad->town)
-                            {{ $ad->town }}
-                        @endif
+                        {{ $ad->town }}
                         @if($ad->county && $ad->county !== $ad->town)
                             , {{ $ad->county }}
                         @endif
+                        {{ $ad->postcode }}
                     </span>
 
                     <span class="aa_price">
@@ -129,10 +128,6 @@
                 <p class="text-center mt-2">{{ $ad->location }}</p>
 
                 <div class="my-2">
-                    @if($ad->postcode)
-                        <p class="mb-0">Postal Code: {{ $ad->postcode }}</p>
-                    @endif
-
                     @if($ad->property_type)
                         <p class="mb-0">Property Type: {{ ucfirst($ad->property_type) }}</p>
                     @endif
@@ -142,30 +137,56 @@
                     @elseif($ad->num_beds)
                         <p class="mb-0">No. of Bedrooms: {{ $ad->num_beds }}</p>
                     @endif
+
+                    @if($ad->room_type == 'couch')
+                        <p class="mb-0">Room Type: Couch Surf</p>
+                    @elseif($ad->room_type)
+                        <p class="mb-0">Room Type: {{ ucfirst($ad->room_type) }} room</p>
+                    @endif
                 </div>
 
                 <h5>Description</h5>
                 <div class="text-muted">{!! nl2br($ad->description) !!}</div>
+
+                @if($ad->www)
+                    <div class="text-center mt-2">
+                        @svg('link')
+                        <a href="{{ $ad->www }}" target="_blank">{{ $ad->www }}</a>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card p-4 d-flex mb-2">
-                <div class="mb-2">
-                    <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                         data-src="/layout/m_noavatar.1666414708.webp" alt="" width="64" height="64" class="float-end ms-4"/>
+            <div class="small text-end text-muted">
+                Member since {{ Carbon\Carbon::parse($usr->created_at)->format('F Y') }}
+            </div>
+            <div class="sticky-top pt-2">
+                <div class="card p-4 d-flex mb-2">
+                    <div class="mb-2">
+                        <a href="#">
+                            <img src="{{ App\Helpers\AdPic::placeholder() }}"
+                                 data-src="/layout/m_noavatar.1666414708.webp"
+                                 width="64" height="64" class="float-end ms-4"
+                                 alt="Member Logo"
+                            />
+                        </a>
 
-                    <h5 class="h5">{{ $usr->name }}</h5>
+                        <h5 class="h5">
+                            <a href="#" class="text-decoration-none text-primary">{{ $usr->name }}</a>
+                        </h5>
+                    </div>
 
-                    @if($usr->phone)
-                        <div>
-                            @svg('phone-call') Call me: {{ $usr->phone }}
-                        </div>
-                    @endif
+                    <div class="d-flex">
+                        @if($usr->phone)
+                            <a href="tel:{{ $usr->phone }}" class="btn btn-warning flex-grow-1 w-50 me-2">
+                                @svg('phone-call') Call me
+                            </a>
+                        @endif
+                        <a href="#" class="btn btn-success flex-grow-1 w-50">
+                            @svg('message') Message me
+                        </a>
+                    </div>
                 </div>
-
-                <a href="#" class="btn btn-warning">
-                    @svg('message') Message me
-                </a>
             </div>
 
             <div class="d-flex py-2 my-4">
@@ -180,6 +201,11 @@
                 </span>
             </div>
         </div>
+    </div>
+
+    <div class="row mt-2">
+        <h3>You may also like...</h3>
+        <div style="height: 200px">&nbsp;</div>
     </div>
 @endsection
 

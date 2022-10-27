@@ -6,10 +6,8 @@ const elMapModal = document.getElementById("map_modal");
 const elMapCont = document.getElementById("map_cont");
 const lng = elMapCont.getAttribute("data-lng");
 const lat = elMapCont.getAttribute("data-lat");
-let map1 = null;
-let marker1 = null;
-
 const imgMap = document.getElementById("map_placeholder");
+
 if (imgMap) {
     const lng = imgMap.getAttribute('data-lng');
     const lat = imgMap.getAttribute('data-lat');
@@ -17,6 +15,9 @@ if (imgMap) {
         `${lng},${lat},13,0/550x250?logo=false&access_token=${window.mapboxToken}`;
     imgMap.setAttribute("src", url);
 }
+
+let map1 = null;
+let marker1 = null;
 
 elMapModal.addEventListener("shown.bs.modal", function () {
     if (map1 == null) {
