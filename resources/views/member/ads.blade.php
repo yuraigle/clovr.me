@@ -79,5 +79,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/member-0.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/member1.js') }}"></script>
 @endsection

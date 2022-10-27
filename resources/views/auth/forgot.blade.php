@@ -7,5 +7,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/auth-forgot-box.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/forgot1.js') }}"></script>
 @endsection

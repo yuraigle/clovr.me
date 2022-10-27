@@ -13,5 +13,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/auth-register-box.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/register1.js') }}"></script>
 @endsection

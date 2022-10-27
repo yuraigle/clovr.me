@@ -13,18 +13,18 @@ module.exports = {
     mode: devMode ? "development" : "production",
 
     entry: {
-        "home-1": "./resources/js/home1.js",
-        "home-2": "./resources/js/home2.js",
-        "show-1": "./resources/js/show-ad1.js",
-        "search": "./resources/js/catalog/search.js",
-        "edit-0": "./resources/js/edit-ad.js",
-        "new-0": "./resources/js/new-ad.js",
-        "member-0": "./resources/js/member-index.js",
-        "auth-login-box": "./resources/js/auth-login-box.js",
-        "auth-register-box": "./resources/js/auth-register-box.js",
-        "auth-forgot-box": "./resources/js/auth-forgot-box.js",
-        "scripts-app": "./resources/js/scripts-app.js",
-        "styles-bs5": "./resources/js/styles-bs5.js",
+        common: "./resources/js/common.js",
+        login1: "./resources/js/auth/login.js",
+        register1: "./resources/js/auth/register.js",
+        forgot1: "./resources/js/auth/forgot.js",
+        home1: "./resources/js/home1.js",
+        home2: "./resources/js/home2.js",
+        new1: "./resources/js/new-ad.js",
+        edit1: "./resources/js/edit-ad.js",
+        show1: "./resources/js/show-ad1.js",
+        search1: "./resources/js/catalog/search.js",
+        member1: "./resources/js/member-index.js",
+        styles: "./resources/scss/styles-app.scss",
     },
 
     output: {
@@ -41,10 +41,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    "vue-style-loader",
-                    "css-loader"
-                ],
+                use: ["vue-style-loader", "css-loader"],
             },
             {
                 test: /\.scss$/,
@@ -65,7 +62,6 @@ module.exports = {
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].[contenthash].css",
-            chunkFilename: "[id].css"
         }),
         devMode ? () => {
         } : new PurgeCSSPlugin({

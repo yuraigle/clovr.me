@@ -210,6 +210,6 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/home-1.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/dist/home-2.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/home1.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/home2.js') }}"></script>
 @endsection

@@ -7,7 +7,7 @@
     @yield('meta')
 
     <title>@yield('title')Clovr - Real Estate Marketplace</title>
-    <link href="{{ mix('/dist/styles-bs5.css') }}" rel="stylesheet"/>
+    <link href="{{ mix('/dist/styles.css') }}" rel="stylesheet"/>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -71,7 +71,7 @@
     <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
 </footer>
 
-<script type="text/javascript" src="{{ mix('/dist/scripts-app.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/dist/common.js') }}"></script>
 @yield('inline_scripts')
 </body>
 </html>

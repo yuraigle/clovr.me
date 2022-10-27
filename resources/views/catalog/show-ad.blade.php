@@ -191,5 +191,5 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet'/>
     <script async src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
-    <script type="text/javascript" src="{{ mix('/dist/show-1.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/show1.js') }}"></script>
 @endsection
