@@ -47,27 +47,10 @@ module.exports = {
                 ],
             },
             {
-                test: /\.svg$/,
-                use: [
-                    'vue-loader',
-                    'vue-svg-loader',
-                ],
-            },
-            {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     "css-loader",
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: () => [
-                                    require('autoprefixer')
-                                ]
-                            }
-                        }
-                    },
                     "sass-loader"
                 ],
             },
