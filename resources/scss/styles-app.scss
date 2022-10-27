@@ -151,3 +151,45 @@ footer {
 .icon-tabler {
     margin-top: -4px;
 }
+
+#map, .mapboxgl-canvas-container.mapboxgl-interactive {
+    cursor: default !important;
+}
+
+#map_cont {
+    height: 500px;
+}
+
+.fit-none {
+    object-fit: none;
+}
+
+.aa_row {
+    line-height: 26px
+}
+
+.aa_price {
+    font-size: 26px;
+    color: #1c628b;
+}
+
+#map1 {
+    position: relative
+}
+
+#map1 button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+div.ratio.ratio-4x3 > img {
+    object-fit: cover;
+    cursor: pointer;
+}
+
+div.ratio.ratio-4x3 > img:hover {
+    opacity: 90%;
+}

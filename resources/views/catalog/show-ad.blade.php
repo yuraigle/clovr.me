@@ -185,50 +185,11 @@
 
 @section('inline_styles')
     <link rel="canonical" href="{{ App\Helpers\AdUrl::canonical($ad) }}"/>
-    <style>
-        #map_cont {
-            height: 500px;
-        }
-
-        .fit-none {
-            object-fit: none;
-        }
-
-        .aa_row {
-            line-height: 26px
-        }
-
-        .aa_price {
-            font-size: 26px;
-            color: #1c628b;
-        }
-
-        #map1 {
-            position: relative
-        }
-
-        #map1 button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
-
-        div.ratio.ratio-4x3 > img {
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        div.ratio.ratio-4x3 > img:hover {
-            opacity: 90%;
-        }
-    </style>
-
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet'/>
-    <script async src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
 @endsection
 
 @section('inline_scripts')
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet'/>
+    <script async src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
+    <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
     <script type="text/javascript" src="{{ mix('/dist/show-1.js') }}"></script>
 @endsection

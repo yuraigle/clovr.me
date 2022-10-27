@@ -58,22 +58,18 @@ module.exports = {
     },
 
     plugins: [
-        new VueLoaderPlugin(),
         new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: false,
             __VUE_PROD_DEVTOOLS__: false,
         }),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].[contenthash].css",
             chunkFilename: "[id].css"
         }),
-        new WebpackManifestPlugin({
-            basePath: "/dist/",
-            publicPath: "/dist/",
-            fileName: path.resolve(__dirname, "./public/mix-manifest.json"),
-        }),
-        devMode ? () => {} : new PurgeCSSPlugin({
-            paths: glob.sync(`${dirNix}/resources/**/*`, { nodir: true }),
+        devMode ? () => {
+        } : new PurgeCSSPlugin({
+            paths: glob.sync(`${dirNix}/resources/**/*`, {nodir: true}),
             safelist: [
                 /^bg-[a-z]+$/,
                 /modal-backdrop/,
@@ -81,6 +77,11 @@ module.exports = {
                 /ratio-16x9/,
                 /visually-hidden/,
             ]
+        }),
+        new WebpackManifestPlugin({
+            basePath: "/dist/",
+            publicPath: "/dist/",
+            fileName: path.resolve(__dirname, "./public/mix-manifest.json"),
         }),
     ],
 };

@@ -1,5 +1,3 @@
-window.mapboxToken = "pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eTNubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw";
-
 document
     .querySelector(".navbar-toggler")
     .addEventListener("click", function () {
