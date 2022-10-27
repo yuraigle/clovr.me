@@ -14,17 +14,33 @@ module.exports = {
 
     entry: {
         common: "./resources/js/common.js",
-        login1: "./resources/js/auth/login.js",
-        register1: "./resources/js/auth/register.js",
-        forgot1: "./resources/js/auth/forgot.js",
+        login1: {
+            import: "./resources/js/auth/login.js",
+            dependOn: "vendors",
+        },
+        register1: {
+            import: "./resources/js/auth/register.js",
+            dependOn: "vendors",
+        },
+        forgot1: {
+            import: "./resources/js/auth/forgot.js",
+            dependOn: "vendors",
+        },
         home1: "./resources/js/home1.js",
         home2: "./resources/js/home2.js",
-        new1: "./resources/js/new-ad.js",
-        edit1: "./resources/js/edit-ad.js",
+        new1: {
+            import: "./resources/js/new-ad.js",
+            dependOn: "vendors",
+        },
+        edit1: {
+            import: "./resources/js/edit-ad.js",
+            dependOn: "vendors",
+        },
         show1: "./resources/js/show-ad1.js",
         search1: "./resources/js/catalog/search.js",
         member1: "./resources/js/member-index.js",
         styles: "./resources/scss/styles-app.scss",
+        vendors: ["vue", "@vuelidate/core", "@vuelidate/validators"],
     },
 
     output: {

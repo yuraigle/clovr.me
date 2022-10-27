@@ -13,5 +13,6 @@
 @endsection
 
 @section('inline_scripts')
+    <script type="text/javascript" src="{{ mix('/dist/vendors.js') }}"></script>
     <script type="text/javascript" src="{{ mix('/dist/login1.js') }}"></script>
 @endsection
