@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
     <link rel="manifest" href="/site.1666414708.webmanifest"/>
+    <meta name="theme-color" content="#aabe39"/>
 
     @yield('inline_styles')
 </head>

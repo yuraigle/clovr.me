@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <button class="btn btn-primary bg-gradient">Save</button>
+                            <button class="btn btn-primary bg-gradient" type="submit">Save</button>
                         </div>
                     </form>
                 </div>

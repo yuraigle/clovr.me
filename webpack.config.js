@@ -13,34 +13,41 @@ module.exports = {
     mode: devMode ? "development" : "production",
 
     entry: {
-        common: "./resources/js/common.js",
+        common: [
+            "./resources/js/common.js",
+            "./resources/js/home1.js"
+        ],
         login1: {
             import: "./resources/js/auth/login.js",
-            dependOn: "vendors",
+            dependOn: "vendors-vue",
         },
         register1: {
             import: "./resources/js/auth/register.js",
-            dependOn: "vendors",
+            dependOn: "vendors-vue",
         },
         forgot1: {
             import: "./resources/js/auth/forgot.js",
-            dependOn: "vendors",
+            dependOn: "vendors-vue",
         },
-        home1: "./resources/js/home1.js",
-        home2: "./resources/js/home2.js",
         new1: {
             import: "./resources/js/new-ad.js",
-            dependOn: "vendors",
+            dependOn: "vendors-vue",
         },
         edit1: {
             import: "./resources/js/edit-ad.js",
-            dependOn: "vendors",
+            dependOn: "vendors-vue",
         },
         show1: "./resources/js/show-ad1.js",
-        search1: "./resources/js/catalog/search.js",
-        member1: "./resources/js/member-index.js",
+        search1: {
+            import: "./resources/js/catalog/search.js",
+            dependOn: "vendors-vue",
+        },
         styles: "./resources/scss/styles-app.scss",
-        vendors: ["vue", "@vuelidate/core", "@vuelidate/validators"],
+        "vendors-vue": ["vue", "@vuelidate/core", "@vuelidate/validators"],
+        "vendors-bs5": [
+            "bootstrap/js/dist/dropdown.js",
+            "bootstrap/js/dist/modal.js"
+        ],
     },
 
     output: {

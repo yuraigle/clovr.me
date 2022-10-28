@@ -10,48 +10,38 @@
             </button>
 
             <div class="d-flex opacity-75 mb-1">
-                <button class="btn btn-dark py-1 me-2 cat1" type="button" data-cat1="sale">Sale
-                </button>
-                <button class="btn btn-light py-1 me-2 cat1" type="button" data-cat1="rent">Rent
-                </button>
-                <button class="btn btn-light py-1 cat1" type="button" data-cat1="share">Share
-                </button>
+                <button class="btn btn-dark py-1 me-2 cat1" type="button"
+                        data-search="cat-sale">Sale</button>
+                <button class="btn btn-light py-1 me-2 cat1" type="button"
+                        data-search="cat-rent">Rent</button>
+                <button class="btn btn-light py-1 cat1" type="button"
+                        data-search="cat-share">Share</button>
             </div>
 
             <div class="input-group shadow-sm mb-2">
                 <button class="btn btn-light dropdown-toggle py-2 px-3 w-150px" type="button"
-                        data-bs-toggle="dropdown">
-                    <span class="sp_prop1" id="prop1_house">
-                        @svg('home-check') House
-                    </span>
-                    <span class="sp_prop1 d-none" id="prop1_flat">
-                        @svg('building-skyscraper') Apartment
-                    </span>
-                    <span class="sp_prop1 d-none" id="prop1_garage">
-                        @svg('building-warehouse') Garage
-                    </span>
-                </button>
+                        data-bs-toggle="dropdown">@svg('home-check') House</button>
                 <ul class="dropdown-menu">
                     <li>
-                        <button class="btn btn-link dropdown-item prop1" type="button"
-                                data-prop1="house">
+                        <button class="btn btn-link dropdown-item" type="button"
+                                data-search="prop-house">
                             @svg('home-check') House
                         </button>
                     </li>
                     <li>
-                        <button class="btn btn-link dropdown-item prop1" type="button"
-                                data-prop1="flat">
+                        <button class="btn btn-link dropdown-item" type="button"
+                                data-search="prop-flat">
                             @svg('building-skyscraper') Apartment
                         </button>
                     </li>
                     <li id="garage2">
-                        <button class="btn btn-link dropdown-item prop1" type="button"
-                                data-prop1="garage">
+                        <button class="btn btn-link dropdown-item" type="button"
+                                data-search="prop-garage">
                             @svg('building-warehouse') Garage
                         </button>
                     </li>
                 </ul>
-                <input type="search" class="form-control form-control-lg py-2 px-3" id="q" name="q"
+                <input type="search" class="form-control form-control-lg" id="q" name="q"
                        placeholder="Address, location, keyword...">
             </div>
 
@@ -64,8 +54,8 @@
                 </button>
             </div>
 
-            <input type="hidden" id="prop1" name="prop" value="house">
-            <input type="hidden" id="cat1" name="cat" value="sale">
+            <input type="hidden" name="prop" value="house">
+            <input type="hidden" name="cat" value="sale">
         </form>
     </section>
 @endsection
@@ -81,7 +71,9 @@
                             <h3 class="h6">Rent a Flat</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">Studios</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
+                                        Studios
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
@@ -137,10 +129,14 @@
                             <h3 class="h6">Property for Sale</h3>
                             <ul class="list-unstyled small">
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'house']) }}">Houses</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'house']) }}">
+                                        Houses
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">Studios</a>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">
+                                        Studios
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('show-cat', ['cat' => 'property-for-sale', 'propType' => 'flat']) }}">
@@ -210,6 +206,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/home1.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/dist/home2.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/vendors-bs5.js') }}"></script>
 @endsection

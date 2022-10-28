@@ -28,6 +28,11 @@ footer {
     left: 12px;
 }
 
+#q {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
 @media(max-width: 575.98px) {
     .ratio-4x3.then-2x1 {
         --bs-aspect-ratio: 50%;

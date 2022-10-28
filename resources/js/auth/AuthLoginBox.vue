@@ -65,7 +65,6 @@
 import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {email, helpers, maxLength, minLength, required,} from "@vuelidate/validators";
-import "bootstrap/js/dist/toast.js";
 
 export default {
   setup() {

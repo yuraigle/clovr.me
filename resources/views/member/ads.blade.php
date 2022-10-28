@@ -45,7 +45,7 @@
 
                         <div class="dropdown">
                             <button class="btn btn-sm dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown">
+                                    title="Options" data-bs-toggle="dropdown">
                                 @svg('dots')
                             </button>
                             <ul class="dropdown-menu">
@@ -79,5 +79,5 @@
 @endsection
 
 @section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/member1.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/dist/vendors-bs5.js') }}"></script>
 @endsection
