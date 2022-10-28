@@ -1,9 +1,3 @@
-document
-    .querySelector(".navbar-toggler")
-    .addEventListener("click", function () {
-        document.getElementById("navbar1").classList.toggle("show");
-    });
-
 for (let el of document.querySelectorAll('[data-bg], img[data-src]')) {
     if (el.hasAttribute('data-bg')) {
         el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";

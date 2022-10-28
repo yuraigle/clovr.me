@@ -3,8 +3,6 @@ const elCat1 = document.getElementById("cat1");
 const elCover = document.querySelectorAll("section.cover1")[0];
 
 elCover.style.backgroundImage = "url('/layout/cover_house.1666414708.webp')";
-// elCover.style.backgroundImage += ", url('/layout/cover_flat.1666414708.webp')";
-// elCover.style.backgroundImage += ", url('/layout/cover_garage.1666414708.webp')";
 
 document.querySelectorAll("button.prop1").forEach((el) => {
     el.addEventListener("click", () => setProp1(el.dataset.prop1));
