@@ -1,24 +1,24 @@
 @extends('layouts.base')
 
 @section('cover1')
-    <section class="cover1">
+    <section class="cover1" style="background-image: url('/layout/cover_house.1666414708.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
-            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button"
+            <button class="btn btn-sm btn-dark bg-gradient opacity-75 location_btn" type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#locationModal">
                 @svg('mini-location', '') {{ $town }}
             </button>
 
             <div class="d-flex opacity-75 mb-1">
-                <button class="btn btn-dark py-1 me-2 cat1" type="button"
+                <button class="btn btn-dark py-1 me-2 cat1 bg-gradient" type="button"
                         data-search="cat-sale">Sale</button>
-                <button class="btn btn-light py-1 me-2 cat1" type="button"
+                <button class="btn btn-light py-1 me-2 cat1 bg-gradient" type="button"
                         data-search="cat-rent">Rent</button>
-                <button class="btn btn-light py-1 cat1" type="button"
+                <button class="btn btn-light py-1 cat1 bg-gradient" type="button"
                         data-search="cat-share">Share</button>
             </div>
 
-            <div class="input-group shadow-sm mb-2">
+            <div class="input-group mb-2">
                 <button class="btn btn-light dropdown-toggle py-2 px-3 w-150px" type="button"
                         data-bs-toggle="dropdown">@svg('home-check') House</button>
                 <ul class="dropdown-menu">

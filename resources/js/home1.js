@@ -1,16 +1,15 @@
 const elCover = document.querySelector("section.cover1");
 const elDd = document.querySelector('button.dropdown-toggle');
-const qs =document.querySelectorAll('[data-search]');
+const qs = document.querySelectorAll('[data-search]');
 
 if (elCover) {
-    elCover.style.backgroundImage = "url('/layout/cover_house.1666414708.webp')";
-
     qs.forEach(el => {
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
             const [k, v] = el.dataset.search.split('-');
             document.querySelector(`[name=${k}]`).value = v;
             if (k === 'prop') {
-                elCover.style.backgroundImage = `url('/layout/cover_${v}.1666414708.webp')`;
+                elCover.style.backgroundImage = elCover.style.backgroundImage
+                    .replace(/cover_[a-z]+\./, `cover_${v}.`);
                 elDd.innerHTML = el.innerHTML;
             }
             if (k === 'cat') {

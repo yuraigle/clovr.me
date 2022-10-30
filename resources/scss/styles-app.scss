@@ -28,6 +28,10 @@ footer {
     left: 12px;
 }
 
+.cover1 button.bg-gradient {
+    filter: drop-shadow(1px 2px 3px black)
+}
+
 #q {
     font-family: Arial, sans-serif;
     font-size: 15px;
@@ -159,9 +163,9 @@ footer {
     margin-top: -4px;
 }
 
-#map, .mapboxgl-canvas-container.mapboxgl-interactive {
-    cursor: default !important;
-}
+//#map, .mapboxgl-canvas-container.mapboxgl-interactive {
+//    cursor: default !important;
+//}
 
 #map_cont {
     height: 500px;

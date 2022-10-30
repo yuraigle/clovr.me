@@ -103,7 +103,8 @@ class CatalogController extends BaseController
 
     public function markers(Request $req): JsonResponse
     {
-        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `pic`, `lat`, `lng` from `ads`");
+        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `pic`, `lat`, `lng` from `ads`
+                            where `lat` is not null and `lng` is not null");
 
         $features = [];
         foreach ($rows as $row) {

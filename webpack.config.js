@@ -43,11 +43,20 @@ module.exports = {
             dependOn: "vendors-vue",
         },
         styles: "./resources/scss/styles-app.scss",
-        "vendors-vue": ["vue", "@vuelidate/core", "@vuelidate/validators"],
+        "vendors-vue": [
+            "vue",
+            "@vuelidate/core",
+            "@vuelidate/validators"
+        ],
         "vendors-bs5": [
             "bootstrap/js/dist/dropdown.js",
             "bootstrap/js/dist/modal.js"
         ],
+        "vendors-map": [
+            "leaflet",
+            "leaflet.markercluster",
+        ],
+        "vendors-map-styles": "./resources/scss/styles-map.scss",
     },
 
     output: {
@@ -94,7 +103,8 @@ module.exports = {
                 /modal-backdrop/,
                 /carousel-(inner|item|control)/,
                 /ratio-16x9/,
-                /visually-hidden/,
+                /^leaflet/,
+                /^marker-cluster/,
             ]
         }),
         new WebpackManifestPlugin({
