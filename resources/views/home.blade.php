@@ -3,7 +3,7 @@
 @section('cover1')
     <section class="cover1" style="background-image: url('/layout/cover_house.1666414708.webp')">
         <form class="container" method="get" action="{{ route('search') }}">
-            <button class="btn btn-sm btn-dark bg-gradient opacity-75 location_btn" type="button"
+            <button class="btn btn-sm btn-dark opacity-75 location_btn" type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#locationModal">
                 @svg('mini-location', '') {{ $town }}
@@ -181,6 +181,11 @@
 
     <div class="card shadow-sm mb-4 px-4 py-2">
         <h3 class="h6">Featured ADs</h3>
+        <div class="d-flex flex-nowrap overflow-hidden">
+            @foreach($featured as $ad1)
+                @include("partials.ad_thumb", ["ad" => $ad1])
+            @endforeach
+        </div>
     </div>
 
     <div class="modal fade" id="locationModal" tabindex="-1">

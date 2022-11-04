@@ -43,6 +43,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\LocationServiceProvider::class,
+        App\Providers\RecommendationsServiceProvider::class,
     ],
 
     'aliases' => [
@@ -88,6 +89,7 @@ return [
         'AdUrl' => App\Helpers\AdUrl::class,
         'AdPic' => App\Helpers\AdPic::class,
         'AdPrice' => App\Helpers\AdPrice::class,
+        'AdPriceFreq' => App\Helpers\AdPriceFreq::class,
         'Breadcrumbs' => App\Helpers\Breadcrumbs::class,
     ],
 ];

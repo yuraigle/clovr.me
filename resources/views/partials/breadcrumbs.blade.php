@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
 
-        @foreach(App\Helpers\Breadcrumbs::for($town, $cat, $propType, $ad) as $b)
+        @foreach(App\Helpers\Breadcrumbs::for($town, $cat, $ad) as $b)
             <li class="breadcrumb-item {{ $b['active'] ? 'active' : '' }}">
                 @if($b['active'])
                     {{ $b['name'] }}

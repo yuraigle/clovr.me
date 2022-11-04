@@ -203,9 +203,13 @@
         </div>
     </div>
 
-    <div class="row mt-2">
+    <div class="row mt-3">
         <h3>You may also like...</h3>
-        <div style="height: 200px">&nbsp;</div>
+        <div class="d-flex flex-wrap">
+            @foreach($also as $ad1)
+                @include("partials.ad_thumb", ["ad" => $ad1])
+            @endforeach
+        </div>
     </div>
 @endsection
 

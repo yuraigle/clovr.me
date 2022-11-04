@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AdUrl;
 use App\Services\LocationService;
+use App\Services\RecommendationsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -20,36 +21,34 @@ class CatalogController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected LocationService $locationService;
+    private RecommendationsService $recommendationsService;
 
-    public function __construct(LocationService $locationService)
-    {
+    public function __construct(
+        LocationService        $locationService,
+        RecommendationsService $recommendationsService
+    ) {
         $this->locationService = $locationService;
+        $this->recommendationsService = $recommendationsService;
     }
 
     public function showAd(Request $req): View
     {
         $id = $req->route()->parameter('id');
-        $rowAd = DB::selectOne("select * from `ads` where `id`=?", [$id]);
-        abort_if(!$rowAd, 404);
+        $ad = DB::selectOne("select * from `ads` where `id`=?", [$id]);
+        abort_if(!$ad, 404);
 
-        $rowCat = DB::selectOne("select * from `categories` where `id`=?", [$rowAd->category_id]);
-        abort_if(!$rowCat, 404);
+        $cat = DB::selectOne("select * from `categories` where `id`=?", [$ad->category_id]);
+        abort_if(!$cat, 404);
 
-        $rowUsr = DB::selectOne("select * from `users` where `id`=?", [$rowAd->user_id]);
-        abort_if(!$rowUsr, 404);
+        $usr = DB::selectOne("select * from `users` where `id`=?", [$ad->user_id]);
+        abort_if(!$usr, 404);
 
         $pics = DB::select("select * from `pictures` where `ad_id`=? order by `ord`", [$id]);
 
         $town = $this->locationService->getTownFromCookie()->getName();
+        $also = $this->recommendationsService->fetchForAd($ad, 20);
 
-        return view('catalog.show-ad', [
-            "ad" => $rowAd,
-            "cat" => $rowCat,
-            "usr" => $rowUsr,
-            "pics" => $pics,
-            'propType' => $rowAd->property_type,
-            "town" => $town,
-        ]);
+        return view('catalog.show-ad', compact("ad", "cat", "usr", "pics", "town", "also"));
     }
 
     public function showCat(Request $req, $cat, $propType = null): View
