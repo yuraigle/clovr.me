@@ -123,6 +123,18 @@ footer {
     background-color: #eee;
 }
 
+.a0 .pics_counter {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: small;
+    color: #fff;
+    background-color: #343a40;
+    opacity: .8;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
 @media (max-width: 768px) {
     .a0 picture, .a0 img {
         width: 120px;
@@ -130,7 +142,6 @@ footer {
     }
 }
 
-// share links
 .color-fb {
     color: #3b5998;
 }
@@ -162,10 +173,6 @@ footer {
 .icon-tabler {
     margin-top: -4px;
 }
-
-//#map, .mapboxgl-canvas-container.mapboxgl-interactive {
-//    cursor: default !important;
-//}
 
 #map_cont {
     height: 500px;
@@ -225,6 +232,7 @@ div.ratio.ratio-4x3 > img:hover {
     height: 0;
     overflow: hidden;
 }
+
 .a_thumb:hover .a_thumb_title {
     height: 52px;
     padding: 5px;

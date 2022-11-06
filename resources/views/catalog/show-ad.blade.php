@@ -191,14 +191,9 @@
 
             <div class="d-flex py-2 my-4">
                 <h5 class="me-auto">Share:</h5>
-                <span>
-                    <a href="#" class="color-fb" title="Share on Facebook">
-                        @svg('brand-facebook')</a>
-                    <a href="#" class="color-tw" title="Share on Twitter">
-                        @svg('brand-twitter')</a>
-                    <a href="#" class="color-gr" title="Share via Email">
-                        @svg('mail')</a>
-                </span>
+                <a href="#" class="color-fb px-1" title="Share on Facebook">@svg('brand-facebook')</a>
+                <a href="#" class="color-tw px-1" title="Share on Twitter">@svg('brand-twitter')</a>
+                <a href="#" class="color-gr px-1" title="Share via Email">@svg('mail')</a>
             </div>
         </div>
     </div>

@@ -90,6 +90,7 @@ return [
         'AdPic' => App\Helpers\AdPic::class,
         'AdPrice' => App\Helpers\AdPrice::class,
         'AdPriceFreq' => App\Helpers\AdPriceFreq::class,
+        'AdLocation' => App\Helpers\AdLocation::class,
         'Breadcrumbs' => App\Helpers\Breadcrumbs::class,
     ],
 ];

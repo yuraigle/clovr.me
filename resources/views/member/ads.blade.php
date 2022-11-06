@@ -14,7 +14,7 @@
                 @for($i = 0; $i < count($rows); $i++)
                     @php $row = $rows[$i] @endphp
                     <article class="a0 p-2 d-flex {{ $i == count($rows) - 1 ? '' : 'border-bottom' }}">
-                        @include('partials.ad_main_pic', ['row' => $row])
+                        @include('partials.ad_main_pic', ['ad' => $row])
 
                         <div class="a1 ms-3 flex-grow-1">
                             <a href="{{ App\Helpers\AdUrl::canonical($row) }}"

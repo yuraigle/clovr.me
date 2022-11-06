@@ -76,10 +76,15 @@ class CatalogController extends BaseController
 
         $rowCnt = DB::selectOne("select count(*) as c from `ads` where $cond", $vars);
 
-        $rows = DB::select("select `id`, `category_id`, `title`, `price`, `price_freq`, `location`,
-                `pic`, `created_at`, `description`
-            from `ads` where $cond
-            order by `created_at` desc limit ? offset ?", [...$vars, $perPage, $offset]);
+        $rows = DB::select("
+            select a.`id`, category_id, title, price, price_freq, location, county, town, postcode,
+                   pic, created_at, description, count(p.id) as npic
+            from `ads` a
+                left join `pictures` p on p.ad_id = a.id
+            where $cond
+            group by a.id, category_id, title, price, price_freq, location, county, town, postcode,
+                pic, created_at, description
+            order by created_at desc limit ? offset ?", [...$vars, $perPage, $offset]);
 
         $paginator = new LengthAwarePaginator($rows, $rowCnt->c, $perPage, $currentPage,
             ["path" => ""]);
