@@ -20,26 +20,15 @@
                 <h1 class="h3 border-bottom mb-1 pb-2">{{ $ad->title }}</h1>
                 <div class="aa_row d-flex mb-4">
                     <span class="me-auto text-muted">
-                        {{ $ad->town }}
-                        @if($ad->county && $ad->county !== $ad->town)
-                            , {{ $ad->county }}
-                        @endif
-                        {{ $ad->postcode }}
+                        {{ App\Helpers\AdDetails::locationFull($ad) }}
                     </span>
-
-                    <span class="aa_price">
-                        &euro;{{ number_format($ad->price) }}
-                    </span>
-
-                    <span class="ms-1 align-middle">
-                        @if($ad->price_freq === 'per_week')
-                            <span class="d-none d-md-inline-block">per week</span>
-                            <span class="d-inline-block d-md-none">pw</span>
-                        @elseif($ad->price_freq === 'per_month')
-                            <span class="d-none d-md-inline-block">per month</span>
-                            <span class="d-inline-block d-md-none">pm</span>
-                        @endif
-                    </span>
+                    <span class="aa_price">{!! App\Helpers\AdDetails::priceShort($ad) !!}</span>
+                    @if($ad->price_freq)
+                        <span class="ms-1 align-middle">
+                            <span class="d-none d-md-inline-block">{{ App\Helpers\AdDetails::freqFull($ad) }}</span>
+                            <span class="d-inline-block d-md-none">{{ App\Helpers\AdDetails::freqShort($ad) }}</span>
+                        </span>
+                    @endif
                 </div>
 
                 @php $i = 0; @endphp
@@ -125,23 +114,17 @@
                     ></div>
                 @endforeach
 
-                <p class="text-center mt-2">{{ $ad->location }}</p>
-
                 <div class="my-2">
-                    @if($ad->property_type)
-                        <p class="mb-0">Property Type: {{ ucfirst($ad->property_type) }}</p>
+                    @if($s = App\Helpers\AdDetails::propType($ad))
+                        <p class="mb-0">Property Type: {{ $s }}</p>
                     @endif
 
-                    @if($ad->num_beds === 0)
-                        <p class="mb-0">No. of Bedrooms: Studio</p>
-                    @elseif($ad->num_beds)
-                        <p class="mb-0">No. of Bedrooms: {{ $ad->num_beds }}</p>
+                    @if($s = App\Helpers\AdDetails::numBeds($ad))
+                        <p class="mb-0">No. of Bedrooms: {{ $s }}</p>
                     @endif
 
-                    @if($ad->room_type == 'couch')
-                        <p class="mb-0">Room Type: Couch Surf</p>
-                    @elseif($ad->room_type)
-                        <p class="mb-0">Room Type: {{ ucfirst($ad->room_type) }} room</p>
+                    @if($s = App\Helpers\AdDetails::roomType($ad))
+                        <p class="mb-0">Room Type: {{ $s }}</p>
                     @endif
                 </div>
 

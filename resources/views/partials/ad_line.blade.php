@@ -18,18 +18,24 @@
             </h5>
 
             @if ($ad->location)
-                <span class="small">{{ App\Helpers\AdLocation::full($ad) }}</span>
+                <span class="small">{{ App\Helpers\AdDetails::locationFull($ad) }}</span>
             @endif
+
+            <div class="a1__details">
+                @if($s = App\Helpers\AdDetails::propType($ad))<span>{{ $s }}</span>@endif
+                @if($s = App\Helpers\AdDetails::numBeds($ad))<span>{{ $s }}</span>@endif
+                @if($s = App\Helpers\AdDetails::roomType($ad))<span>{{ $s }}</span>@endif
+            </div>
 
             <div class="small lh-sm text-muted my-2">
                 {{ Illuminate\Support\Str::of($ad->description)->limit(150) }}
             </div>
 
             <strong class="a1pr text-info me-auto">
-                {!! App\Helpers\AdPrice::full($ad, 0) !!}
+                {!! App\Helpers\AdDetails::priceFull($ad, 0) !!}
             </strong>
 
-            <span class="a1dt text-muted">
+            <span class="a1dt text-muted small" title="{{ Carbon\Carbon::parse($ad->created_at)->format('d M H:i') }}">
                 {{ Carbon\Carbon::parse($ad->created_at)->diffForHumans() }}
             </span>
         </div>

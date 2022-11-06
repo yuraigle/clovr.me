@@ -135,6 +135,20 @@ footer {
     border-radius: 3px;
 }
 
+.a1__details {
+    font-weight: bold;
+}
+
+.a1__details > span:after {
+    content: " | ";
+    margin: 0 4px;
+}
+
+.a1__details > span:last-child:after {
+    content: "";
+    margin: 0;
+}
+
 @media (max-width: 768px) {
     .a0 picture, .a0 img {
         width: 120px;

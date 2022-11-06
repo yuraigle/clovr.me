@@ -34,7 +34,7 @@
 
                             <div class="d-flex">
                                 <strong class="a1pr text-info me-auto">
-                                    {!! App\Helpers\AdPrice::full($row, 0) !!}
+                                    {!! App\Helpers\AdDetails::priceFull($row, 0) !!}
                                 </strong>
 
                                 <span class="a1dt text-muted">
