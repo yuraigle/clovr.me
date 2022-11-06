@@ -85,6 +85,11 @@
                                         2 bedroom
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'house']) }}">
+                                        Houses
+                                    </a>
+                                </li>
                             </ul>
                         </td>
                     </tr>

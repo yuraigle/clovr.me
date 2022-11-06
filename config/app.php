@@ -88,9 +88,7 @@ return [
 
         'AdUrl' => App\Helpers\AdUrl::class,
         'AdPic' => App\Helpers\AdPic::class,
-        'AdPrice' => App\Helpers\AdPrice::class,
-        'AdPriceFreq' => App\Helpers\AdPriceFreq::class,
-        'AdLocation' => App\Helpers\AdLocation::class,
+        'AdDetails' => App\Helpers\AdDetails::class,
         'Breadcrumbs' => App\Helpers\Breadcrumbs::class,
     ],
 ];

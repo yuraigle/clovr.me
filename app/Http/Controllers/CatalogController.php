@@ -26,7 +26,8 @@ class CatalogController extends BaseController
     public function __construct(
         LocationService        $locationService,
         RecommendationsService $recommendationsService
-    ) {
+    )
+    {
         $this->locationService = $locationService;
         $this->recommendationsService = $recommendationsService;
     }
@@ -78,12 +79,12 @@ class CatalogController extends BaseController
 
         $rows = DB::select("
             select a.`id`, category_id, title, price, price_freq, location, county, town, postcode,
-                   pic, created_at, description, count(p.id) as npic
+                   pic, created_at, description, property_type, num_beds, room_type, count(p.id) as npic
             from `ads` a
                 left join `pictures` p on p.ad_id = a.id
             where $cond
             group by a.id, category_id, title, price, price_freq, location, county, town, postcode,
-                pic, created_at, description
+                pic, created_at, description, property_type, num_beds, room_type
             order by created_at desc limit ? offset ?", [...$vars, $perPage, $offset]);
 
         $paginator = new LengthAwarePaginator($rows, $rowCnt->c, $perPage, $currentPage,
