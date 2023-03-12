@@ -55,7 +55,7 @@
       </div>
 
       <div class="mb-2 text-center">
-        <a href="/register" class="btn btn-link">I'm new here </a>
+        <a href="/register" class="btn btn-link">I'm new here</a>
       </div>
     </form>
   </div>
@@ -69,8 +69,8 @@ import {email, helpers, maxLength, minLength, required,} from "@vuelidate/valida
 export default {
   setup() {
     const form = reactive({
-      email: undefined,
-      password: undefined,
+      email: "demouser@clovr.me",
+      password: "demouser",
     });
 
     const loading = ref(false);

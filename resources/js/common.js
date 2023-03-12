@@ -28,6 +28,10 @@ window.showToast = function (content, color = "danger") {
     }, 3000);
 };
 
+window.showToast2 = function ({msg, bg}) {
+    showToast(msg, bg);
+}
+
 window.fetchApi = function ({url, opts, _success, _finally}) {
     return fetch(url, opts)
         .then((response) => {

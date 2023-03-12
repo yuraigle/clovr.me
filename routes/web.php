@@ -17,7 +17,10 @@ Route::get('/forgot', [AuthController::class, 'forgot'])->name('forgot');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/auth/fb-redirect', [AuthController::class, 'fbRedirect']);
 Route::get('/auth/fb-callback', [AuthController::class, 'fbCallback']);
+
 Route::get('/member/profile', [MemberController::class, 'profile'])->name('profile');
+Route::post('/member/profile', [MemberController::class, 'profilePost']);
+
 Route::get('/member/security', [MemberController::class, 'security'])->name('security');
 Route::get('/member/ads', [MemberController::class, 'ads'])->name('my-ads');
 Route::get('/member/favorites', [MemberController::class, 'favorites'])->name('favorites');
@@ -26,8 +29,10 @@ Route::get('/member/messages', [MemberController::class, 'messages'])->name('mes
 Route::get('/', [IndexController::class, 'home'])->name('home');
 Route::get('/about', [IndexController::class, 'about'])->name('about');
 Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
+
 Route::get('/new', [AdController::class, 'newAd'])->name('new-ad');
 Route::post('/new', [AdController::class, 'newAdPost']);
+
 Route::post('/image-upload', [AdController::class, 'upload']);
 Route::get('/activate', [PaymentController::class, 'activate']);
 Route::get('/edit-ad/{id}', [AdController::class, 'editAd'])
@@ -52,3 +57,4 @@ Route::get('/markers', [CatalogController::class, 'markers']);
 Route::get('/member', function () {
     return redirect('/member/profile');
 })->name('member');
+Route::post('/member/avatar', [MemberController::class, 'avatarUpload']);

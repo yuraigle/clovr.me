@@ -1,9 +1,7 @@
 server {
     listen 80;
-
-    if ($host = clovr.me) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
+    server_name clovr.me www.clovr.me;
+    return 301 https://clovr.me$request_uri;
 }
 
 server {
@@ -19,7 +17,7 @@ server {
     ssl_prefer_server_ciphers on;
     ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DHE+AES128:!ADH:!AECDH:!MD5;
 
-    server_name clovr.me;
+    server_name clovr.me www.clovr.me;
     root /var/www/site1/public;
     index index.php index.html index.htm;
     charset utf-8;

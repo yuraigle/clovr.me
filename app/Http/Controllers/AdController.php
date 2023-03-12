@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\LocationService;
+use App\Services\UploaderService;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -11,18 +12,18 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
+
 
 class AdController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected LocationService $locationService;
+    protected UploaderService $uploaderService;
 
     private array $rules = [
         'category_id' => 'required|numeric|min:1|max:5',
@@ -47,10 +48,19 @@ class AdController extends BaseController
         'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
     ];
 
-    public function __construct(LocationService $locationService)
+    /**
+     * @param LocationService $locationService
+     * @param UploaderService $uploaderService
+     */
+    public function __construct(
+        LocationService $locationService,
+        UploaderService $uploaderService
+    )
     {
         $this->locationService = $locationService;
+        $this->uploaderService = $uploaderService;
     }
+
 
     public function newAd(): RedirectResponse|View
     {
@@ -184,15 +194,13 @@ class AdController extends BaseController
         }
 
         DB::beginTransaction();
-        DB::insert(
+        DB::update(
             "update `ads` set `title`=?, `price`=?, `property_type`=?, `num_beds`=?,
                    `price_freq`=?, `date_avail`=?, `room_type`=?, `room_couples`=?, `www`=?,
                    `youtube`=?, `description`=?, `lng`=?, `lat`=?, `location`=?, `postcode`=?,
                     `county`=?, `town`=?, `pic`=? where `id`=?",
             [...$vars, $pic, $id]
         );
-
-        $a = [...$vars, $pic, $id];
 
         $i = 0;
         DB::delete("delete from `pictures` where `ad_id`=?", [$id]);
@@ -214,45 +222,11 @@ class AdController extends BaseController
         }
 
         try {
-            $hash = $this->uploadImage($req->file('pic'));
+            $hash = $this->uploaderService->uploadImage($req->file('pic'));
             return response()->json(["result" => "OK", "hash" => $hash]);
         } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], 500);
         }
     }
 
-    /**
-     * @throws Exception
-     */
-    private function uploadImage(UploadedFile $file1): string
-    {
-        if ($file1->getSize() > 4 * 1024 * 1024) {
-            throw new Exception('Maximum file size to upload is 4MB');
-        }
-
-        $hash = date('ym') . substr(md5(rand()), 0, 10);
-        $dest = '/' . substr($hash, 0, 4) . '/';
-        $destAbs = base_path('public/images' . $dest);
-
-        if (!file_exists($destAbs) && !mkdir($destAbs)) {
-            throw new Exception('I/O exception');
-        }
-
-        Image::make($file1)->fit(200, 150)
-            ->save($destAbs . "m_$hash.jpg")
-            ->save($destAbs . "m_$hash.webp", 75);
-
-        Image::make($file1)->fit(120, 90)
-            ->save($destAbs . "s_$hash.jpg")
-            ->save($destAbs . "s_$hash.webp", 75);
-
-        Image::make($file1)->resize(800, 600, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })
-            ->save($destAbs . "x_$hash.jpg")
-            ->save($destAbs . "x_$hash.webp", 75);
-
-        return $hash;
-    }
 }

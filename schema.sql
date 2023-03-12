@@ -39,6 +39,7 @@ CREATE TABLE `users`
     `updated_at`        TIMESTAMP           NULL DEFAULT NULL,
     `phone`             VARCHAR(20)         NULL DEFAULT NULL,
     `fb_id`             VARCHAR(20)         NULL DEFAULT NULL,
+    `pic`               VARCHAR(14)         NULL DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `IX_USERS_EMAIL_UNIQUE` (`email`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'

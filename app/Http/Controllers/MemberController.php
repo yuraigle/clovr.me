@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UploaderService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -16,6 +17,16 @@ class MemberController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected UploaderService $uploaderService;
+
+    /**
+     * @param UploaderService $uploaderService
+     */
+    public function __construct(UploaderService $uploaderService)
+    {
+        $this->uploaderService = $uploaderService;
+    }
+
     public function profile(Request $req): RedirectResponse|View
     {
         if (!Auth::check()) {
@@ -25,6 +36,27 @@ class MemberController extends BaseController
         return view('member.profile', [
             "user" => $req->user(),
         ]);
+    }
+
+    public function profilePost(Request $req): RedirectResponse
+    {
+        return redirect(route('profile'))
+            ->with('status', ['msg' => 'Saved.', 'bg' => 'success']);
+    }
+
+    public function avatarUpload(Request $req): RedirectResponse
+    {
+        try {
+            $hash = $this->uploaderService->uploadImage($req->file('pic1'));
+            DB::update("update `users` set `pic` = ? where `id` = ?", [$hash, $req->user()->id]);
+
+        } catch (\Exception $e) {
+            return redirect(route('profile'))
+                ->with('status', ['msg' => $e->getMessage(), 'bg' => 'danger']);
+        }
+
+        return redirect(route('profile'))
+            ->with('status', ['msg' => 'Saved.', 'bg' => 'success']);
     }
 
     public function security(Request $req): RedirectResponse|View

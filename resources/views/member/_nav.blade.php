@@ -10,7 +10,7 @@
 
 <div class="border-end">
     <div class="d-flex pb-2 mb-4">
-        <img src="/layout/m_noavatar.1666414708.webp" class="rounded d-block" alt="User Avatar">
+        <img src="{{ App\Helpers\UserPic::main($user) }}" class="rounded d-block" width="64" alt="User Avatar">
         <div class="ms-2">
             <strong>{{ $user->name }}</strong><br/>
             <small class="text-muted">ID {{ $user->id }}</small>

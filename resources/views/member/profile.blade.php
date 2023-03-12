@@ -16,6 +16,7 @@
                 </div>
                 <div class="card-body">
                     <form method="post">
+                        @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="name" value="{{ $user->name }}">
                             <label for="name" class="form-label">Display name:</label>
@@ -43,15 +44,17 @@
                     Profile Picture
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="/member/avatar" id="form2" enctype="multipart/form-data">
+                        @csrf
                         <label class="btn btn-primary bg-gradient">
                     <span>
                         @svg('camera') Upload Picture
                         <input
-                            id="picture1"
+                            name="pic1"
                             type="file"
                             class="d-none"
                             accept="image/*"
+                            onchange="document.getElementById('form2').submit()"
                         />
                     </span>
                         </label>
@@ -60,12 +63,4 @@
             </section>
         </div>
     </div>
-@endsection
-
-@section('inline_scripts')
-    <script type="text/javascript">
-        function upload_pic(e) {
-            console.log(e);
-        }
-    </script>
 @endsection
