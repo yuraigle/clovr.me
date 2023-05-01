@@ -66,7 +66,7 @@
             <div class="card shadow-sm mb-3">
                 <table>
                     <tr>
-                        <td data-bg="/layout/x_rent.1666414708.webp"></td>
+                        <td data-bg="/layout/x_rent.1666414709.webp"></td>
                         <td class="px-4 py-2">
                             <h3 class="h6">Rent a Flat</h3>
                             <ul class="list-unstyled small">
@@ -119,7 +119,7 @@
                                 </li>
                             </ul>
                         </td>
-                        <td data-bg="/layout/x_share.1666414708.webp"></td>
+                        <td data-bg="/layout/x_share.1666414709.webp"></td>
                     </tr>
                 </table>
             </div>
@@ -129,7 +129,7 @@
             <div class="card shadow-sm mb-3">
                 <table>
                     <tr>
-                        <td data-bg="/layout/x_buy.1666414708.webp"></td>
+                        <td data-bg="/layout/x_buy.1666414709.webp"></td>
                         <td class="px-4 py-2">
                             <h3 class="h6">Property for Sale</h3>
                             <ul class="list-unstyled small">
@@ -177,7 +177,7 @@
                                 </li>
                             </ul>
                         </td>
-                        <td data-bg="/layout/x_garage.1666414708.webp"></td>
+                        <td data-bg="/layout/x_garage.1666414709.webp"></td>
                     </tr>
                 </table>
             </div>
