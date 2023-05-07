@@ -2,7 +2,7 @@
     $links = [
         'Profile' => ['profile', 'id'],
         'Security' => ['security', 'shield-lock'],
-        'My ADs' => ['my-ads', 'list-details'],
+        'My ADs' => ['my-items', 'list-details'],
         'Messages' => ['messages', 'mail'],
         'Favorites' => ['favorites', 'star'],
     ];

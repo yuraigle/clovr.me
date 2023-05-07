@@ -104,8 +104,7 @@ class AdSeeder extends Seeder
             $client = new Client(['verify' => false]);
             $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json";
             $resp = $client->request('GET', $url, ['query' => [
-                'access_token' => 'pk.eyJ1IjoieXVyYWlnbGUiLCJhIjoiY2wwZmUzdTNnMHJ5eT' .
-                    'NubzZpOXEzNGFrayJ9.vK2h-JCIge6NaEABNtPxvw'
+                'access_token' => env('MAPBOX_PK')
             ]]);
 
             $json = $resp->getBody()->getContents();
@@ -157,6 +156,7 @@ class AdSeeder extends Seeder
                 $imgDim = self::$faker->randomElement(["800x600", "600x800", "900x900"]);
                 [$w, $h] = explode('x', $imgDim);
 
+                /*
                 if ($cat == 4 || $cat == 5) {
                     $imgSrc = "https://source.unsplash.com/random/$imgDim/?garage";
                 } elseif ($propType == 'flat') {
@@ -164,6 +164,9 @@ class AdSeeder extends Seeder
                 } else {
                     $imgSrc = "https://api.lorem.space/image/house?w=$w&h=$h";
                 }
+                */
+
+                $imgSrc = "https://via.assets.so/furniture.png?id=1&q=95&w=$w&h=$h&fit=fill";
 
                 try {
                     $raw = file_get_contents($imgSrc);

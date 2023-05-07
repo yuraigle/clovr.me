@@ -1,11 +1,11 @@
 <?php
 
 use App\Helpers\AdUrl;
-use App\Http\Controllers\AdController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,27 +18,27 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/auth/fb-redirect', [AuthController::class, 'fbRedirect']);
 Route::get('/auth/fb-callback', [AuthController::class, 'fbCallback']);
 
-Route::get('/member/profile', [MemberController::class, 'profile'])->name('profile');
-Route::post('/member/profile', [MemberController::class, 'profilePost']);
+Route::get('/profile/details', [ProfileController::class, 'details'])->name('profile');
+Route::post('/profile/details', [ProfileController::class, 'detailsPost']);
+Route::get('/profile/security', [ProfileController::class, 'security'])->name('security');
+Route::get('/profile/my-items', [ProfileController::class, 'ads'])->name('my-items');
+Route::get('/profile/favorites', [ProfileController::class, 'favorites'])->name('favorites');
+Route::get('/profile/messages', [ProfileController::class, 'messages'])->name('messages');
 
-Route::get('/member/security', [MemberController::class, 'security'])->name('security');
-Route::get('/member/ads', [MemberController::class, 'ads'])->name('my-ads');
-Route::get('/member/favorites', [MemberController::class, 'favorites'])->name('favorites');
-Route::get('/member/messages', [MemberController::class, 'messages'])->name('messages');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/terms', [PagesController::class, 'terms'])->name('terms');
 
-Route::get('/', [IndexController::class, 'home'])->name('home');
-Route::get('/about', [IndexController::class, 'about'])->name('about');
-Route::get('/terms', [IndexController::class, 'terms'])->name('terms');
+Route::get('/new', [MemberController::class, 'newAd'])->name('new-ad');
+Route::post('/new', [MemberController::class, 'newAdPost']);
 
-Route::get('/new', [AdController::class, 'newAd'])->name('new-ad');
-Route::post('/new', [AdController::class, 'newAdPost']);
-
-Route::post('/image-upload', [AdController::class, 'upload']);
+Route::post('/image-upload', [MemberController::class, 'upload']);
 Route::get('/activate', [PaymentController::class, 'activate']);
-Route::get('/edit-ad/{id}', [AdController::class, 'editAd'])
+Route::get('/edit-ad/{id}', [MemberController::class, 'editAd'])
     ->where('id', '[0-9]+')->name('edit-ad');
-Route::post('/edit-ad/{id}', [AdController::class, 'editAdPost'])
+Route::post('/edit-ad/{id}', [MemberController::class, 'editAdPost'])
     ->where('id', '[0-9]+');
+
+Route::get('/', [CatalogController::class, 'home'])->name('home');
 
 Route::get('/_/{cat}/{title}/{id}', [CatalogController::class, 'showAd'])
     ->where('cat', '[a-z\-]+')
@@ -57,4 +57,4 @@ Route::get('/markers', [CatalogController::class, 'markers']);
 Route::get('/member', function () {
     return redirect('/member/profile');
 })->name('member');
-Route::post('/member/avatar', [MemberController::class, 'avatarUpload']);
+Route::post('/member/avatar', [ProfileController::class, 'avatarUpload']);

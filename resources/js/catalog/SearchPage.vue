@@ -2,7 +2,7 @@
   <table class="bg-light">
     <tr style="height: 47px; border-bottom: 1px solid #ccc">
       <td colspan="2">
-        <SearchFilter :filter="filter"/>
+        <SearchFilter/>
       </td>
     </tr>
     <tr>
@@ -16,6 +16,10 @@
 <script>
 import {onMounted, reactive, ref} from "vue";
 import SearchFilter from "./SearchFilter.vue";
+
+import "leaflet";
+import "leaflet.markercluster";
+import "../../sass/styles-map.scss"
 
 export default {
   components: {

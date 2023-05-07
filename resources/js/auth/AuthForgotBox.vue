@@ -39,7 +39,7 @@
 <script>
 import { ref } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { maxLength, required, helpers } from "@vuelidate/validators";
+import { maxLength, required, email, helpers } from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -66,6 +66,7 @@ export default {
 
   validations: () => ({
     email: {
+      email: helpers.withMessage("Should be a valid email", email),
       required: helpers.withMessage("Required", required),
       max: helpers.withMessage("Too long", maxLength(50)),
     },

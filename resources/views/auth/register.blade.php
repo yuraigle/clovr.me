@@ -9,10 +9,7 @@
 @endsection
 
 @section('content')
-    <div id="app"></div>
-@endsection
-
-@section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/vendors-vue.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/dist/register1.js') }}"></script>
+    <div id="app">
+        <auth-register-box></auth-register-box>
+    </div>
 @endsection

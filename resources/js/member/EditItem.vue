@@ -2,7 +2,7 @@
   <form class="row">
     <AdCategoryBox
       v-model:category_id="ad.category_id"
-      :editable="true"
+      :editable="false"
       :errors="v$.ad"
     />
 
@@ -13,7 +13,7 @@
     />
 
     <AdLocationBox
-      mode="input"
+      mode="line"
       v-model:address="address"
       :errors="v$.address"
       @validate="v$.address.$validate()"
@@ -44,7 +44,7 @@
         :class="{ disabled: loading }"
         @click="handleSubmit"
       >
-        Next
+        Save
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24"
              height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
              stroke-linejoin="round">
@@ -57,15 +57,15 @@
 </template>
 
 <script>
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {helpers, maxLength, minLength, required, url} from "@vuelidate/validators";
-import AdCategoryBox from "./components/AdCategoryBox.vue";
-import AdTitleBox from "./components/AdTitleBox.vue";
-import AdDetailsBox from "./components/AdDetailsBox.vue";
-import AdWebsiteBox from "./components/AdWebsiteBox.vue";
-import AdImagesBox from "./components/AdImagesBox.vue";
-import AdLocationBox from "./components/AdLocationBox.vue";
+import AdCategoryBox from "./AdCategoryBox.vue";
+import AdTitleBox from "./AdTitleBox.vue";
+import AdDetailsBox from "./AdDetailsBox.vue";
+import AdWebsiteBox from "./AdWebsiteBox.vue";
+import AdImagesBox from "./AdImagesBox.vue";
+import AdLocationBox from "./AdLocationBox.vue";
 
 export default {
   components: {
@@ -130,7 +130,7 @@ export default {
 
         loading.value = true;
         fetchApi({
-            url: "/new",
+            url: "/edit-ad/" + ad.id,
             opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
             _success: (resp) => (window.location.href = "/activate?id=" + resp.id),
             _finally: () => (loading.value = false)
@@ -138,6 +138,35 @@ export default {
         );
       });
     }
+
+    onMounted(() => {
+      const fData = JSON.parse(document.querySelector('meta[name="form-data"]').content);
+
+      ad.id = fData.id;
+      ad.category_id = fData.category_id;
+      ad.title = fData.title;
+      ad.youtube = fData.youtube;
+      ad.www = fData.www;
+      ad.has_www = !!fData.www;
+
+      details.price = fData.price;
+      details.property_type = fData.property_type;
+      details.num_beds = fData.num_beds;
+      details.price_freq = fData.price_freq;
+      details.room_type = fData.room_type;
+      details.description = fData.description;
+
+      address.location = fData.location;
+      address.postcode = fData.postcode;
+      address.county = fData.county;
+      address.town = fData.town;
+      address.lng = fData.lng;
+      address.lat = fData.lat;
+
+      fData.pictures.forEach((el) => {
+        pictures.value.push(el.name);
+      });
+    });
 
     return {
       v$,

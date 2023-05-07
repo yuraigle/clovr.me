@@ -7,7 +7,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-3 col-sm-4">
-            @include("member._nav")
+            @include("profile._nav")
         </div>
         <div class="col-lg-6 col-sm-8">
             <section class="card bg-white shadow mb-5">

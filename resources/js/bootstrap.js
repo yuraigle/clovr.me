@@ -1,14 +1,16 @@
-for (let el of document.querySelectorAll('[data-bg], img[data-src]')) {
-    if (el.hasAttribute('data-bg')) {
-        el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
-    } else if (el.hasAttribute('data-src')) {
-        el.setAttribute("src", el.getAttribute('data-src'));
-    }
-}
+import 'bootstrap';
 
-window.csrf = function () {
-    return document.querySelector('meta[name="csrf-token"]').content;
-};
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+import axios from 'axios';
+
+window.axios = axios;
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.showToast = function (content, color = "danger") {
     const id = 'toast_' + new Date().getTime() + '_' + Math.floor(Math.random() * 100);
@@ -30,8 +32,14 @@ window.showToast = function (content, color = "danger") {
 
 window.showToast2 = function ({msg, bg}) {
     showToast(msg, bg);
-}
+};
 
+// todo remove
+window.csrf = function () {
+    return document.querySelector('meta[name="csrf-token"]').content;
+};
+
+// todo remove
 window.fetchApi = function ({url, opts, _success, _finally}) {
     return fetch(url, opts)
         .then((response) => {
@@ -57,4 +65,12 @@ window.fetchApi = function ({url, opts, _success, _finally}) {
         })
         .catch((err) => showToast(err.message))
         .finally((() => _finally()));
+};
+
+for (let el of document.querySelectorAll('[data-bg], img[data-src]')) {
+    if (el.hasAttribute('data-bg')) {
+        el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
+    } else if (el.hasAttribute('data-src')) {
+        el.setAttribute("src", el.getAttribute('data-src'));
+    }
 }

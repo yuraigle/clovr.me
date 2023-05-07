@@ -32,6 +32,23 @@ class CatalogController extends BaseController
         $this->recommendationsService = $recommendationsService;
     }
 
+    public function home(Request $req): View|RedirectResponse
+    {
+        if ($loc = $req->query("loc")) {
+            $isCorrect = $this->locationService->getTownByName($loc);
+            $loc = $isCorrect ? urlencode($loc) : "Dublin";
+            return redirect('/')->withCookie(cookie("location", $loc, 60 * 24 * 10));
+        }
+
+        $featured = DB::select("select * from `ads` where `pic` is not null limit 6");
+
+        return view('catalog.home', [
+            "towns" => $this->locationService->getTowns(),
+            "town" => $this->locationService->getTownFromCookie()->getName(),
+            "featured" => $featured,
+        ]);
+    }
+
     public function showAd(Request $req): View
     {
         $id = $req->route()->parameter('id');
@@ -49,7 +66,7 @@ class CatalogController extends BaseController
         $town = $this->locationService->getTownFromCookie()->getName();
         $also = $this->recommendationsService->fetchForAd($ad, 20);
 
-        return view('catalog.show-ad', compact("ad", "cat", "usr", "pics", "town", "also"));
+        return view('catalog.show-item', compact("ad", "cat", "usr", "pics", "town", "also"));
     }
 
     public function showCat(Request $req, $cat, $propType = null): View
