@@ -18,17 +18,17 @@
                     <form method="post">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" value="{{ $user->name }}">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                             <label for="name" class="form-label">Display name:</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" value="{{ $user->email }}">
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                             <label for="email" class="form-label">Contact email:</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control" id="phone" value="{{ $user->phone }}">
+                            <input type="tel" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
                             <label for="phone" class="form-label">Contact number:</label>
                         </div>
 

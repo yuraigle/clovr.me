@@ -148,7 +148,7 @@
                     <div class="mb-2">
                         <a href="#">
                             <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                                 data-src="/layout/m_noavatar.1666414708.webp"
+                                 data-src="{{ App\Helpers\UserPic::main($usr) }}"
                                  width="64" height="64" class="float-end ms-4"
                                  alt="Member Logo"
                             />
