@@ -8,24 +8,25 @@ CREATE TABLE `categories`
 (
     `id`   INT(10) UNSIGNED NOT NULL,
     `name` VARCHAR(100)     NOT NULL,
+    `slug` VARCHAR(30)      NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) COLLATE = 'utf8mb3_general_ci'
   ENGINE = InnoDB;
 
-INSERT INTO `categories` (`id`, `name`)
-VALUES (1, 'Property For Sale');
+INSERT INTO `categories` (`id`, `name`, `slug`)
+VALUES (1, 'Property For Sale', 'property-for-sale');
 
-INSERT INTO `categories` (`id`, `name`)
-VALUES (2, 'Property To Rent');
+INSERT INTO `categories` (`id`, `name`, `slug`)
+VALUES (2, 'Property To Rent', 'property-to-rent');
 
-INSERT INTO `categories` (`id`, `name`)
-VALUES (3, 'Property To Share');
+INSERT INTO `categories` (`id`, `name`, `slug`)
+VALUES (3, 'Property To Share', 'property-to-share');
 
-INSERT INTO `categories` (`id`, `name`)
-VALUES (4, 'Parking & Garage For Sale');
+INSERT INTO `categories` (`id`, `name`, `slug`)
+VALUES (4, 'Parking & Garage For Sale', 'garage-parking-for-sale');
 
-INSERT INTO `categories` (`id`, `name`)
-VALUES (5, 'Parking & Garage To Rent');
+INSERT INTO `categories` (`id`, `name`, `slug`)
+VALUES (5, 'Parking & Garage To Rent', 'garage-parking-to-rent');
 
 CREATE TABLE `users`
 (

@@ -11,14 +11,14 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
-        "blade-ui-kit/blade-icons": "^1.4",
-        "fakerphp/faker": "^1.20",
+        "blade-ui-kit/blade-icons": "^1.5",
+        "fakerphp/faker": "^1.21",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.5",
         "intervention/image": "^2.7",
-        "laravel/framework": "^9.37",
-        "laravel/socialite": "^5.5",
-        "laravel/tinker": "^2.7"
+        "laravel/framework": "^9.52",
+        "laravel/socialite": "^5.6",
+        "laravel/tinker": "^2.8"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0"
