@@ -91,7 +91,7 @@ export default {
           .then(res => {
             if (res.status === 200) {
               const urlParams = new URLSearchParams(window.location.search);
-              window.location.href = urlParams.get("back") || "/member/profile";
+              window.location.href = urlParams.get("back") || "/";
             }
           })
           .catch((err) => {

@@ -77,7 +77,3 @@
 
     </style>
 @endsection
-
-@section('inline_scripts')
-    <script type="text/javascript" src="{{ mix('/dist/vendors-bs5.js') }}"></script>
-@endsection

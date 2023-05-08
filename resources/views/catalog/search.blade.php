@@ -16,8 +16,4 @@
 
 @section('inline_scripts')
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
-{{--    <script type="text/javascript" src="{{ mix('/dist/vendors-vue.js') }}"></script>--}}
-{{--    <script type="text/javascript" src="{{ mix('/dist/vendors-map.js') }}"></script>--}}
-{{--    <script type="text/javascript" src="{{ mix('/dist/search1.js') }}"></script>--}}
-{{--    <script async type="text/javascript" src="{{ mix('/dist/vendors-bs5.js') }}"></script>--}}
 @endsection
