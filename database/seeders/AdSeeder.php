@@ -144,7 +144,7 @@ class AdSeeder extends Seeder
             if (in_array($propType, ["garage", "parking"])) {
                 $imgCat = "garage";
             } elseif (in_array($propType, ["flat", "other"])) {
-                $imgCat = "room";
+                $imgCat = "flat";
             } else {
                 $imgCat = "house";
             }
