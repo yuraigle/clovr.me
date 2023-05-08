@@ -1,45 +1,27 @@
 {
     "name": "clovr",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "prod": "cross-env NODE_ENV=production vite build"
+        "build": "vite build"
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.19.1",
-        "@popperjs/core": "^2.11.6",
-        "@vitejs/plugin-vue": "^4.0.0",
+        "@popperjs/core": "^2.11.7",
+        "@vitejs/plugin-vue": "^4.2.1",
         "axios": "^1.4.0",
         "bootstrap": "^5.2.3",
-        "cross-env": "^7.0.3",
-        "css-loader": "^6.7.1",
-        "eslint": "^8.26.0",
-        "eslint-plugin-vue": "^9.6.0",
-        "file-loader": "^6.2.0",
         "glob": "^8.0.3",
         "laravel-vite-plugin": "^0.7.4",
-        "mini-css-extract-plugin": "^2.6.1",
-        "purgecss": "^5.0.0",
-        "purgecss-webpack-plugin": "^5.0.0",
         "sass": "^1.56.1",
-        "sass-loader": "^13.1.0",
-        "style-loader": "^3.3.1",
-        "vue": "^3.2.37",
-        "vue-loader": "^17.0.0",
-        "vue-style-loader": "^4.1.3",
-        "webpack": "^5.74.0",
-        "webpack-cli": "^4.10.0",
-        "webpack-manifest-plugin": "^5.0.0"
+        "vite": "^4.3.5",
+        "vue": "^3.2.47"
     },
     "dependencies": {
-        "@popperjs/core": "^2.11.6",
-        "@vuelidate/core": "^2.0.0",
-        "@vuelidate/validators": "^2.0.0",
-        "bs5-lightbox": "^1.8.2",
-        "leaflet": "^1.9.2",
+        "@vuelidate/core": "^2.0.2",
+        "@vuelidate/validators": "^2.0.2",
+        "bs5-lightbox": "^1.8.3",
+        "leaflet": "^1.9.3",
         "leaflet.markercluster": "^1.5.3",
-        "vite": "^4.3.5",
-        "vue-currency-input": "^3.0.1"
+        "vue-currency-input": "^3.0.4"
     }
 }

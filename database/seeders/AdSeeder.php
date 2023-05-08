@@ -103,9 +103,9 @@ class AdSeeder extends Seeder
         try {
             $client = new Client(['verify' => false]);
             $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json";
-            $resp = $client->request('GET', $url, ['query' => [
-                'access_token' => env('MAPBOX_PK')
-            ]]);
+            $resp = $client->request('GET', $url, [
+                'query' => ['access_token' => env('MAPBOX_PK')]
+            ]);
 
             $json = $resp->getBody()->getContents();
             $data = json_decode($json, true);
@@ -127,60 +127,35 @@ class AdSeeder extends Seeder
                     $location = trim($text);
                 }
             }
-        } catch (Exception | GuzzleException $ignore) {
+        } catch (Exception|GuzzleException $ignore) {
         }
 
         if (!$location) {
             $location = self::$addressProvider->address();
         }
+
         if (!$postcode) {
             $postcode = self::$addressProvider::postcode();
         }
 
-        if (rand(0, 100) > 30) {
-            $numPics = 2;
-        } elseif (rand(0, 100) > 30) {
-            $numPics = 1;
-        } else {
-            $numPics = 0;
-        }
-
-        $imgCat = (!$propType || $propType == "other") ? "flat" : $propType;
-        $cntPicsAll = DB::selectOne("SELECT count(*) as c FROM `pictures` p
-                    LEFT JOIN `ads` a ON a.id = p.ad_id
-                    WHERE a.property_type = ?", [$imgCat])->c;
-
+        $numPics = self::$faker->numberBetween(0, 6);
         $pics = [];
         for ($i = 0; $i < $numPics; $i++) {
-            if ($cntPicsAll < 50 || rand(0, 100) > 60) {
-                $imgDim = self::$faker->randomElement(["800x600", "600x800", "900x900"]);
-                [$w, $h] = explode('x', $imgDim);
-
-                /*
-                if ($cat == 4 || $cat == 5) {
-                    $imgSrc = "https://source.unsplash.com/random/$imgDim/?garage";
-                } elseif ($propType == 'flat') {
-                    $imgSrc = "https://source.unsplash.com/random/$imgDim/?flat";
-                } else {
-                    $imgSrc = "https://api.lorem.space/image/house?w=$w&h=$h";
-                }
-                */
-
-                $imgSrc = "https://via.assets.so/furniture.png?id=1&q=95&w=$w&h=$h&fit=fill";
-
-                try {
-                    $raw = file_get_contents($imgSrc);
-                    $pics[] = $this->uploadImage($raw);
-                    print "Downloaded a pic: $imgCat" . PHP_EOL;
-                    sleep(1);
-                } catch (Exception $e) {
-                    print_r($e->getMessage());
-                }
+            if (in_array($propType, ["garage", "parking"])) {
+                $imgCat = "garage";
+            } elseif (in_array($propType, ["flat", "other"])) {
+                $imgCat = "room";
             } else {
-                $pics[] = DB::selectOne(
-                    "SELECT p.name FROM `pictures` p LEFT JOIN `ads` a ON a.id = p.ad_id
-                    WHERE a.property_type = ? ORDER BY rand() LIMIT 1", [$imgCat]
-                )->name;
+                $imgCat = "house";
+            }
+            $imgNum = self::$faker->randomElement([1, 2, 3]);
+            $imgSrc = "dist/img/$imgCat$imgNum.jpg";
+
+            try {
+                $raw = file_get_contents($imgSrc);
+                $pics[] = $this->uploadImage($raw);
+            } catch (Exception $e) {
+                print_r($e->getMessage());
             }
         }
 

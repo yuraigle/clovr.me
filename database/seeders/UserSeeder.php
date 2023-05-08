@@ -40,4 +40,21 @@ class UserSeeder extends Seeder
             'updated_at' => $created,
         ]);
     }
+
+    public function makeDemoUser()
+    {
+        if (DB::table('users')->count() > 0) {
+            return;
+        }
+
+        $created = self::$faker->dateTimeBetween("-2 years");
+        DB::table('users')->insert([
+            'name' => "Demo",
+            'email' => "demouser@clovr.me",
+            'phone' => "",
+            'password' => Hash::make("demouser"),
+            'created_at' => $created,
+            'updated_at' => $created,
+        ]);
+    }
 }
