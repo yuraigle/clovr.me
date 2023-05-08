@@ -129,13 +129,15 @@ export default {
         }
 
         loading.value = true;
-        fetchApi({
-            url: "/new",
-            opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
-            _success: (resp) => (window.location.href = "/activate?id=" + resp.id),
-            _finally: () => (loading.value = false)
-          }
-        );
+        axios.post('/new', body)
+          .then(res => {
+            if (res.status === 200) {
+              window.location.href = "/activate?id=" + res['id'];
+            }
+          })
+          .catch((err) => showError(err))
+          .finally(() => loading.value = false);
+
       });
     }
 

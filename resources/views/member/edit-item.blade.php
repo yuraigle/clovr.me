@@ -1,7 +1,6 @@
 @extends('layouts.base')
 
 @section('meta')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="form-data" content="{{ $row_json }}">
     <meta name="town" content="{{ $town }}">
 @endsection

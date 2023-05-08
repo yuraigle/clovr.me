@@ -101,15 +101,16 @@ export default {
         }
 
         loading.value = true;
-        fetchApi({
-          url: "/register",
-          opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
-          _success: () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            window.location.href = urlParams.get("back") || "/member/profile";
-          },
-          _finally: () => (loading.value = false)
-        });
+        axios.post('/register', body)
+          .then(res => {
+            if (res.status === 200) {
+              const urlParams = new URLSearchParams(window.location.search);
+              window.location.href = urlParams.get("back") || "/";
+            }
+          })
+          .catch((err) => showError(err))
+          .finally(() => loading.value = false);
+
       });
     }
 

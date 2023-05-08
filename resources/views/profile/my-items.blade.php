@@ -50,7 +50,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('edit-ad', ['id' => $row->id]) }}" class="dropdown-item">
+                                    <a href="{{ route('edit-item', ['id' => $row->id]) }}" class="dropdown-item">
                                         @svg('mini-pencil') Edit
                                     </a>
                                 </li>

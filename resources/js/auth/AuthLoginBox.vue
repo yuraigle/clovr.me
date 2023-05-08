@@ -94,16 +94,9 @@ export default {
               window.location.href = urlParams.get("back") || "/";
             }
           })
-          .catch((err) => {
-            if (err.response.data.message) {
-              showToast(err.response.data.message);
-            } else {
-              showToast('Something went wrong');
-            }
-          })
-          .finally(() => {
-            loading.value = false;
-          })
+          .catch((err) => showError(err))
+          .finally(() => loading.value = false);
+
       });
     }
 

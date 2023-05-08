@@ -28,15 +28,15 @@ Route::get('/profile/messages', [ProfileController::class, 'messages'])->name('m
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/terms', [PagesController::class, 'terms'])->name('terms');
 
-Route::get('/new', [MemberController::class, 'newAd'])->name('new-ad');
+Route::get('/new', [MemberController::class, 'newAd'])->name('new-item');
 Route::post('/new', [MemberController::class, 'newAdPost']);
+Route::get('/edit/{id}', [MemberController::class, 'editAd'])
+    ->where('id', '[0-9]+')->name('edit-item');
+Route::post('/edit/{id}', [MemberController::class, 'editAdPost'])
+    ->where('id', '[0-9]+');
 
 Route::post('/image-upload', [MemberController::class, 'upload']);
 Route::get('/activate', [PaymentController::class, 'activate']);
-Route::get('/edit-ad/{id}', [MemberController::class, 'editAd'])
-    ->where('id', '[0-9]+')->name('edit-ad');
-Route::post('/edit-ad/{id}', [MemberController::class, 'editAdPost'])
-    ->where('id', '[0-9]+');
 
 Route::get('/', [CatalogController::class, 'home'])->name('home');
 

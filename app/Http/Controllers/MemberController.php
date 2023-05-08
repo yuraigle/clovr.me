@@ -65,7 +65,7 @@ class MemberController extends BaseController
     public function newAd(): RedirectResponse|View
     {
         if (!Auth::check()) {
-            return redirect('/login?back=' . urlencode(route('new-ad', [], false)));
+            return redirect('/login?back=' . urlencode(route('new-item', [], false)));
         }
 
         return view('member.new-item', [

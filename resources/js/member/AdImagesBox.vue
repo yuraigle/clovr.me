@@ -124,18 +124,19 @@ export default {
       body.append("pic", files[0]);
 
       uploading.value = true;
-      fetchApi({
-        url: "/image-upload",
-        opts: {method: "POST", headers: {"X-CSRF-TOKEN": csrf()}, body},
-        _success: (resp) => {
-          pictures1.value.push(resp.hash);
-          emit("update:pictures", pictures1.value);
-        },
-        _finally: () => {
+      axios.post('/image-upload', body)
+        .then((res) => {
+          if (res.status === 200) {
+            pictures1.value.push(res.data.hash);
+            emit("update:pictures", pictures1.value);
+          }
+        })
+        .catch((err) => showError(err))
+        .finally(() => {
           uploading.value = false;
           document.getElementById("picture1").value = null;
-        }
-      });
+        });
+
     }
 
     function removeImg(hash) {

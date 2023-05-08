@@ -1,11 +1,4 @@
 import 'bootstrap';
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 import axios from 'axios';
 
 window.axios = axios;
@@ -33,38 +26,10 @@ window.showToast2 = function ({msg, bg}) {
     showToast(msg, bg);
 };
 
-// todo remove
-window.csrf = function () {
-    return document.querySelector('meta[name="csrf-token"]').content;
-};
-
-// todo remove
-window.fetchApi = function ({url, opts, _success, _finally}) {
-    return fetch(url, opts)
-        .then((response) => {
-            if (!response.ok) {
-                return response.text().then((text) => {
-                    let msg = "Something went wrong";
-                    try {
-                        const data = JSON.parse(text);
-                        if (data && data.message) {
-                            msg = data.message;
-                        }
-                    } catch (ignore) {
-                    }
-                    throw new Error(msg);
-                })
-            }
-            return response.json().then((data) => ({status: response.status, data}));
-        })
-        .then(({status, data}) => {
-            if (status === 200) {
-                _success(data);
-            }
-        })
-        .catch((err) => showToast(err.message))
-        .finally((() => _finally()));
-};
+window.showError = function ({err}) {
+    const msg = err.response.data.message ? err.response.data.message : err;
+    showToast(msg, 'danger');
+}
 
 for (let el of document.querySelectorAll('[data-bg], img[data-src]')) {
     if (el.hasAttribute('data-bg')) {
