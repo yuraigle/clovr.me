@@ -1,6 +1,6 @@
 <div class="a_thumb d-inline-block me-2 mb-2">
     <a href="{{ App\Helpers\AdUrl::canonical($ad) }}" title="{{ $ad->title }}">
-        @include('partials.ad_main_pic', ['ad' => $ad])
+        @include('_partials.ad_main_pic', ['ad' => $ad])
         <span class="a_thumb_price small text-white p-1">
             {!! App\Helpers\AdDetails::priceShort($ad) !!}
             {{ App\Helpers\AdDetails::freqShort($ad) }}

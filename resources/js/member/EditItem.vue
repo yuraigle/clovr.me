@@ -66,6 +66,9 @@ import AdDetailsBox from "./AdDetailsBox.vue";
 import AdWebsiteBox from "./AdWebsiteBox.vue";
 import AdImagesBox from "./AdImagesBox.vue";
 import AdLocationBox from "./AdLocationBox.vue";
+import axios from 'axios';
+
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 export default {
   components: {

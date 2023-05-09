@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
 @section('meta')
     <meta name="form-data" content="{{ $row_json }}">
@@ -20,5 +20,5 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet'/>
     <script async src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
-    @vite('resources/js/member/member_index.js')
+    @vite('resources/js/member/edit-item.js')
 @endsection

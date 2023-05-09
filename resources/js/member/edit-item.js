@@ -1,4 +1,4 @@
-import '@/js/bootstrap';
+import '@/js/common';
 import {createApp} from 'vue';
 
 const app = createApp({});

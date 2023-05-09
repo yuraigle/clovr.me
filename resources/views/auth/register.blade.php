@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
 @section('title')
     Register -
@@ -11,5 +11,5 @@
 @endsection
 
 @section('inline_scripts')
-    @vite('resources/js/auth/index.js')
+    @vite('resources/js/auth/register.js')
 @endsection

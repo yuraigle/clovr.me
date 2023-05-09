@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
 @section('cover1')
     <section class="cover1" style="background-image: url('/layout/cover_house.1666414708.webp')">
@@ -11,16 +11,20 @@
 
             <div class="d-flex opacity-75 mb-1">
                 <button class="btn btn-dark py-1 me-2 cat1 bg-gradient" type="button"
-                        data-search="cat-sale">Sale</button>
+                        data-search="cat-sale">Sale
+                </button>
                 <button class="btn btn-light py-1 me-2 cat1 bg-gradient" type="button"
-                        data-search="cat-rent">Rent</button>
+                        data-search="cat-rent">Rent
+                </button>
                 <button class="btn btn-light py-1 cat1 bg-gradient" type="button"
-                        data-search="cat-share">Share</button>
+                        data-search="cat-share">Share
+                </button>
             </div>
 
             <div class="input-group mb-2">
                 <button class="btn btn-light dropdown-toggle py-2 px-3 w-150px" type="button"
-                        data-bs-toggle="dropdown">@svg('home-check') House</button>
+                        data-bs-toggle="dropdown">@svg('home-check') House
+                </button>
                 <ul class="dropdown-menu">
                     <li>
                         <button class="btn btn-link dropdown-item" type="button"
@@ -188,7 +192,7 @@
         <h3 class="h6">Featured ADs</h3>
         <div class="d-flex flex-nowrap overflow-hidden">
             @foreach($featured as $ad1)
-                @include("partials.ad_thumb", ["ad" => $ad1])
+                @include("_partials.ad_thumb", ["ad" => $ad1])
             @endforeach
         </div>
     </div>

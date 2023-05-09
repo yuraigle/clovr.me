@@ -1,6 +1,8 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
-@section('title')Forgotten password - @endsection
+@section('title')
+    Forgotten password -
+@endsection
 
 @section('content')
     <div id="app">
@@ -9,5 +11,5 @@
 @endsection
 
 @section('inline_scripts')
-    @vite('resources/js/auth/index.js')
+    @vite('resources/js/auth/forgot.js')
 @endsection

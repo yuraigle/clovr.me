@@ -1,23 +1,23 @@
 import {defineConfig, splitVendorChunkPlugin} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import glob from 'glob';
+import path from 'node:path';
+
+const input = [
+    'resources/sass/app.scss',
+    'resources/js/common.js',
+];
+glob.sync('resources/js/**/*.js').map(file => {
+    if (file.match(/resources\/js\/[a-z]+\//)) {
+        input.push(file);
+    }
+});
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: [
-                'resources/sass/app.scss',
-                'resources/sass/styles-map.scss',
-
-                'resources/js/app.js',
-                'resources/js/catalog/home.js',
-                'resources/js/catalog/show-item.js',
-                'resources/js/auth/index.js',
-                'resources/js/profile/index.js',
-                'resources/js/catalog/search.js',
-                'resources/js/member/member_index.js',
-            ],
+            input,
             refresh: true,
         }),
         vue({
@@ -28,7 +28,7 @@ export default defineConfig({
                 },
             },
         }),
-        // splitVendorChunkPlugin,
+        splitVendorChunkPlugin,
     ],
     resolve: {
         alias: {
@@ -37,13 +37,14 @@ export default defineConfig({
         },
     },
 
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks: {
-                    // 'vendor-mapbox': ['mapbox-gl'],
-                },
-            },
-        },
-    },
+    // build: {
+    //     rollupOptions: {
+    //         output: {
+    //             manualChunks: {
+    //                 'vendor-map': ['leaflet'],
+    //                 'vendor-vue': ['vue', '@vuelidate/core', '@vuelidate/validators', 'vue-currency-input', 'axios'],
+    //             },
+    //         },
+    //     },
+    // },
 });

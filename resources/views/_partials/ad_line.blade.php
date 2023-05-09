@@ -2,7 +2,7 @@
     <a href="{{ App\Helpers\AdUrl::canonical($ad) }}" class="d-flex text-dark text-decoration-none p-2">
         <div>
             <div class="position-relative">
-                @include('partials.ad_main_pic', ['ad' => $ad])
+                @include('_partials.ad_main_pic', ['ad' => $ad])
                 @if($ad->npic > 1)
                     <span class="pics_counter" title="{{ $ad->npic }} photos">
                         @svg('mini-photo') {{ $ad->npic }}
@@ -22,9 +22,15 @@
             @endif
 
             <div class="a1__details">
-                @if($s = App\Helpers\AdDetails::propType($ad))<span>{{ $s }}</span>@endif
-                @if($s = App\Helpers\AdDetails::numBeds($ad))<span>{{ $s }}</span>@endif
-                @if($s = App\Helpers\AdDetails::roomType($ad))<span>{{ $s }}</span>@endif
+                @if($s = App\Helpers\AdDetails::propType($ad))
+                    <span>{{ $s }}</span>
+                @endif
+                @if($s = App\Helpers\AdDetails::numBeds($ad))
+                    <span>{{ $s }}</span>
+                @endif
+                @if($s = App\Helpers\AdDetails::roomType($ad))
+                    <span>{{ $s }}</span>
+                @endif
             </div>
 
             <div class="small lh-sm text-muted my-2">

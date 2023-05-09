@@ -67,6 +67,9 @@
 import {reactive, ref} from "vue";
 import useVuelidate from "@vuelidate/core";
 import {email, helpers, maxLength, minLength, required,} from "@vuelidate/validators";
+import axios from 'axios';
+
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 export default {
   setup() {

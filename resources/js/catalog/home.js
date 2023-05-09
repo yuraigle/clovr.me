@@ -1,4 +1,4 @@
-import "@/js/bootstrap";
+import "@/js/common";
 import "bootstrap/js/src/modal";
 import "bootstrap/js/src/dropdown";
 

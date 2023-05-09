@@ -1,7 +1,9 @@
-import "@/js/bootstrap";
+import "@/js/common";
+import "bootstrap/js/src/modal";
 import "leaflet";
 
 import Lightbox from "bs5-lightbox";
+
 Lightbox.defaultSelector = '[data-toggle="lightbox"]';
 
 const elMapModal = document.getElementById("map_modal");

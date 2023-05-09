@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
-@include("layouts/_head")
+@include("_layouts/_head")
 
 <body class="d-flex flex-column">
-@include("layouts/_navbar")
+@include("_layouts/_navbar")
 @yield('cover1')
 
 <main class="flex-grow-1">

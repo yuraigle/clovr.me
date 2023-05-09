@@ -1,4 +1,4 @@
-@extends('layouts.wide')
+@extends('_layouts.wide')
 
 @section('meta')
     <meta name="town" content="{{ $town }}">
@@ -12,10 +12,6 @@
     <div id="app">
         <search-page></search-page>
     </div>
-@endsection
-
-@section('inline_styles')
-    @vite('resources/sass/styles-map.scss')
 @endsection
 
 @section('inline_scripts')

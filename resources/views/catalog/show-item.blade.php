@@ -1,10 +1,10 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
 @section('content')
     <div class="row">
 
         <div>
-            @include('partials.breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => $ad])
+            @include('_partials.breadcrumbs', ['town' => $town, 'cat' => $cat, 'ad' => $ad])
         </div>
 
         <div class="col-lg-8">
@@ -178,7 +178,7 @@
         <h3>You may also like...</h3>
         <div class="d-flex flex-wrap">
             @foreach($also as $ad1)
-                @include("partials.ad_thumb", ["ad" => $ad1])
+                @include("_partials.ad_thumb", ["ad" => $ad1])
             @endforeach
         </div>
     </div>
@@ -191,6 +191,4 @@
 @section('inline_scripts')
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
     @vite("resources/js/catalog/show-item.js")
-    @vite("resources/sass/styles-map.scss")
-
 @endsection

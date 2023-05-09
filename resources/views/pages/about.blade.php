@@ -1,6 +1,8 @@
-@extends('layouts.base')
+@extends('_layouts.base')
 
-@section('title')About Us - @endsection
+@section('title')
+    About Us -
+@endsection
 
 @section('content')
     <h1>About Us</h1>
@@ -11,4 +13,8 @@
         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
         laborum.
     </p>
+@endsection
+
+@section('inline_scripts')
+    @vite('resources/js/common.js')
 @endsection

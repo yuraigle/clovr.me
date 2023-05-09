@@ -1,8 +1,3 @@
-import axios from 'axios';
-
-window.axios = axios;
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 window.showToast = function (content, color = "danger") {
     const id = 'toast_' + new Date().getTime() + '_' + Math.floor(Math.random() * 100);
     document.querySelector(".toast-container").innerHTML += `

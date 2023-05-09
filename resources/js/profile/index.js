@@ -1,2 +1,2 @@
-import '@/js/bootstrap';
+import '@/js/common';
 import 'bootstrap';
