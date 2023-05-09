@@ -52,13 +52,6 @@
                             @if ($ad->lng && $ad->lat)
                                 <div id="map1" class="col-6 col-sm-12 p-0" title="Show Map" data-bs-toggle="modal"
                                      data-bs-target="#map_modal">
-                                    <button class="btn btn-sm btn-info opacity-75" type="button">
-                                        @svg('mini-map-pin')
-                                        <span
-                                            class="d-none d-sm-none d-md-inline-block d-lg-none d-xl-inline-block">Show map</span>
-                                        <span
-                                            class="d-inline-block d-sm-inline-block d-md-none d-lg-inline-block d-xl-none">Map</span>
-                                    </button>
                                     <div class="ratio ratio-4x3 then-2x1">
                                         <img src="{{ App\Helpers\AdPic::placeholder() }}"
                                              id="map_placeholder"
@@ -196,8 +189,8 @@
 @endsection
 
 @section('inline_scripts')
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet'/>
-    <script async src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
     @vite("resources/js/catalog/show-item.js")
+    @vite("resources/sass/styles-map.scss")
+
 @endsection

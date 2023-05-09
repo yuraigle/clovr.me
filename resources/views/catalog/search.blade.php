@@ -14,6 +14,11 @@
     </div>
 @endsection
 
+@section('inline_styles')
+    @vite('resources/sass/styles-map.scss')
+@endsection
+
 @section('inline_scripts')
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
+    @vite("resources/js/catalog/search.js")
 @endsection

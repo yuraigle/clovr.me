@@ -7,3 +7,7 @@
         <auth-forgot-box></auth-forgot-box>
     </div>
 @endsection
+
+@section('inline_scripts')
+    @vite('resources/js/auth/index.js')
+@endsection

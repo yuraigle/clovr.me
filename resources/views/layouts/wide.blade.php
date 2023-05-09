@@ -12,7 +12,7 @@
 </main>
 
 <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
-@vite('resources/js/app.js')
+{{--@vite('resources/js/app.js')--}}
 @yield('inline_scripts')
 
 </body>

@@ -1,43 +1,256 @@
 @import "bootstrap/scss/functions";
+@import "variables";
+@import "bootstrap/scss/bootstrap";
 
-$white: #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #868e96 !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black: #000 !default;
+body {
+    min-height: 100%;
+}
 
-$blue: #033c73 !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #e83e8c !default;
-$red: #c71c22 !default;
-$orange: #fd7e14 !default;
-$yellow: #dd5600 !default;
-$green: #73a839 !default;
-$teal: #20c997 !default;
-$cyan: #1690d7 !default;
+footer {
+    height: 100px;
+}
 
-$primary: $cyan !default;
-$secondary: $gray-200 !default;
-$success: $green !default;
-$info: $blue !default;
-$warning: $yellow !default;
-$danger: $red !default;
-$light: $gray-100 !default;
-$dark: $gray-800 !default;
+.cover1 {
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 1s ease;
+}
 
-$min-contrast-ratio: 2.75 !default;
-$body-color: $gray-700 !default;
-$body-bg: #eee !default;
-$input-bg: #fff !default;
+.cover1 > form {
+    padding-top: 150px;
+    position: relative;
+}
 
-@import 'variables';
-@import 'bootstrap/scss/bootstrap';
+.cover1 > form > .location_btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
 
-@import "styles-app";
+.cover1 button.bg-gradient {
+    filter: drop-shadow(1px 2px 3px black)
+}
+
+#q {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+@media(max-width: 575.98px) {
+    .ratio-4x3.then-2x1 {
+        --bs-aspect-ratio: 50%;
+    }
+}
+
+.btn.bg-fb {
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+
+.btn.bg-fb:hover {
+    background-color: #324c81;
+    border-color: #2f477a;
+}
+
+.btn.bg-fb:focus {
+    background-color: #324c81;
+    border-color: #2f477a;
+    box-shadow: 0 0 0 0.25rem rgb(88 114 167 / 50%)
+}
+
+.card > table {
+    width: 100%;
+    height: 150px;
+}
+
+.card > table td {
+    width: 50%;
+    vertical-align: top;
+}
+
+.card > table td {
+    background-size: cover;
+    background-position: center center;
+}
+
+.hover-milk:hover {
+    background-color: #faf7f7;
+}
+
+.a0 {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.a0 .fav {
+    position: absolute;
+    top: 0;
+    color: #bbb;
+    transition: all .3s ease;
+    opacity: 0;
+    right: -20px;
+}
+
+.a0:hover .fav {
+    opacity: 1;
+    right: -5px;
+}
+
+.a0 .fav:hover {
+    color: #c71c22;
+}
+
+.a0 .a1 {
+    position: relative;
+    padding-bottom: 30px
+}
+
+.a0 .a1 > .a1pr {
+    position: absolute;
+    bottom: 0;
+}
+
+.a0 .a1 > .a1dt {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.a0 picture, .a0 img {
+    width: 200px;
+    height: 150px;
+    background-color: #eee;
+}
+
+.a0 .pics_counter {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: small;
+    color: #fff;
+    background-color: #343a40;
+    opacity: .8;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.a1__details {
+    font-weight: bold;
+}
+
+.a1__details > span:after {
+    content: " | ";
+    margin: 0 4px;
+}
+
+.a1__details > span:last-child:after {
+    content: "";
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .a0 picture, .a0 img {
+        width: 120px;
+        height: 90px;
+    }
+}
+
+.color-fb {
+    color: #3b5998;
+}
+
+.color-fb:hover {
+    color: #324c81;
+}
+
+.color-tw {
+    color: #00acee;
+}
+
+.color-tw:hover {
+    color: #0da0d9;
+}
+
+.color-gr {
+    color: #656656;
+}
+
+.color-gr:hover {
+    color: #5a5b4c;
+}
+
+.w-150px {
+    width: 150px;
+}
+
+.icon-tabler {
+    margin-top: -4px;
+}
+
+#map_cont {
+    height: 500px;
+}
+
+.fit-none {
+    object-fit: none;
+}
+
+.aa_row {
+    line-height: 26px
+}
+
+.aa_price {
+    font-size: 26px;
+    color: #1c628b;
+}
+
+#map1 {
+    position: relative
+}
+
+#map1 button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+div.ratio.ratio-4x3 > img {
+    object-fit: cover;
+    cursor: pointer;
+}
+
+div.ratio.ratio-4x3 > img:hover {
+    opacity: 90%;
+}
+
+.a_thumb {
+    position: relative
+}
+
+.a_thumb_price {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #4c812a;
+    opacity: .75;
+}
+
+.a_thumb_title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+}
+
+.a_thumb:hover .a_thumb_title {
+    height: 52px;
+    padding: 5px;
+    transition: height .25s;
+}

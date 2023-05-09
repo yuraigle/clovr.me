@@ -1,4 +1,3 @@
-import 'bootstrap';
 import axios from 'axios';
 
 window.axios = axios;
@@ -26,7 +25,7 @@ window.showToast2 = function ({msg, bg}) {
     showToast(msg, bg);
 };
 
-window.showError = function ({err}) {
+window.showError = function (err) {
     const msg = err.response.data.message ? err.response.data.message : err;
     showToast(msg, 'danger');
 }

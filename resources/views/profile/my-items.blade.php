@@ -77,3 +77,7 @@
 
     </style>
 @endsection
+
+@section('inline_scripts')
+    @vite('resources/js/profile/index.js')
+@endsection

@@ -16,11 +16,14 @@
 @include("layouts/_footer")
 
 <div class="toast-container position-fixed p-3 bottom-0 end-0"></div>
-@vite('resources/js/app.js')
 @yield('inline_scripts')
 
-@if (session('status'))
-    {{--    <script type="text/javascript">window.showToast2(@json(session('status')));</script>--}}
+@if(session('status'))
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.showToast2(@json(session('status')));
+        })
+    </script>
 @endif
 
 </body>

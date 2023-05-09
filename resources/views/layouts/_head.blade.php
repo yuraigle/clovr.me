@@ -1,6 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     @yield('meta')
 
     <title>@yield('title')Clovr - Real Estate Marketplace</title>
@@ -10,6 +11,6 @@
     <link rel="manifest" href="/site.1666414708.webmanifest"/>
     <meta name="theme-color" content="#aabe39"/>
 
-    @vite(['resources/sass/app.scss'])
+    @vite('resources/sass/app.scss')
     @yield('inline_styles')
 </head>

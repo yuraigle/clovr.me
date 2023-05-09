@@ -1,3 +1,7 @@
+import "@/js/bootstrap";
+import "bootstrap/js/src/modal";
+import "bootstrap/js/src/dropdown";
+
 const elCover = document.querySelector("section.cover1");
 const elDd = document.querySelector('button.dropdown-toggle');
 const qs = document.querySelectorAll('[data-search]');

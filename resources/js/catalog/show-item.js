@@ -1,42 +1,50 @@
-import Lightbox from 'bs5-lightbox';
+import "@/js/bootstrap";
+import "leaflet";
+
+import Lightbox from "bs5-lightbox";
 Lightbox.defaultSelector = '[data-toggle="lightbox"]';
 
 const elMapModal = document.getElementById("map_modal");
 const elMapCont = document.getElementById("map_cont");
-const lng = elMapCont.getAttribute("data-lng");
-const lat = elMapCont.getAttribute("data-lat");
-const imgMap = document.getElementById("map_placeholder");
+const elMapImg = document.getElementById("map_placeholder");
 
-if (imgMap) {
-    const lng = imgMap.getAttribute('data-lng');
-    const lat = imgMap.getAttribute('data-lat');
-    const url = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/` +
-        `${lng},${lat},13,0/550x250?logo=false&access_token=${window.mapboxToken}`;
-    imgMap.setAttribute("src", url);
+if (elMapCont) {
+    const x2 = L.Browser.retina ? '@2x' : '';
+    const lng = elMapCont.getAttribute("data-lng");
+    const lat = elMapCont.getAttribute("data-lat");
+    const staticUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static` +
+        `/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B${lng}%2C${lat}%5D%7D)` +
+        `/${lng},${lat},16,0/350x250${x2}?logo=false&attribution=false&access_token=${mapboxToken}`;
+    const layerUrl = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}${x2}`
+        + `?access_token=${mapboxToken}`;
+
+    elMapImg.setAttribute("src", staticUrl);
+
+    let map1 = null;
+    elMapModal.addEventListener("shown.bs.modal", function () {
+        if (map1 == null) {
+            map1 = L.map('map_cont', {
+                zoomAnimation: false,
+                attributionControl: false,
+            }).setView([lat, lng], 18);
+
+            L.tileLayer(layerUrl, {
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                hq: L.Browser.retina,
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map1);
+
+            L.Icon.Default.imagePath = '/layout/';
+            L.marker([lat, lng]).addTo(map1);
+        }
+    });
+
+    window.addEventListener("resize", function () {
+        if (map1 && !elMapModal.classList.contains("show")) {
+            map1.remove();
+            map1 = null;
+        }
+    });
 }
-
-let map1 = null;
-let marker1 = null;
-
-elMapModal.addEventListener("shown.bs.modal", function () {
-    if (map1 == null) {
-        marker1 = new mapboxgl.Marker();
-        map1 = new mapboxgl.Map({
-            accessToken: window.mapboxToken,
-            container: elMapCont,
-            style: "mapbox://styles/mapbox/streets-v11",
-            center: [lng, lat],
-            zoom: 16,
-        });
-    }
-
-    marker1.setLngLat([lng, lat]).addTo(map1);
-    map1.jumpTo([lng, lat]);
-});
-
-window.addEventListener("resize", function () {
-    if (map1 && elMapModal && !elMapModal.classList.contains("show")) {
-        map1.remove();
-        map1 = null;
-    }
-});

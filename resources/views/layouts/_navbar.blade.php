@@ -15,8 +15,8 @@
                 </li>
                 <li class="nav-item ms-1">
                     @auth
-                        <a class="nav-link px-3 py-1 btn btn-sm btn-outline-secondary {{ request()->routeIs('profile') ? 'active' : '' }}"
-                           href="{{ route('profile') }}" title="User Details">
+                        <a class="nav-link px-3 py-1 btn btn-sm btn-outline-secondary {{ request()->routeIs('my-items') ? 'active' : '' }}"
+                           href="{{ route('my-items') }}" title="User Details">
                             @svg('user')
                             <span class="d-none d-sm-inline-block text-dark">{{ auth()->user()['name'] }}</span>
                         </a>

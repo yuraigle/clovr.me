@@ -1,8 +1,8 @@
 @php
     $links = [
+        'My ADs' => ['my-items', 'list-details'],
         'Profile' => ['profile', 'id'],
         'Security' => ['security', 'shield-lock'],
-        'My ADs' => ['my-items', 'list-details'],
         'Messages' => ['messages', 'mail'],
         'Favorites' => ['favorites', 'star'],
     ];

@@ -19,7 +19,6 @@ import SearchFilter from "./SearchFilter.vue";
 
 import "leaflet";
 import "leaflet.markercluster";
-import "../../sass/styles-map.scss"
 
 export default {
   components: {
@@ -38,20 +37,16 @@ export default {
         attributionControl: false,
       }).setView([townData.lat, townData.lng], townData.zoom);
 
-      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}', {
         maxZoom: 18,
         id: 'mapbox/streets-v11',
+        hq: L.Browser.retina,
         tileSize: 512,
         zoomOffset: -1,
         accessToken: window.mapboxToken
       }).addTo(map.value);
 
-
-      const greenDot = L.icon({
-        iconUrl: '/layout/blue-dot.svg',
-        iconSize: [18, 18],
-      });
-
+      L.Icon.Default.imagePath = '/layout/';
       const markers = L.markerClusterGroup({
         spiderfyOnMaxZoom: false,
         showCoverageOnHover: false,
@@ -64,7 +59,7 @@ export default {
           data.features.forEach((f) => {
             const coords = f.geometry.coordinates;
             const {url, pic, title, price} = f.properties;
-            const marker = L.marker([coords[1], coords[0]], {icon: greenDot});
+            const marker = L.marker([coords[1], coords[0]]);
             const html = `<a href='${url}' target="_blank" class="text-center" title="${title}">
 <img src="${hash2img(pic, 's')}" class="img-thumbnail" alt="pic" width="120"/><br/>
 ${price_fmt(price)}</a>`;
