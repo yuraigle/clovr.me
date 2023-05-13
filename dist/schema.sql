@@ -1,3 +1,6 @@
+CREATE DATABASE adz CHARACTER SET utf8 COLLATE utf8mb3_general_ci;
+USE adz;
+
 DROP TABLE IF EXISTS `pictures`;
 DROP TABLE IF EXISTS `ads`;
 DROP TABLE IF EXISTS `categories`;
