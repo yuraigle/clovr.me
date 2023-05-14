@@ -38,7 +38,7 @@
                         <div class="ratio ratio-4x3 then-2x1">
                             @if(!empty($pics[0]))
                                 <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                                     data-src="{{ App\Helpers\AdPic::named($pics[0]->name, 'x') }}"
+                                     data-src="{{ App\Helpers\AdPic::named($pics[0]->name, "1200") }}"
                                      data-toggle="lightbox"
                                      data-type="image"
                                      data-gallery="gallery1"
@@ -78,7 +78,7 @@
                                 <div class="ratio ratio-4x3 then-2x1">
                                     @if(!empty($pics[1]))
                                         <img src="{{ App\Helpers\AdPic::placeholder() }}"
-                                             data-src="{{ App\Helpers\AdPic::named($pics[1]->name, 'x') }}"
+                                             data-src="{{ App\Helpers\AdPic::named($pics[1]->name, "1200") }}"
                                              data-toggle="lightbox"
                                              data-type="image"
                                              data-gallery="gallery1"
@@ -99,7 +99,7 @@
 
                 @foreach(array_slice($pics, 2) as $pic)
                     <div class="d-none"
-                         data-src="{{ App\Helpers\AdPic::named($pic->name, 'x') }}"
+                         data-src="{{ App\Helpers\AdPic::named($pic->name, "1200") }}"
                          data-toggle="lightbox"
                          data-type="image"
                          data-gallery="gallery1"

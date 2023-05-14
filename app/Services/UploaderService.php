@@ -32,20 +32,22 @@ class UploaderService
             throw new Exception('I/O exception');
         }
 
+        $quality = 85;
+
         Image::make($file1)->fit(200, 200 * $ratioY / $ratioX)
-            ->save($destAbs . "m_$hash.jpg")
-            ->save($destAbs . "m_$hash.webp", 75);
+            ->save($destAbs . "{$hash}_200.jpg", $quality)
+            ->save($destAbs . "{$hash}_200.webp", $quality);
 
-        Image::make($file1)->fit(120, 120 * $ratioY / $ratioX)
-            ->save($destAbs . "s_$hash.jpg")
-            ->save($destAbs . "s_$hash.webp", 75);
+        Image::make($file1)->fit(400, 400 * $ratioY / $ratioX)
+            ->save($destAbs . "{$hash}_400.jpg", $quality)
+            ->save($destAbs . "{$hash}_400.webp", $quality);
 
-        Image::make($file1)->resize(800, 800 * $ratioY / $ratioX, function ($constraint) {
+        Image::make($file1)->resize(1200, 1200 * $ratioY / $ratioX, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         })
-            ->save($destAbs . "x_$hash.jpg")
-            ->save($destAbs . "x_$hash.webp", 75);
+            ->save($destAbs . "{$hash}_1200.jpg", $quality)
+            ->save($destAbs . "{$hash}_1200.webp", $quality);
 
         return $hash;
     }

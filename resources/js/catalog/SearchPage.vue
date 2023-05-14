@@ -61,8 +61,10 @@ export default {
             const {url, pic, title, price} = f.properties;
             const marker = L.marker([coords[1], coords[0]]);
             const html = `<a href='${url}' target="_blank" class="text-center" title="${title}">
-<img src="${hash2img(pic, 's')}" class="img-thumbnail" alt="pic" width="120"/><br/>
-${price_fmt(price)}</a>`;
+<img src="${hash2img(pic)}" alt="pic" width="120"/><br/>
+<strong>${price_fmt(price)}</strong></a><br/>
+<div class="small text-muted text-decoration-none">${title}</div>
+`;
             marker.bindPopup(html);
             markers.addLayer(marker);
 
@@ -73,11 +75,11 @@ ${price_fmt(price)}</a>`;
           map.value.addLayer(markers);
         });
 
-      function hash2img(hash, size = 'm') {
+      function hash2img(hash, size = '400') {
         if (!hash) {
           return `/layout/${size}_noimg.1666414708.webp`;
         }
-        return `/images/${hash.substring(0, 4)}/${size}_${hash}.webp`;
+        return `/images/${hash.substring(0, 4)}/${hash}_${size}.webp`;
       }
 
       function price_fmt(n) {

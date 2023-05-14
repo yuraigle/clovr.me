@@ -18,7 +18,7 @@
               >
                 &nbsp;
               </button>
-              <img :src="hash2img(hash)" alt="img"/>
+              <img :src="hash2img(hash)" alt="img" width="120"/>
             </div>
 
             <label
@@ -112,7 +112,7 @@ export default {
     const uploading = ref(false);
 
     function hash2img(s) {
-      return "/images/" + s.substring(0, 4) + "/s_" + s + ".webp";
+      return "/images/" + s.substring(0, 4) + "/" + s + "_200.webp";
     }
 
     function addImg(e) {

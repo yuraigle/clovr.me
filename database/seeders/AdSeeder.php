@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Services\LocationService;
+use App\Services\UploaderService;
 use Exception;
 use Faker\Factory;
 use Faker\Generator;
@@ -11,6 +12,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
@@ -18,11 +20,15 @@ class AdSeeder extends Seeder
 {
     private static Generator $faker;
     private static Address $addressProvider;
+    protected UploaderService $uploaderService;
 
-    public function __construct()
+    public function __construct(
+        UploaderService $uploaderService
+    )
     {
         self::$faker = Factory::create("en_GB");
         self::$addressProvider = new Address(self::$faker);
+        $this->uploaderService = $uploaderService;
     }
 
     public function run()
@@ -138,7 +144,7 @@ class AdSeeder extends Seeder
             $postcode = self::$addressProvider::postcode();
         }
 
-        $numPics = self::$faker->numberBetween(0, 6);
+        $numPics = self::$faker->numberBetween(1, 3);
         $pics = [];
         for ($i = 0; $i < $numPics; $i++) {
             if (in_array($propType, ["garage", "parking"])) {
@@ -152,8 +158,8 @@ class AdSeeder extends Seeder
             $imgSrc = "dist/img/$imgCat$imgNum.jpg";
 
             try {
-                $raw = file_get_contents($imgSrc);
-                $pics[] = $this->uploadImage($raw);
+                $uploaded = new UploadedFile($imgSrc, "tmp.jpg");
+                $pics[] = $this->uploaderService->uploadImage($uploaded);
             } catch (Exception $e) {
                 print_r($e->getMessage());
             }
@@ -198,32 +204,5 @@ class AdSeeder extends Seeder
         DB::commit();
 
         print "AD #$adId created ($numPics pics)" . PHP_EOL;
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function uploadImage($raw): string
-    {
-        $hash = date('ym') . substr(md5(rand()), 0, 10);
-        $destAbs = base_path('public/images/' . substr($hash, 0, 4) . '/');
-
-        if (!file_exists($destAbs) && !mkdir($destAbs)) {
-            throw new Exception('I/O exception');
-        }
-
-        Image::make($raw)->fit(200, 150)
-            ->save($destAbs . "m_$hash.webp", 75);
-
-        Image::make($raw)->fit(120, 90)
-            ->save($destAbs . "s_$hash.webp", 75);
-
-        Image::make($raw)->resize(800, 600, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })
-            ->save($destAbs . "x_$hash.webp", 75);
-
-        return $hash;
     }
 }
