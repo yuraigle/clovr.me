@@ -29,10 +29,23 @@ class AdSeeder extends Seeder
         self::$faker = Factory::create("en_GB");
         self::$addressProvider = new Address(self::$faker);
         $this->uploaderService = $uploaderService;
+
+        \Unsplash\HttpClient::init([
+            'applicationId' => env('UNSPLASH_APP_ID'),
+            'secret' => env('UNSPLASH_APP_SECRET'),
+            'utmSource' => env('UNSPLASH_APP'),
+        ]);
     }
 
     public function run()
     {
+        $results = \Unsplash\Search::photos('house');
+        print_r($results);
+        print_r($results->getResults());
+        print_r($results->getTotal());
+
+        return;
+
         $cat = self::$faker->randomElement([1, 2, 3, 4, 5]);
 
         $freq = null;
