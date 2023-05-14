@@ -20,14 +20,13 @@ class ProfileController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected UploaderService $uploaderService;
-
     /**
      * @param UploaderService $uploaderService
      */
-    public function __construct(UploaderService $uploaderService)
+    public function __construct(
+        private readonly UploaderService $uploaderService
+    )
     {
-        $this->uploaderService = $uploaderService;
     }
 
     public function details(Request $req): RedirectResponse|View

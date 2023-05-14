@@ -20,16 +20,15 @@ class CatalogController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected LocationService $locationService;
-    private RecommendationsService $recommendationsService;
-
+    /**
+     * @param LocationService $locationService
+     * @param RecommendationsService $recommendationsService
+     */
     public function __construct(
-        LocationService        $locationService,
-        RecommendationsService $recommendationsService
+        private readonly LocationService        $locationService,
+        private readonly RecommendationsService $recommendationsService
     )
     {
-        $this->locationService = $locationService;
-        $this->recommendationsService = $recommendationsService;
     }
 
     public function home(Request $req): View|RedirectResponse

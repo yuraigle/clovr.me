@@ -22,8 +22,16 @@ class MemberController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected LocationService $locationService;
-    protected UploaderService $uploaderService;
+    /**
+     * @param LocationService $locationService
+     * @param UploaderService $uploaderService
+     */
+    public function __construct(
+        private readonly LocationService $locationService,
+        private readonly UploaderService $uploaderService
+    )
+    {
+    }
 
     private array $rules = [
         'category_id' => 'required|numeric|min:1|max:5',
@@ -47,20 +55,6 @@ class MemberController extends BaseController
         'pictures' => 'nullable|array|max:10',
         'pictures.*' => 'required|string|regex:/^[0-9a-f]{14}$/',
     ];
-
-    /**
-     * @param LocationService $locationService
-     * @param UploaderService $uploaderService
-     */
-    public function __construct(
-        LocationService $locationService,
-        UploaderService $uploaderService
-    )
-    {
-        $this->locationService = $locationService;
-        $this->uploaderService = $uploaderService;
-    }
-
 
     public function newAd(): RedirectResponse|View
     {
