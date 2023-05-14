@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Services\UnsplashImagesService;
+use App\Services\UploaderService;
+use Exception;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +16,10 @@ class UserSeeder extends Seeder
 {
     private static Generator $faker;
 
-    public function __construct()
+    public function __construct(
+        private readonly UploaderService       $uploaderService,
+        private readonly UnsplashImagesService $unsplashService
+    )
     {
         self::$faker = Factory::create("en_GB");
     }
@@ -31,11 +38,21 @@ class UserSeeder extends Seeder
             $name = self::$faker->title($gender) . " " . $name;
         }
 
+        $pic = null;
+        try {
+            $imageFilename = $this->unsplashService->downloadByTag("user profile $gender");
+            $uploaded = new UploadedFile($imageFilename, "tmp.jpg");
+            $pic = $this->uploaderService->uploadImage($uploaded, "1:1");
+        } catch (Exception $e) {
+            print_r($e->getMessage() . PHP_EOL);
+        }
+
         DB::table('users')->insert([
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
             'password' => Hash::make($email),
+            'pic' => $pic,
             'created_at' => $created,
             'updated_at' => $created,
         ]);

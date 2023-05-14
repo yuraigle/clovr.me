@@ -18,8 +18,7 @@ class PicturesUnusedCommand extends Command
 
         $files = Storage::disk('images')->allFiles();
         foreach ($files as $file) {
-            // TODO
-            if (preg_match("/^.*_([0-9a-f]+)\.(jpg|webp)$/", $file, $m)) {
+            if (preg_match("/.*([0-9]{4}[0-9a-f]{10}).*\.(jpg|webp)$/", $file, $m)) {
                 $hash = $m[1];
                 $existsAd = array_filter($adPictures, function ($p) use ($hash) {
                     return $p->name == $hash;

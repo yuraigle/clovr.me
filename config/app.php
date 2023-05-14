@@ -43,7 +43,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\LocationServiceProvider::class,
-        App\Providers\RecommendationsServiceProvider::class,
     ],
 
     'aliases' => [

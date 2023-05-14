@@ -3,49 +3,35 @@
 namespace Database\Seeders;
 
 use App\Services\LocationService;
+use App\Services\UnsplashImagesService;
 use App\Services\UploaderService;
 use Exception;
 use Faker\Factory;
 use Faker\Generator;
 use Faker\Provider\en_GB\Address;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Intervention\Image\Facades\Image;
 
 class AdSeeder extends Seeder
 {
     private static Generator $faker;
     private static Address $addressProvider;
-    protected UploaderService $uploaderService;
 
     public function __construct(
-        UploaderService $uploaderService
+        private readonly UploaderService       $uploaderService,
+        private readonly UnsplashImagesService $unsplashService
     )
     {
         self::$faker = Factory::create("en_GB");
         self::$addressProvider = new Address(self::$faker);
-        $this->uploaderService = $uploaderService;
-
-        \Unsplash\HttpClient::init([
-            'applicationId' => env('UNSPLASH_APP_ID'),
-            'secret' => env('UNSPLASH_APP_SECRET'),
-            'utmSource' => env('UNSPLASH_APP'),
-        ]);
     }
 
     public function run()
     {
-        $results = \Unsplash\Search::photos('house');
-        print_r($results);
-        print_r($results->getResults());
-        print_r($results->getTotal());
-
-        return;
-
         $cat = self::$faker->randomElement([1, 2, 3, 4, 5]);
 
         $freq = null;
@@ -120,7 +106,7 @@ class AdSeeder extends Seeder
         $location = "";
 
         try {
-            $client = new Client(['verify' => false]);
+            $client = new GuzzleHttpClient(['verify' => false]);
             $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json";
             $resp = $client->request('GET', $url, [
                 'query' => ['access_token' => env('MAPBOX_PK')]
@@ -157,24 +143,21 @@ class AdSeeder extends Seeder
             $postcode = self::$addressProvider::postcode();
         }
 
-        $numPics = self::$faker->numberBetween(1, 3);
-        $pics = [];
-        for ($i = 0; $i < $numPics; $i++) {
-            if (in_array($propType, ["garage", "parking"])) {
-                $imgCat = "garage";
-            } elseif (in_array($propType, ["flat", "other"])) {
-                $imgCat = "flat";
-            } else {
-                $imgCat = "house";
-            }
-            $imgNum = self::$faker->randomElement([1, 2, 3]);
-            $imgSrc = "dist/img/$imgCat$imgNum.jpg";
+        $imageTags = ["house", "room"];
+        if (in_array($propType, ["garage", "parking"])) {
+            $imageTags = ["garage", "garage"];
+        } elseif ($propType == "flat") {
+            $imageTags = ["room", "room"];
+        }
 
+        $adPictures = [];
+        foreach ($imageTags as $tag) {
             try {
-                $uploaded = new UploadedFile($imgSrc, "tmp.jpg");
-                $pics[] = $this->uploaderService->uploadImage($uploaded);
+                $imageFilename = $this->unsplashService->downloadByTag($tag);
+                $uploaded = new UploadedFile($imageFilename, "tmp.jpg");
+                $adPictures[] = $this->uploaderService->uploadImage($uploaded);
             } catch (Exception $e) {
-                print_r($e->getMessage());
+                print_r($e->getMessage() . PHP_EOL);
             }
         }
 
@@ -200,22 +183,22 @@ class AdSeeder extends Seeder
             'postcode' => $postcode,
             'county' => $county ?: null,
             'town' => $town,
-            'pic' => $pics ? $pics[0] : null,
+            'pic' => $adPictures ? $adPictures[0] : null,
             'created_at' => self::$faker->dateTimeBetween("-30 days"),
         ]);
 
         $adId = DB::getPdo()->lastInsertId();
 
-        for ($i = 0; $i < count($pics); $i++) {
+        for ($i = 0; $i < count($adPictures); $i++) {
             DB::table('pictures')->insert([
                 'ad_id' => $adId,
-                'name' => $pics[$i],
+                'name' => $adPictures[$i],
                 'ord' => $i,
             ]);
         }
 
         DB::commit();
 
-        print "AD #$adId created ($numPics pics)" . PHP_EOL;
+        print "AD #$adId created" . PHP_EOL;
     }
 }
