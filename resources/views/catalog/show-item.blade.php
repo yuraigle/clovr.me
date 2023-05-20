@@ -174,21 +174,35 @@
         </div>
     </div>
 
-    <div class="row mt-3">
-        <h3>You may also like...</h3>
-        <div class="d-flex flex-wrap">
-            @foreach($also as $ad1)
-                @include("_partials.ad_thumb", ["ad" => $ad1])
-            @endforeach
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <div class="d-flex mb-1">
+                <div class="me-auto align-middle">
+                    <h5 class="m-0 pt-2">You may also like...</h5>
+                </div>
+                <button class="btn">@svg('chevron-left')</button>
+                <button class="btn">@svg('chevron-right')</button>
+            </div>
+
+            <div id="similar_items" style="height: 150px; overflow-y: hidden"></div>
         </div>
     </div>
 @endsection
 
 @section('inline_styles')
+
     <link rel="canonical" href="{{ App\Helpers\AdUrl::canonical($ad) }}"/>
+    <script>window.adata = {id: {{$ad->id}}};</script>
 @endsection
 
 @section('inline_scripts')
     <script> window.mapboxToken = '{{ config('app.mapbox_token') }}'; </script>
     @vite("resources/js/catalog/show-item.js")
+    <script type="text/javascript">
+        fetch(`/similar?aid=${window.adata.id}`)
+            .then((resp) => resp.text())
+            .then((html) => {
+                document.getElementById('similar_items').innerHTML += html;
+            });
+    </script>
 @endsection

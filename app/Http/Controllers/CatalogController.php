@@ -63,9 +63,8 @@ class CatalogController extends BaseController
         $pics = DB::select("select * from `pictures` where `ad_id`=? order by `ord`", [$id]);
 
         $town = $this->locationService->getTownFromCookie()->getName();
-        $also = $this->recommendationsService->fetchForAd($ad, 20);
 
-        return view('catalog.show-item', compact("ad", "cat", "usr", "pics", "town", "also"));
+        return view('catalog.show-item', compact("ad", "cat", "usr", "pics", "town"));
     }
 
     public function showCat(Request $req, $cat, $propType = null): View
@@ -148,5 +147,17 @@ class CatalogController extends BaseController
         }
 
         return response()->json(["type" => "FeatureCollection", "features" => $features]);
+    }
+
+    public function similar(Request $req): View
+    {
+        $aid = $req->query('aid');
+        $seed = $req->query('seed');;
+        $also = $this->recommendationsService->fetchForAd($aid, 5, $seed);
+
+        return view('catalog.similar', [
+            "also" => $also,
+            "aid" => $aid,
+        ]);
     }
 }

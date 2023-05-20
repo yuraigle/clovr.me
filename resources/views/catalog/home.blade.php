@@ -188,7 +188,7 @@
         </div>
     </div>
 
-    <div class="card shadow-sm mb-4 px-4 py-2">
+    <div class="card shadow-sm px-4 pt-2 pb-3">
         <h3 class="h6">Featured ADs</h3>
         <div class="d-flex flex-nowrap overflow-hidden">
             @foreach($featured as $ad1)

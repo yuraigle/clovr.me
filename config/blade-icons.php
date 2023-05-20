@@ -3,7 +3,7 @@
 return [
     'sets' => [
         'default' => [
-            'path' => 'resources/svg',
+            'path' => 'vendor/ryangjchandler/blade-tabler-icons/resources/svg',
             'prefix' => 'icon',
             'attributes' => [
                  'width' => 24,
@@ -11,7 +11,7 @@ return [
             ],
         ],
         'mini' => [
-            'path' => 'resources/svg',
+            'path' => 'vendor/ryangjchandler/blade-tabler-icons/resources/svg',
             'prefix' => 'mini',
             'attributes' => [
                 'width' => 16,

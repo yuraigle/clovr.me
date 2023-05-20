@@ -12,13 +12,14 @@
         "ext-json": "*",
         "ext-mysqli": "*",
         "blade-ui-kit/blade-icons": "^1.5",
-        "fakerphp/faker": "^1.21",
-        "guzzlehttp/guzzle": "^7.5",
+        "fakerphp/faker": "^1.22",
+        "guzzlehttp/guzzle": "^7.6",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.52",
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+        "ryangjchandler/blade-tabler-icons": "^1.5",
         "unsplash/unsplash": "^3.2"
     },
     "require-dev": {

@@ -1,4 +1,4 @@
-<div class="a_thumb d-inline-block me-2 mb-2">
+<div class="a_thumb d-inline-block me-2">
     <a href="{{ App\Helpers\AdUrl::canonical($ad) }}" title="{{ $ad->title }}">
         @include('_partials.ad_main_pic', ['ad' => $ad])
         <span class="a_thumb_price small text-white p-1">

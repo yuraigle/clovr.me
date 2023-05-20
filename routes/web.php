@@ -46,6 +46,9 @@ Route::get('/_/{cat}/{title}/{id}', [CatalogController::class, 'showAd'])
     ->where('id', '[0-9]+')
     ->name('show-ad');
 
+Route::get('/similar', [CatalogController::class, 'similar'])
+    ->name('similar');
+
 Route::get('/{cat}/{propType?}', [CatalogController::class, 'showCat'])
     ->where('cat', join('|', AdUrl::$CATS))
     ->where('propType', 'house|flat|other|garage|parking')

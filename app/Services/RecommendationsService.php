@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\DB;
 
 class RecommendationsService
 {
-    public function fetchForAd($ad, $num = 5): array
+    public function fetchForAd($aid, $num = 5, $seed = null): array
     {
         assert(is_int($num));
 
+        if (!$seed) {
+            $seed = 9_999_999_999;
+        }
+
         return DB::select("
-            select *
-            from `ads`
-            where `pic` is not null
-                and `id` != ?
-                and `category_id` = ?
-                and `price` >= ? and `price` <= ?
-            order by `created_at` desc
+            select a.*
+            from `ads` a
+                left join `ads` a0 on a0.`id` = ?
+            where a.`pic` is not null
+                and a.`id` != a0.`id`
+                and a.`category_id` = a0.`category_id`
+                and a.`price` >= a0.`price` * .75 and a.`price` <= a0.`price` * 1.5
+                and a.`id` < ?
+            order by `id` desc
             limit ?
             ",
-            [
-                $ad->id,
-                $ad->category_id,
-                $ad->price * .75,
-                $ad->price * 1.5,
-                $num
-            ]
+            [$aid, $seed, $num]
         );
     }
 }
