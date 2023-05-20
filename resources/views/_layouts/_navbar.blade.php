@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand p-0" href="/">
             <img src="/layout/logo-default-1x.png"
-                 srcset="/layout/logo-default-2x.png 2x, /layout/logo-default-1x.png 1x"
+                 srcset="/layout/logo-default-2x.png"
                  width="128" height="48"
                  class="d-inline-block"
                  alt="Site Logo"
@@ -10,15 +10,18 @@
         </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item ms-2">
-                    <a class="nav-link" aria-current="page" href="#">Buy</a>
+                    <a class="nav-link {{request()->segment(1) == 'property-for-sale' ? 'active' : '' }}"
+                       href="{{ route('show-cat', ['cat' => 'property-for-sale']) }}">Buy</a>
                 </li>
                 <li class="nav-item ms-2">
-                    <a class="nav-link" aria-current="page" href="#">Rent</a>
+                    <a class="nav-link {{request()->segment(1) == 'property-to-rent' ? 'active' : '' }}"
+                       href="{{ route('show-cat', ['cat' => 'property-to-rent']) }}">Rent</a>
                 </li>
                 <li class="nav-item ms-2">
-                    <a class="nav-link" aria-current="page" href="#">Share</a>
+                    <a class="nav-link {{request()->segment(1) == 'property-to-share' ? 'active' : '' }}"
+                       href="{{ route('show-cat', ['cat' => 'property-to-share']) }}">Share</a>
                 </li>
                 <li class="nav-item ms-2">
                     <a class="nav-link" aria-current="page" href="#">Agents</a>
