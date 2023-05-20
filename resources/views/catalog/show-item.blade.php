@@ -121,7 +121,7 @@
                     @endif
                 </div>
 
-                <h5>Description</h5>
+                <p class="h5">Description</p>
                 <div class="text-muted">{!! nl2br($ad->description) !!}</div>
 
                 @if($ad->www)
@@ -147,9 +147,9 @@
                             />
                         </a>
 
-                        <h5 class="h5">
+                        <h2 class="h5">
                             <a href="#" class="text-decoration-none text-primary">{{ $usr->name }}</a>
-                        </h5>
+                        </h2>
                     </div>
 
                     <div class="d-flex">
@@ -166,7 +166,7 @@
             </div>
 
             <div class="d-flex py-2 my-4">
-                <h5 class="me-auto">Share:</h5>
+                <h3 class="h5 me-auto">Share:</h3>
                 <a href="#" class="color-fb px-1" title="Share on Facebook">@svg('brand-facebook')</a>
                 <a href="#" class="color-tw px-1" title="Share on Twitter">@svg('brand-twitter')</a>
                 <a href="#" class="color-gr px-1" title="Share via Email">@svg('mail')</a>
@@ -178,10 +178,10 @@
         <div class="col-lg-8">
             <div class="d-flex mb-1">
                 <div class="me-auto align-middle">
-                    <h5 class="m-0 pt-2">You may also like...</h5>
+                    <h3 class="h5 m-0 pt-2">You may also like...</h3>
                 </div>
-                <button class="btn">@svg('chevron-left')</button>
-                <button class="btn">@svg('chevron-right')</button>
+                <button class="btn" aria-label="Previous">@svg('chevron-left')</button>
+                <button class="btn" aria-label="Next">@svg('chevron-right')</button>
             </div>
 
             <div id="similar_items" style="height: 150px; overflow-y: hidden"></div>
