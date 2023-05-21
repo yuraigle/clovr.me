@@ -81,12 +81,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
-                                        1 bedroom
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('show-cat', ['cat' => 'property-to-rent', 'propType' => 'flat']) }}">
-                                        2 bedroom
+                                        Apartments
                                     </a>
                                 </li>
                                 <li>

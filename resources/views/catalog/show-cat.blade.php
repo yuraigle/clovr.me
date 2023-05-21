@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="sticky-lg-top pt-4">
-                <h4>Filters</h4>
+                @include("_partials.filter", ['cat' => $cat])
             </div>
         </div>
         <div class="col-lg-9 p-0">
