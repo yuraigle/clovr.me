@@ -12,9 +12,19 @@
 
 <div class="row pt-2">
     <label class="form-label">Property type</label>
-    <ul class="ms-3">
-        <li>House</li>
-        <li>Apartment</li>
-        <li>Other</li>
-    </ul>
+    <div class="col-12">
+        <ul>
+            <li><a href="#" class="text-decoration-none">House</a></li>
+            <li><a href="#" class="text-decoration-none text-dark fw-bold">Apartment</a></li>
+            <li><a href="#" class="text-decoration-none">Other</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row pt-2">
+    <div class="col-12">
+        <button class="btn btn-success bg-gradient w-100">
+            Apply
+        </button>
+    </div>
 </div>
